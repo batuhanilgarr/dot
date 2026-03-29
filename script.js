@@ -6,16 +6,75 @@ const menu = document.getElementById('menu');
 const menuToggle = document.getElementById('menuToggle');
 const menuItems = document.getElementById('menuItems');
 const backgroundMusic = document.getElementById('backgroundMusic');
+const musicToggle = document.getElementById('musicToggle');
+const playIcon = musicToggle?.querySelector('.play');
+const pauseIcon = musicToggle?.querySelector('.pause');
+
+let isMusicPlaying = false;
+let hasUserInteracted = false;
+
+function updateMusicButton() {
+    if (!musicToggle) return;
+
+    musicToggle.classList.add('visible');
+
+    if (playIcon) playIcon.style.display = isMusicPlaying ? 'none' : 'block';
+    if (pauseIcon) pauseIcon.style.display = isMusicPlaying ? 'block' : 'none';
+}
+
+async function tryPlayMusic() {
+    if (!backgroundMusic) return;
+
+    try {
+        await backgroundMusic.play();
+        isMusicPlaying = true;
+    } catch (error) {
+        isMusicPlaying = false;
+        console.log('Müzik otomatik başlatma engellendi:', error);
+    }
+
+    updateMusicButton();
+}
+
+function onFirstInteraction() {
+    hasUserInteracted = true;
+    tryPlayMusic();
+
+    document.removeEventListener('click', onFirstInteraction);
+    document.removeEventListener('touchstart', onFirstInteraction);
+    document.removeEventListener('keydown', onFirstInteraction);
+}
+
+document.addEventListener('click', onFirstInteraction, { passive: true });
+document.addEventListener('touchstart', onFirstInteraction, { passive: true });
+document.addEventListener('keydown', onFirstInteraction);
+
+window.addEventListener('load', () => {
+    tryPlayMusic();
+});
+
+if (musicToggle && backgroundMusic) {
+    musicToggle.addEventListener('click', async () => {
+        if (backgroundMusic.paused) {
+            await tryPlayMusic();
+        } else {
+            backgroundMusic.pause();
+            isMusicPlaying = false;
+            updateMusicButton();
+        }
+    });
+}
 
 introVideo.addEventListener('ended', () => {
     videoContainer.classList.add('hidden');
     content.classList.add('visible');
     menu.classList.add('visible');
     document.body.style.overflow = 'auto';
-    
-    backgroundMusic.play().catch(error => {
-        console.log('Müzik otomatik başlatma engellendi:', error);
-    });
+
+    updateMusicButton();
+    if (hasUserInteracted) {
+        tryPlayMusic();
+    }
 });
 
 introVideo.addEventListener('error', () => {
@@ -24,10 +83,11 @@ introVideo.addEventListener('error', () => {
     content.classList.add('visible');
     menu.classList.add('visible');
     document.body.style.overflow = 'auto';
-    
-    backgroundMusic.play().catch(error => {
-        console.log('Müzik otomatik başlatma engellendi:', error);
-    });
+
+    updateMusicButton();
+    if (hasUserInteracted) {
+        tryPlayMusic();
+    }
 });
 
 menuToggle.addEventListener('click', () => {

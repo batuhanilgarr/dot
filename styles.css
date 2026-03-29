@@ -24,6 +24,46 @@ body::before {
     z-index: -1;
 }
 
+.music-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(212, 165, 165, 0.9);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(212, 165, 165, 0.4);
+    z-index: 2000;
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.music-toggle.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.music-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(212, 165, 165, 0.6);
+}
+
+.music-toggle:active {
+    transform: scale(0.95);
+}
+
+.music-icon {
+    color: white;
+    width: 24px;
+    height: 24px;
+}
+
 .butterflies-container {
     position: fixed;
     top: 0;

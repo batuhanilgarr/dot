@@ -3,13 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zeynep & Batuhan - Düğün Davetiyesi</title>
+    <title>Zeynep & Batuhan - Nişan Davetiyesi</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <audio id="backgroundMusic" loop>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
+    
+    <button id="musicToggle" class="music-toggle" aria-label="Müzik Kontrol">
+        <svg class="music-icon play" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+        <svg class="music-icon pause" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+            <line x1="6" y1="4" x2="6" y2="20"></line>
+            <line x1="18" y1="4" x2="18" y2="20"></line>
+        </svg>
+    </button>
     
     <div class="butterflies-container" id="butterflies"></div>
     
@@ -97,7 +109,7 @@
                 </div>
                 <div class="schedule-item">
                     <div class="schedule-time">14:00</div>
-                    <div class="schedule-event">Nikah Töreni</div>
+                    <div class="schedule-event">Nişan Töreni</div>
                 </div>
                 <div class="schedule-item">
                     <div class="schedule-time">15:00</div>
