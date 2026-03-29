@@ -9,6 +9,7 @@ const backgroundMusic = document.getElementById('backgroundMusic');
 const musicToggle = document.getElementById('musicToggle');
 const playIcon = musicToggle?.querySelector('.play');
 const pauseIcon = musicToggle?.querySelector('.pause');
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
 let isMusicPlaying = false;
 let hasUserInteracted = false;
@@ -61,6 +62,41 @@ if (musicToggle && backgroundMusic) {
             backgroundMusic.pause();
             isMusicPlaying = false;
             updateMusicButton();
+        }
+    });
+}
+
+function initScrollReveal() {
+    const revealTargets = document.querySelectorAll(
+        '.content section, .sakura-divider, .schedule-item, .info-item, .countdown-item'
+    );
+
+    revealTargets.forEach((element, index) => {
+        if (element.classList.contains('hero-section')) return;
+        element.classList.add('reveal');
+        element.style.transitionDelay = `${Math.min(index % 4, 3) * 60}ms`;
+    });
+
+    if (!('IntersectionObserver' in window)) {
+        revealTargets.forEach((element) => element.classList.add('in-view'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -8% 0px'
+    });
+
+    revealTargets.forEach((element) => {
+        if (!element.classList.contains('hero-section')) {
+            observer.observe(element);
         }
     });
 }
@@ -135,15 +171,26 @@ for (let i = 0; i < 15; i++) {
     createButterfly();
 }
 
-window.addEventListener('scroll', () => {
-    const butterflies = document.querySelectorAll('.butterfly');
+const butterflies = document.querySelectorAll('.butterfly');
+let rafId = null;
+
+function updateButterflyParallax() {
     const scrollY = window.scrollY;
-    
+
     butterflies.forEach((butterfly, index) => {
-        const speed = 0.1 + (index % 3) * 0.05;
+        const speed = 0.06 + (index % 3) * 0.03;
         butterfly.style.transform = `translateY(${scrollY * speed}px)`;
     });
-});
+
+    rafId = null;
+}
+
+if (!isMobile) {
+    window.addEventListener('scroll', () => {
+        if (rafId !== null) return;
+        rafId = window.requestAnimationFrame(updateButterflyParallax);
+    }, { passive: true });
+}
 
 function updateCountdown() {
     const weddingDate = new Date('2026-05-10T13:00:00').getTime();
@@ -167,3 +214,4 @@ function updateCountdown() {
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
+initScrollReveal();
