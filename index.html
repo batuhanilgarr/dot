@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeynep & Batuhan - Düğün Davetiyesi</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <audio id="backgroundMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+    
+    <div class="butterflies-container" id="butterflies"></div>
+    
+    <nav class="menu" id="menu" style="display: none;">
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="menu-items" id="menuItems">
+            <li><a href="#davetiye">Ana Sayfa</a></li>
+            <li><a href="#geri-sayim">Geri Sayım</a></li>
+            <li><a href="#program">Program</a></li>
+            <li><a href="#lokasyon">Lokasyon</a></li>
+        </ul>
+    </nav>
+    
+    <div class="video-container" id="videoContainer">
+        <video id="introVideo" autoplay muted playsinline>
+            <source src="https://bizevleniyoruz.blob.core.windows.net/assets/assets/sakurawaxsealintrovideo.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="content" id="content">
+        <section class="hero-section" id="davetiye">
+            <div class="sakura-tree left"></div>
+            <div class="sakura-tree right"></div>
+            <div class="hero-content">
+                <h1 class="couple-names">
+                    <span class="bride-name">Zeynep</span>
+                    <span class="ampersand">&</span>
+                    <span class="groom-name">Batuhan</span>
+                </h1>
+                <p class="wedding-date">10 Mayıs 2026</p>
+                <p class="wedding-time">13:00 - 17:00</p>
+                <div class="scroll-indicator">
+                    <span>↓</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="sakura-divider">
+            <img src="./WhatsApp Image 2026-03-29 at 9.20.17 PM.jpeg" class="davetiye">
+        </div>
+
+        <div class="sakura-divider">
+            <img src="https://bizevleniyoruz.blob.core.windows.net/assets/assets/u3812931696_minimal_botanical_website_divider_single_horizont_76ac43eb-3a5a-4ebf-b5c0-fd765c323972_1%20-%20Edited.png" alt="Sakura Branch" class="sakura-branch">
+        </div>
+
+        <section class="countdown-section" id="geri-sayim">
+            <h2>Geri Sayım</h2>
+            <p class="event-date">10 Mayıs 2026, 13:00</p>
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-value" id="days">00</span>
+                    <span class="countdown-label">Gün</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="hours">00</span>
+                    <span class="countdown-label">Saat</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="minutes">00</span>
+                    <span class="countdown-label">Dakika</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="seconds">00</span>
+                    <span class="countdown-label">Saniye</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sakura-divider">
+            <img src="https://bizevleniyoruz.blob.core.windows.net/assets/assets/u3812931696_minimal_botanical_website_divider_single_horizont_76ac43eb-3a5a-4ebf-b5c0-fd765c323972_1%20-%20Edited.png" alt="Sakura Branch" class="sakura-branch">
+        </div>
+
+    
+
+        <section class="schedule-section" id="program">
+            <h2>Akış</h2>
+            <div class="schedule-timeline">
+                <div class="schedule-item">
+                    <div class="schedule-time">13:00</div>
+                    <div class="schedule-event">Karşılama</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="schedule-time">14:00</div>
+                    <div class="schedule-event">Nikah Töreni</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="schedule-time">15:00</div>
+                    <div class="schedule-event">Kokteyl & Fotoğraf</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="schedule-time">16:00</div>
+                    <div class="schedule-event">Yemek & Eğlence</div>
+                </div>
+                <div class="schedule-item">
+                    <div class="schedule-time">17:00</div>
+                    <div class="schedule-event">Bitiş</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sakura-divider">
+            <img src="https://bizevleniyoruz.blob.core.windows.net/assets/assets/u3812931696_minimal_botanical_website_divider_single_horizont_76ac43eb-3a5a-4ebf-b5c0-fd765c323972_1%20-%20Edited.png" alt="Sakura Branch" class="sakura-branch">
+        </div>
+
+        <section class="location-section" id="lokasyon">
+            <h2>Lokasyon</h2>
+            <div class="location-image">
+                <img src="./484988162_1172576828203231_8853228718053290437_n.jpg" alt="Gloria Event">
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.203225099298!2d29.1500426!3d40.99892489999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cacfbbb9a2ac03%3A0xfd098fa8c051c49e!2sGloria%20Event!5e0!3m2!1str!2str!4v1774808695295!5m2!1str!2str" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=40.99892489999999,29.1500426" target="_blank" class="directions-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                </svg>
+                Yol Tarifi Al
+            </a>
+        </section>
+        
+        <div class="sakura-divider">
+            <img src="https://bizevleniyoruz.blob.core.windows.net/assets/assets/sakura-branch.png" alt="Sakura Branch" class="sakura-branch">
+        </div>
+        
+        <section class="rsvp-section" id="rsvp">
+            <h2>Katılım Bildirimi</h2>
+            <p class="rsvp-text">Bizimle bu özel günü paylaşacağınız için çok mutluyuz!</p>
+            <div class="rsvp-info">
+                <div class="info-item">
+                    <h3>📱 İletişim</h3>
+                    <p>Katılımınızı bildirmek için lütfen bizimle iletişime geçin.</p>
+                </div>
+                <div class="info-item">
+                    <h3>👗 Dress Code</h3>
+                    <p>Şık kıyafetler tercih edebilirsiniz. Beyaz renk gelin için ayrılmıştır.</p>
+                </div>
+                <div class="info-item">
+                    <h3>🅿️ Otopark</h3>
+                    <p>Ücretsiz otopark hizmeti mevcuttur.</p>
+                </div>
+                <div class="info-item">
+                    <h3>🎁 Hediye</h3>
+                    <p>En büyük hediye katılımınızdır. Dilediğiniz takdirde zarf tercih edebilirsiniz.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

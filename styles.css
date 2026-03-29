@@ -1,0 +1,632 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    background: url('background.png') center center / cover no-repeat fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    color: #5a4a42;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(245, 240, 235, 0.7);
+    z-index: -1;
+}
+
+.butterflies-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.butterfly {
+    position: absolute;
+    font-size: 20px;
+    animation: fly 15s infinite ease-in-out;
+    opacity: 0.6;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+@keyframes fly {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+        transform: translate(100px, -100px) rotate(10deg);
+    }
+    50% {
+        transform: translate(-50px, -200px) rotate(-10deg);
+    }
+    75% {
+        transform: translate(150px, -150px) rotate(5deg);
+    }
+}
+
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    z-index: 2000;
+    transition: opacity 1s ease, visibility 1s ease;
+}
+
+.video-container.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#introVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    z-index: 1500;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.menu.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 2px;
+    background: #8b7355;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.menu-items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 40px;
+}
+
+.menu-items li {
+    padding: 20px 0;
+}
+
+.menu-items a {
+    text-decoration: none;
+    color: #8b7355;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.menu-items a:hover {
+    color: #d4a5a5;
+}
+
+.content {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease 0.5s, visibility 1s ease 0.5s;
+    padding: 0;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.content.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.sakura-tree {
+    position: absolute;
+    width: 400px;
+    height: 100%;
+    background: url('https://bizevleniyoruz.blob.core.windows.net/assets/assets/sakura-tree.png') no-repeat;
+    background-size: contain;
+    background-position: bottom;
+    opacity: 0.8;
+}
+
+.sakura-tree.left {
+    left: 0;
+    transform: scaleX(-1);
+}
+
+.sakura-tree.right {
+    right: 0;
+}
+
+.hero-content {
+    text-align: center;
+    z-index: 10;
+    animation: fadeInUp 1.5s ease;
+}
+
+.couple-names {
+    font-size: 64px;
+    font-weight: 300;
+    color: #8b7355;
+    margin-bottom: 20px;
+    font-family: 'Brush Script MT', cursive;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.bride-name, .groom-name {
+    display: block;
+}
+
+.ampersand {
+    font-size: 40px;
+    color: #d4a5a5;
+}
+
+.wedding-date {
+    font-size: 24px;
+    color: #8b7355;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.wedding-time {
+    font-size: 18px;
+    color: #a89080;
+    margin-bottom: 40px;
+}
+
+.scroll-indicator {
+    font-size: 32px;
+    color: #d4a5a5;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.sakura-divider {
+    text-align: center;
+    padding: 40px 0;
+    overflow: hidden;
+}
+
+.sakura-branch {
+    max-width: 300px;
+    height: auto;
+    opacity: 0.7;
+}
+
+.davetiye {
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    margin: 20px auto;
+    display: block;
+}
+
+section {
+    padding: 60px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+section h2 {
+    text-align: center;
+    font-size: 36px;
+    color: #8b7355;
+    margin-bottom: 40px;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.countdown-section {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 50px 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.event-date {
+    text-align: center;
+    color: #d4a5a5;
+    font-size: 18px;
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+}
+
+.countdown-value {
+    font-size: 48px;
+    font-weight: 300;
+    color: #d4a5a5;
+    line-height: 1;
+}
+
+.countdown-label {
+    font-size: 14px;
+    color: #8b7355;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+.gallery-section {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    padding: 50px 30px;
+}
+
+.photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.photo-item {
+    text-align: center;
+}
+
+.polaroid {
+    background: white;
+    padding: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transform: rotate(-2deg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.polaroid:nth-child(even) {
+    transform: rotate(2deg);
+}
+
+.polaroid:hover {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.photo-frame {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-caption {
+    font-size: 16px;
+    color: #8b7355;
+    font-family: 'Brush Script MT', cursive;
+}
+
+.schedule-section {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 50px 30px;
+}
+
+.schedule-timeline {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 30px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50px;
+    border-left: 4px solid #d4a5a5;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.schedule-item:hover {
+    transform: translateX(10px);
+    box-shadow: 0 5px 20px rgba(212, 165, 165, 0.2);
+}
+
+.schedule-time {
+    font-size: 20px;
+    font-weight: 600;
+    color: #d4a5a5;
+    min-width: 80px;
+}
+
+.schedule-event {
+    font-size: 16px;
+    color: #8b7355;
+    text-align: right;
+    flex: 1;
+}
+
+.location-section {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 50px 30px;
+    text-align: center;
+}
+
+.location-image {
+    margin-bottom: 30px;
+}
+
+.location-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border: 5px solid white;
+}
+
+.map-container {
+    margin: 30px 0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.directions-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #d4a5a5;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 20px rgba(212, 165, 165, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 20px;
+}
+
+.directions-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(212, 165, 165, 0.4);
+}
+
+.rsvp-section {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 50px 30px;
+    text-align: center;
+}
+
+.rsvp-text {
+    font-size: 18px;
+    color: #8b7355;
+    margin-bottom: 40px;
+    font-style: italic;
+}
+
+.rsvp-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.info-item {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 30px 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.info-item:hover {
+    transform: translateY(-5px);
+}
+
+.info-item h3 {
+    font-size: 18px;
+    color: #d4a5a5;
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+
+.info-item p {
+    font-size: 14px;
+    color: #8b7355;
+    line-height: 1.6;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+    
+    .menu-items {
+        flex-direction: column;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    
+    .menu-items.active {
+        max-height: 400px;
+    }
+    
+    .menu-items li {
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+        border-top: 1px solid #f0f0f0;
+    }
+    
+    .sakura-tree {
+        width: 200px;
+    }
+    
+    .couple-names {
+        font-size: 48px;
+    }
+    
+    .wedding-date {
+        font-size: 20px;
+    }
+    
+    section h2 {
+        font-size: 28px;
+    }
+    
+    .countdown-value {
+        font-size: 36px;
+    }
+    
+    .photo-gallery {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    #introVideo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .couple-names {
+        font-size: 36px;
+    }
+    
+    .ampersand {
+        font-size: 28px;
+    }
+    
+    .wedding-date {
+        font-size: 18px;
+    }
+    
+    .wedding-time {
+        font-size: 16px;
+    }
+    
+    section {
+        padding: 40px 15px;
+    }
+    
+    section h2 {
+        font-size: 24px;
+    }
+    
+    .countdown-value {
+        font-size: 28px;
+    }
+    
+    .countdown-label {
+        font-size: 12px;
+    }
+    
+    .schedule-time {
+        font-size: 16px;
+        min-width: 60px;
+    }
+    
+    .schedule-event {
+        font-size: 14px;
+    }
+    
+    .rsvp-info {
+        grid-template-columns: 1fr;
+    }
+}
