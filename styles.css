@@ -226,7 +226,7 @@ body::before {
     position: absolute;
     width: 400px;
     height: 100%;
-    background: url('https://bizevleniyoruz.blob.core.windows.net/assets/assets/sakura-tree.png') no-repeat;
+    background: url('./assets/images/sakura-branch.png') no-repeat;
     background-size: contain;
     background-position: bottom;
     opacity: 0.8;
@@ -519,6 +519,20 @@ section h2 {
     margin-top: 20px;
 }
 
+.location-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.directions-button.secondary {
+    background: #ffffff;
+    color: #8b7355;
+    border: 1px solid #d9c6b8;
+    box-shadow: 0 5px 20px rgba(139, 115, 85, 0.12);
+}
+
 .directions-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(212, 165, 165, 0.4);
@@ -529,6 +543,63 @@ section h2 {
     border-radius: 20px;
     padding: 50px 30px;
     text-align: center;
+}
+
+.story-section {
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: 20px;
+    padding: 50px 30px;
+    text-align: center;
+}
+
+.story-section p {
+    max-width: 680px;
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 1.7;
+    color: #7e6c61;
+}
+
+.faq-section {
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    padding: 50px 30px;
+}
+
+.faq-item + .faq-item {
+    margin-top: 12px;
+}
+
+.faq-question {
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.85);
+    color: #8b7355;
+    text-align: left;
+    padding: 16px 18px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.35s ease;
+    opacity: 0;
+    padding: 0 6px;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 140px;
+    opacity: 1;
+    padding-top: 8px;
+}
+
+.faq-answer p {
+    color: #7e6c61;
+    line-height: 1.6;
 }
 
 .rsvp-text {
@@ -699,6 +770,15 @@ section h2 {
     
     .rsvp-info {
         grid-template-columns: 1fr;
+    }
+
+    .location-actions {
+        flex-direction: column;
+    }
+
+    .directions-button {
+        width: 100%;
+        justify-content: center;
     }
 }
 

@@ -150,6 +150,15 @@ document.querySelectorAll('.menu-items a').forEach(anchor => {
     });
 });
 
+document.querySelectorAll('.faq-question').forEach((button) => {
+    button.addEventListener('click', () => {
+        const item = button.closest('.faq-item');
+        if (!item) return;
+
+        item.classList.toggle('active');
+    });
+});
+
 function createButterfly() {
     const butterfly = document.createElement('div');
     butterfly.className = 'butterfly';
