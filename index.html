@@ -14,11 +14,14 @@
     
         
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <link rel="icon" href="./favicon.ico" sizes="any">
     <link rel="icon" type="image/png" href="./favicon.png" sizes="32x32">
     <link rel="apple-touch-icon" href="./apple-touch-icon.png">
     <meta name="theme-color" content="#f4eee8">
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'sha256-ieoeWczDHkReVBsRBqaal5AFMlBtNjMzgwKvLqi/tSU=' 'sha256-IGtNjTMsM2EXGQ10WJFHW4zrDT07iC/xgR2sbDf0yf8='; img-src 'self' https: data:; media-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-src https://www.google.com; connect-src 'self' https://www.google-analytics.com;">
     <meta name="description" content="Zeynep & Batuhan nişan davetiyesi - 10 Mayıs 2026, Gloria Event.">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="tr_TR">
@@ -35,6 +38,12 @@
     <meta name="twitter:title" content="Zeynep & Batuhan - Nişan Davetiyesi">
     <meta name="twitter:description" content="10 Mayıs 2026, 13:00 - 17:00, Gloria Event">
     <meta name="twitter:image" content="https://zeynepbatuhan.com/assets/images/og-invite.jpeg">
+    
+    <!-- WhatsApp Meta Tags -->
+    <meta property="og:site_name" content="Zeynep & Batuhan">
+    <meta property="og:locale" content="tr_TR">
+    <meta name="format-detection" content="telephone=no">
+    
     <link rel="canonical" href="https://zeynepbatuhan.com/">
     <title>Zeynep & Batuhan - Nişan Davetiyesi</title>
     <link rel="stylesheet" href="styles.css">
@@ -100,6 +109,69 @@
       "description": "Nişanlanan çift - 10 Mayıs 2026",
       "url": "https://zeynepbatuhan.com/",
       "image": "https://zeynepbatuhan.com/assets/images/og-invite.jpeg"
+    }
+    </script>
+    
+    <!-- ImageObject Schema for Main Image -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ImageObject",
+      "contentUrl": "https://zeynepbatuhan.com/assets/images/og-invite.jpeg",
+      "name": "Zeynep & Batuhan Nişan Davetiyesi",
+      "description": "Zeynep ve Batuhan'ın 10 Mayıs 2026 tarihli nişan davetiyesi görseli",
+      "width": "1024",
+      "height": "1536"
+    }
+    </script>
+    
+    <!-- FAQPage Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Dress code var mı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Şık kıyafetler tercih edebilirsiniz. Beyaz renk gelin için ayrılmıştır."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Nişan ne zaman?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nişan törenimiz 10 Mayıs 2026 tarihinde, saat 13:00'te başlayacak."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Nerede yapılacak?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gloria Event, Ümraniye/İstanbul'da gerçekleşecek. Adres: Şerifali, Turgut Özal Bulvarı No:169/2"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hediye almalı mıyım?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Katılımınız en büyük hediyemizdir. Başka bir şey getirmenize gerek yok."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Çocuklar davetli mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet, çocuklar da davetlidir. Ailece katılmanızdan mutluluk duyarız."
+          }
+        }
+      ]
     }
     </script>
     
@@ -175,11 +247,11 @@
         </section>
 
         <div class="sakura-divider">
-            <img src="./WhatsApp Image 2026-03-29 at 9.20.17 PM.jpeg" class="davetiye">
+            <img src="./WhatsApp Image 2026-03-29 at 9.20.17 PM.jpeg" class="davetiye" loading="lazy" alt="Zeynep ve Batuhan nişan davetiyesi">
         </div>
 
         <div class="sakura-divider">
-            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch">
+            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" loading="lazy">
         </div>
 
         <section class="countdown-section" id="geri-sayim" aria-labelledby="geri-sayim-baslik">
@@ -206,7 +278,7 @@
         </div>
         
         <div class="sakura-divider">
-            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch">
+            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" loading="lazy">
         </div>
 
     
@@ -230,13 +302,13 @@
         </div>
         
         <div class="sakura-divider">
-            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch">
+            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" loading="lazy">
         </div>
 
         <section class="location-section" id="lokasyon" aria-labelledby="lokasyon-baslik">
             <h2 id="lokasyon-baslik">Lokasyon</h2>
             <div class="location-image">
-                <img src="./484988162_1172576828203231_8853228718053290437_n.jpg" alt="Gloria Event">
+                <img src="./484988162_1172576828203231_8853228718053290437_n.jpg" alt="Gloria Event mekanı" loading="lazy">
             </div>
             <div class="map-container">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.203225099298!2d29.1500426!3d40.99892489999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cacfbbb9a2ac03%3A0xfd098fa8c051c49e!2sGloria%20Event!5e0!3m2!1str!2str!4v1774808695295!5m2!1str!2str" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -255,7 +327,7 @@
         </section>
         
         <div class="sakura-divider">
-            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch">
+            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" loading="lazy">
         </div>
         
         <section class="rsvp-section" id="rsvp" aria-labelledby="katilim-baslik">
@@ -283,6 +355,30 @@
                 <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-dresscode">Dress code var mı?</button>
                 <div class="faq-answer" id="faq-dresscode">
                     <p>Şık kıyafetler tercih edebilirsiniz. Beyaz renk gelin için ayrılmıştır.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-tarih">Nişan ne zaman?</button>
+                <div class="faq-answer" id="faq-tarih">
+                    <p>Nişan törenimiz 10 Mayıs 2026 tarihinde, saat 13:00'te başlayacak.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-lokasyon">Nerede yapılacak?</button>
+                <div class="faq-answer" id="faq-lokasyon">
+                    <p>Gloria Event, Ümraniye/İstanbul'da gerçekleşecek. Adres: Şerifali, Turgut Özal Bulvarı No:169/2</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-hediye">Hediye almalı mıyım?</button>
+                <div class="faq-answer" id="faq-hediye">
+                    <p>Katılımınız en büyük hediyemizdir. Başka bir şey getirmenize gerek yok.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-cocuk">Çocuklar davetli mi?</button>
+                <div class="faq-answer" id="faq-cocuk">
+                    <p>Evet, çocuklar da davetlidir. Ailece katılmanızdan mutluluk duyarız.</p>
                 </div>
             </div>
 
