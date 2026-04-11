@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://zeynepbatuhan.com/sitemap.xml
+
+# Crawl-delay for bots (optional, keeps server load low)
+Crawl-delay: 1

@@ -38,13 +38,81 @@
     <link rel="canonical" href="https://zeynepbatuhan.com/">
     <title>Zeynep & Batuhan - Nişan Davetiyesi</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "Zeynep & Batuhan Nişan Töreni",
+      "description": "Zeynep ve Batuhan'ın nişan töreni daveti. 10 Mayıs 2026 tarihinde Gloria Event'te gerçekleşecek.",
+      "startDate": "2026-05-10T13:00:00+03:00",
+      "endDate": "2026-05-10T17:00:00+03:00",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Gloria Event",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Şerifali, Turgut Özal Bulvarı No:169/2",
+          "addressLocality": "Ümraniye",
+          "addressRegion": "İstanbul",
+          "addressCountry": "TR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "40.9989249",
+          "longitude": "29.1500426"
+        }
+      },
+      "image": [
+        "https://zeynepbatuhan.com/assets/images/og-invite.jpeg"
+      ],
+      "organizer": {
+        "@type": "Person",
+        "name": "Zeynep & Batuhan"
+      },
+      "performer": {
+        "@type": "Person",
+        "name": "Zeynep & Batuhan"
+      }
+    }
+    </script>
+    
+    <!-- WebSite Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Zeynep & Batuhan Nişan Davetiyesi",
+      "url": "https://zeynepbatuhan.com/",
+      "description": "Zeynep ve Batuhan'ın nişan davetiye sitesi - 10 Mayıs 2026, Gloria Event"
+    }
+    </script>
+    
+    <!-- Person Schema for Couple -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Zeynep & Batuhan",
+      "description": "Nişanlanan çift - 10 Mayıs 2026",
+      "url": "https://zeynepbatuhan.com/",
+      "image": "https://zeynepbatuhan.com/assets/images/og-invite.jpeg"
+    }
+    </script>
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.google.com">
 </head>
 <body>
     <audio id="backgroundMusic" loop>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
     
-    <button id="musicToggle" class="music-toggle" aria-label="Müzik Kontrol">
+    <button id="musicToggle" class="music-toggle" aria-label="Müzik aç/kapat" type="button">
         <svg class="music-icon play" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 18V5l12-2v13"></path>
             <circle cx="6" cy="18" r="3"></circle>
@@ -58,30 +126,30 @@
     
     <div class="butterflies-container" id="butterflies"></div>
     
-    <nav class="menu" id="menu" style="display: none;">
-        <div class="menu-toggle" id="menuToggle">
+    <nav class="menu" id="menu" style="display: none;" aria-label="Ana menü">
+        <div class="menu-toggle" id="menuToggle" role="button" tabindex="0" aria-label="Menüyü aç/kapat" aria-expanded="false" aria-controls="menuItems">
             <span></span>
             <span></span>
             <span></span>
         </div>
-        <ul class="menu-items" id="menuItems">
-            <li><a href="#davetiye">Ana Sayfa</a></li>
-            <li><a href="#hikayemiz">Hikayemiz</a></li>
-            <li><a href="#geri-sayim">Geri Sayım</a></li>
-            <li><a href="#program">Program</a></li>
-            <li><a href="#lokasyon">Lokasyon</a></li>
-            <li><a href="#sss">S.S.S.</a></li>
+        <ul class="menu-items" id="menuItems" role="menubar">
+            <li role="none"><a href="#davetiye" role="menuitem">Ana Sayfa</a></li>
+            <li role="none"><a href="#hikayemiz" role="menuitem">Hikayemiz</a></li>
+            <li role="none"><a href="#geri-sayim" role="menuitem">Geri Sayım</a></li>
+            <li role="none"><a href="#program" role="menuitem">Program</a></li>
+            <li role="none"><a href="#lokasyon" role="menuitem">Lokasyon</a></li>
+            <li role="none"><a href="#sss" role="menuitem">S.S.S.</a></li>
         </ul>
     </nav>
     
     <div class="video-container" id="videoContainer">
         <video id="introVideo" autoplay muted playsinline>
-            <source src="https://bizevleniyoruz.blob.core.windows.net/assets/assets/sakurawaxsealintrovideo.mp4" type="video/mp4">
+            <source src="./assets/videos/sakurawaxsealintrovideo.mp4" type="video/mp4">
         </video>
     </div>
 
     <div class="content" id="content">
-        <section class="hero-section" id="davetiye">
+        <section class="hero-section" id="davetiye" aria-label="Davetiye ana başlık">
             <div class="sakura-tree left"></div>
             <div class="sakura-tree right"></div>
             <div class="hero-content">
@@ -98,8 +166,8 @@
             </div>
         </section>
 
-        <section class="story-section reveal" id="hikayemiz">
-            <h2>Hikayemiz</h2>
+        <section class="story-section reveal" id="hikayemiz" aria-labelledby="hikaye-baslik">
+            <h2 id="hikaye-baslik">Hikayemiz</h2>
             <p>
                 Birlikte attigimiz her adim, bugune uzanan en guzel yolculuk oldu.
                 Bu ozel gunde sevincimizi bizimle paylasmaniz bize buyuk mutluluk verecek.
@@ -114,8 +182,8 @@
             <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch">
         </div>
 
-        <section class="countdown-section" id="geri-sayim">
-            <h2>Geri Sayım</h2>
+        <section class="countdown-section" id="geri-sayim" aria-labelledby="geri-sayim-baslik">
+            <h2 id="geri-sayim-baslik">Geri Sayım</h2>
             <p class="event-date">10 Mayıs 2026, 13:00</p>
             <div class="countdown" id="countdown">
                 <div class="countdown-item">
@@ -143,8 +211,8 @@
 
     
 
-        <section class="schedule-section" id="program">
-            <h2>Akış</h2>
+        <section class="schedule-section" id="program" aria-labelledby="akis-baslik">
+            <h2 id="akis-baslik">Akış</h2>
             <div class="schedule-timeline">
                 <div class="schedule-item">
                     <div class="schedule-time">13:00</div>
@@ -165,8 +233,8 @@
             <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch">
         </div>
 
-        <section class="location-section" id="lokasyon">
-            <h2>Lokasyon</h2>
+        <section class="location-section" id="lokasyon" aria-labelledby="lokasyon-baslik">
+            <h2 id="lokasyon-baslik">Lokasyon</h2>
             <div class="location-image">
                 <img src="./484988162_1172576828203231_8853228718053290437_n.jpg" alt="Gloria Event">
             </div>
@@ -190,8 +258,8 @@
             <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch">
         </div>
         
-        <section class="rsvp-section" id="rsvp">
-            <h2>Katılım Bildirimi</h2>
+        <section class="rsvp-section" id="rsvp" aria-labelledby="katilim-baslik">
+            <h2 id="katilim-baslik">Katılım Bildirimi</h2>
             <p class="rsvp-text">Bizimle bu özel günü paylaşacağınız için çok mutluyuz!</p>
             <div class="rsvp-info">
                 <div class="info-item">
@@ -209,12 +277,12 @@
             </div>
         </div>
 
-        <section class="faq-section" id="sss">
-            <h2>Sik Sorulan Sorular</h2>
+        <section class="faq-section" id="sss" aria-labelledby="sss-baslik">
+            <h2 id="sss-baslik">Sık Sorulan Sorular</h2>
             <div class="faq-item">
-                <button class="faq-question" type="button">Dress code var mi?</button>
-                <div class="faq-answer">
-                    <p>Şık kıyafetler tercih edebilirsiniz. Beyaz renk gelin icin ayrılmıştır</p>
+                <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-dresscode">Dress code var mı?</button>
+                <div class="faq-answer" id="faq-dresscode">
+                    <p>Şık kıyafetler tercih edebilirsiniz. Beyaz renk gelin için ayrılmıştır.</p>
                 </div>
             </div>
 
