@@ -2,15 +2,7 @@
 <html lang="tr">
 <head>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QNFHDMSSG6"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-QNFHDMSSG6');
-    </script>
+    <meta name="ga-measurement-id" content="G-QNFHDMSSG6">
     
         
     <meta charset="UTF-8">
@@ -164,8 +156,7 @@
     <link rel="dns-prefetch" href="https://www.google.com">
 </head>
 <body>
-    <audio id="backgroundMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
+    <audio id="backgroundMusic" loop preload="none" data-src="music.mp3">
     </audio>
     
     <button id="musicToggle" class="music-toggle" aria-label="Müzik aç/kapat" type="button">
@@ -199,8 +190,7 @@
     </nav>
     
     <div class="video-container" id="videoContainer">
-        <video id="introVideo" autoplay muted playsinline>
-            <source src="./assets/videos/sakurawaxsealintrovideo.mp4" type="video/mp4">
+        <video id="introVideo" autoplay muted playsinline preload="none" poster="./assets/images/og-invite.jpeg" data-src="./assets/videos/sakurawaxsealintrovideo.mp4">
         </video>
     </div>
 
@@ -231,11 +221,11 @@
         </section>
 
         <div class="sakura-divider">
-            <img src="./WhatsApp Image 2026-03-29 at 9.20.17 PM.jpeg" class="davetiye">
+            <img src="./WhatsApp Image 2026-03-29 at 9.20.17 PM.jpeg" class="davetiye" width="900" height="1268" loading="lazy" decoding="async" alt="Nisan davetiye gorseli">
         </div>
 
         <div class="sakura-divider">
-            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch">
+            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" width="2912" height="416" loading="lazy" decoding="async">
         </div>
 
         <section class="countdown-section" id="geri-sayim" aria-labelledby="geri-sayim-baslik">
@@ -262,7 +252,7 @@
         </div>
         
         <div class="sakura-divider">
-            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch">
+            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" width="2912" height="416" loading="lazy" decoding="async">
         </div>
 
     
@@ -286,16 +276,17 @@
         </div>
         
         <div class="sakura-divider">
-            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch">
+            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" width="2912" height="416" loading="lazy" decoding="async">
         </div>
 
         <section class="location-section" id="lokasyon" aria-labelledby="lokasyon-baslik">
             <h2 id="lokasyon-baslik">Lokasyon</h2>
             <div class="location-image">
-                <img src="./484988162_1172576828203231_8853228718053290437_n.jpg" alt="Gloria Event">
+                <img src="./484988162_1172576828203231_8853228718053290437_n.jpg" alt="Gloria Event" width="901" height="901" loading="lazy" decoding="async">
             </div>
             <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.203225099298!2d29.1500426!3d40.99892489999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cacfbbb9a2ac03%3A0xfd098fa8c051c49e!2sGloria%20Event!5e0!3m2!1str!2str!4v1774808695295!5m2!1str!2str" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <button id="loadMapButton" class="load-map-button" type="button">Haritayi Yukle</button>
+                <iframe id="mapFrame" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.203225099298!2d29.1500426!3d40.99892489999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cacfbbb9a2ac03%3A0xfd098fa8c051c49e!2sGloria%20Event!5e0!3m2!1str!2str!4v1774808695295!5m2!1str!2str" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Gloria Event Harita"></iframe>
             </div>
             <div class="location-actions">
                 <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Zeynep%20%26%20Batuhan%20Nisan%20Daveti&dates=20260510T100000Z/20260510T140000Z&details=Zeynep%20ve%20Batuhan%20nisan%20daveti.%20Sizi%20aramizda%20gormekten%20mutluluk%20duyariz.&location=Gloria%20Event%2C%20Serifali%2C%20Turgut%20Ozal%20Blv%20No%3A169%2F2%2C%20Umraniye%2FIstanbul" target="_blank" class="directions-button secondary">
@@ -311,12 +302,17 @@
         </section>
         
         <div class="sakura-divider">
-            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch">
+            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" width="2912" height="416" loading="lazy" decoding="async">
         </div>
         
         <section class="rsvp-section" id="rsvp" aria-labelledby="katilim-baslik">
             <h2 id="katilim-baslik">Katılım Bildirimi</h2>
             <p class="rsvp-text">Bizimle bu özel günü paylaşacağınız için çok mutluyuz!</p>
+            <div class="rsvp-live-card" aria-live="polite">
+                <p class="rsvp-live-label">Canli Katilim Sayisi</p>
+                <p class="rsvp-live-value"><span id="rsvpCountValue">0</span> kisi</p>
+                <p class="rsvp-live-updated">Son guncelleme: <span id="rsvpCountUpdated">-</span></p>
+            </div>
             <div class="rsvp-info">
                 <div class="info-item">
                     <h3>📱 İletişim</h3>
@@ -332,7 +328,6 @@
                 </div>
             </div>
         </div>
-
         <section class="faq-section" id="sss" aria-labelledby="sss-baslik">
             <h2 id="sss-baslik">Sık Sorulan Sorular</h2>
             <div class="faq-item">

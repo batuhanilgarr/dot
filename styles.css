@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Georgia', serif;
-    background: url('background.png') center center / cover no-repeat fixed;
+    background: linear-gradient(180deg, #f7efe7 0%, #efe3d6 100%);
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
@@ -226,7 +226,7 @@ body::before {
     position: absolute;
     width: 400px;
     height: 100%;
-    background: url('./assets/images/sakura-branch.png') no-repeat;
+    background-repeat: no-repeat;
     background-size: contain;
     background-position: bottom;
     opacity: 0.8;
@@ -319,6 +319,7 @@ body::before {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     margin: 20px auto;
     display: block;
+    aspect-ratio: 900 / 1268;
 }
 
 section {
@@ -500,6 +501,29 @@ section h2 {
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    min-height: 300px;
+    position: relative;
+    background: linear-gradient(180deg, #f8f2eb 0%, #efe4d8 100%);
+}
+
+.map-container iframe {
+    display: none;
+}
+
+.map-container iframe.loaded {
+    display: block;
+}
+
+.load-map-button {
+    width: 100%;
+    min-height: 300px;
+    border: none;
+    background: transparent;
+    color: #8b7355;
+    font-size: 18px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    font-family: inherit;
 }
 
 .directions-button {
@@ -616,6 +640,35 @@ section h2 {
     margin-top: 40px;
 }
 
+.rsvp-live-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #eadfd3;
+    border-radius: 16px;
+    padding: 24px 18px;
+    margin: 0 auto 28px;
+    max-width: 360px;
+    box-shadow: 0 10px 26px rgba(139, 115, 85, 0.1);
+}
+
+.rsvp-live-label {
+    font-size: 14px;
+    color: #8b7355;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.rsvp-live-value {
+    font-size: 34px;
+    color: #d4a5a5;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.rsvp-live-updated {
+    font-size: 13px;
+    color: #8b7355;
+}
+
 .info-item {
     background: rgba(255, 255, 255, 0.8);
     padding: 30px 20px;
@@ -655,7 +708,6 @@ section h2 {
 @media (max-width: 768px) {
     body {
         background-attachment: scroll;
-        background-position: center top;
     }
 
     body::before {
@@ -691,7 +743,9 @@ section h2 {
     }
     
     .sakura-tree {
-        width: 200px;
+        width: 160px;
+        opacity: 0.4;
+        background-image: none;
     }
     
     .couple-names {
@@ -717,6 +771,16 @@ section h2 {
     .reveal {
         transform: translateY(12px);
         transition-duration: 0.55s;
+    }
+}
+
+@media (min-width: 769px) {
+    body {
+        background: url('background.png') center center / cover no-repeat fixed;
+    }
+
+    .sakura-tree {
+        background-image: url('./assets/images/sakura-branch.png');
     }
 }
 
