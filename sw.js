@@ -1,7 +1,7 @@
 // Service Worker for Zeynep & Batuhan Wedding Invitation
 // Enables offline functionality
 
-const CACHE_NAME = 'zeynep-batuhan-v1';
+const CACHE_NAME = 'zeynep-batuhan-v2';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -34,15 +34,30 @@ self.addEventListener('install', event => {
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', event => {
+  const requestUrl = new URL(event.request.url);
+  const isSameOrigin = requestUrl.origin === self.location.origin;
+  const isCoreAsset =
+    requestUrl.pathname === '/' ||
+    requestUrl.pathname.endsWith('/index.html') ||
+    requestUrl.pathname.endsWith('/script.js') ||
+    requestUrl.pathname.endsWith('/styles.css');
+
+  if (isSameOrigin && isCoreAsset) {
+    // Keep HTML/CSS/JS fresh to avoid serving stale broken bundles.
+    event.respondWith(
+      fetch(event.request)
+        .then(networkResponse => {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
+          return networkResponse;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Return cached version or fetch from network
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      })
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });
 

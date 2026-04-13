@@ -290,8 +290,6 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 initScrollReveal();
-<<<<<<< HEAD
-=======
 
 async function updateRsvpCount() {
     if (!rsvpCountValue || !rsvpCountUpdated) return;
@@ -329,4 +327,3 @@ if ('serviceWorker' in navigator) {
         }
     });
 }
->>>>>>> b600f7e (Improve mobile performance and add live RSVP counter.)
