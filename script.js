@@ -332,7 +332,11 @@ async function submitRsvp() {
         return;
     }
 
-    const selectedGuestCount = Number(rsvpGuestCount.value || 1);
+    const selectedGuestCount = Math.floor(Number(rsvpGuestCount.value || 1));
+    if (!Number.isFinite(selectedGuestCount) || selectedGuestCount < 1) {
+        rsvpActionStatus.textContent = 'Lutfen 1 veya daha buyuk bir kisi sayisi girin.';
+        return;
+    }
     rsvpConfirmButton.disabled = true;
     rsvpGuestCount.disabled = true;
     rsvpActionStatus.textContent = `${selectedGuestCount} kisi icin kaydediliyor...`;
