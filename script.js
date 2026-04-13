@@ -13,7 +13,12 @@ const mapFrame = document.getElementById('mapFrame');
 const loadMapButton = document.getElementById('loadMapButton');
 const rsvpCountValue = document.getElementById('rsvpCountValue');
 const rsvpCountUpdated = document.getElementById('rsvpCountUpdated');
+const rsvpConfirmButton = document.getElementById('rsvpConfirmButton');
+const rsvpActionStatus = document.getElementById('rsvpActionStatus');
+const rsvpGuestCount = document.getElementById('rsvpGuestCount');
 const RSVP_API_URL = 'https://zeynepbatuhan-rsvp-api.batuhannilgarr.workers.dev/rsvp-count';
+const RSVP_POST_URL = RSVP_API_URL.replace('/rsvp-count', '/rsvp');
+const RSVP_LOCAL_KEY = 'rsvp-confirmed-v1';
 const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
 let isMusicPlaying = false;
@@ -316,6 +321,56 @@ async function updateRsvpCount() {
 
 updateRsvpCount();
 setInterval(updateRsvpCount, 60000);
+
+async function submitRsvp() {
+    if (!rsvpConfirmButton || !rsvpActionStatus || !rsvpGuestCount) return;
+    const previousValue = Number(localStorage.getItem(RSVP_LOCAL_KEY) || 0);
+    if (previousValue > 0) {
+        rsvpConfirmButton.disabled = true;
+        rsvpGuestCount.disabled = true;
+        rsvpActionStatus.textContent = `Katilim bildiriminiz alindi (${previousValue} kisi). Tesekkur ederiz!`;
+        return;
+    }
+
+    const selectedGuestCount = Number(rsvpGuestCount.value || 1);
+    rsvpConfirmButton.disabled = true;
+    rsvpGuestCount.disabled = true;
+    rsvpActionStatus.textContent = `${selectedGuestCount} kisi icin kaydediliyor...`;
+
+    try {
+        for (let i = 0; i < selectedGuestCount; i += 1) {
+            const response = await fetch(RSVP_POST_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ source: 'web', index: i + 1, total: selectedGuestCount })
+            });
+
+            if (!response.ok) throw new Error(`RSVP post error: ${response.status}`);
+        }
+
+        localStorage.setItem(RSVP_LOCAL_KEY, String(selectedGuestCount));
+        rsvpActionStatus.textContent = `Katilim bildiriminiz alindi (${selectedGuestCount} kisi). Cok tesekkurler!`;
+        await updateRsvpCount();
+    } catch (error) {
+        console.log('RSVP kaydi gonderilemedi:', error);
+        rsvpActionStatus.textContent = 'Gonderilemedi, lutfen tekrar deneyin.';
+        rsvpConfirmButton.disabled = false;
+        rsvpGuestCount.disabled = false;
+    }
+}
+
+if (rsvpConfirmButton && rsvpGuestCount) {
+    const previousValue = Number(localStorage.getItem(RSVP_LOCAL_KEY) || 0);
+    if (previousValue > 0) {
+        rsvpConfirmButton.disabled = true;
+        rsvpGuestCount.disabled = true;
+        if (rsvpActionStatus) {
+            rsvpActionStatus.textContent = `Bu cihazdan katilim bildirimi daha once yapildi (${previousValue} kisi).`;
+        }
+    } else {
+        rsvpConfirmButton.addEventListener('click', submitRsvp);
+    }
+}
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {

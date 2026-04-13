@@ -669,6 +669,69 @@ section h2 {
     color: #8b7355;
 }
 
+.rsvp-action-card {
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid #eadfd3;
+    border-radius: 16px;
+    padding: 20px 18px;
+    margin: 0 auto 24px;
+    max-width: 360px;
+    text-align: center;
+}
+
+.rsvp-action-title {
+    color: #8b7355;
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+.rsvp-guest-label {
+    display: block;
+    font-size: 13px;
+    color: #8b7355;
+    margin-bottom: 6px;
+}
+
+.rsvp-guest-select {
+    width: 100%;
+    max-width: 220px;
+    margin: 0 auto 12px;
+    padding: 10px 12px;
+    border: 1px solid #d9c6b8;
+    border-radius: 10px;
+    background: #fff;
+    color: #6f5b4c;
+    font-size: 14px;
+}
+
+.rsvp-confirm-button {
+    border: none;
+    border-radius: 999px;
+    padding: 12px 24px;
+    background: #d4a5a5;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.rsvp-confirm-button:hover {
+    transform: translateY(-1px);
+}
+
+.rsvp-confirm-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.rsvp-action-status {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #7e6c61;
+    min-height: 18px;
+}
+
 .info-item {
     background: rgba(255, 255, 255, 0.8);
     padding: 30px 20px;
