@@ -78,24 +78,10 @@ body::before {
 .butterfly {
     position: absolute;
     font-size: 20px;
-    animation: fly 15s infinite ease-in-out;
     opacity: 0.6;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-}
-
-@keyframes fly {
-    0%, 100% {
-        transform: translate(0, 0) rotate(0deg);
-    }
-    25% {
-        transform: translate(100px, -100px) rotate(10deg);
-    }
-    50% {
-        transform: translate(-50px, -200px) rotate(-10deg);
-    }
-    75% {
-        transform: translate(150px, -150px) rotate(5deg);
-    }
+    will-change: transform;
+    transform-origin: center center;
 }
 
 .video-container {
@@ -582,6 +568,53 @@ section h2 {
     font-size: 18px;
     line-height: 1.7;
     color: #7e6c61;
+}
+
+.seo-landing-section {
+    background: rgba(255, 255, 255, 0.62);
+    border-radius: 20px;
+    padding: 50px 30px;
+}
+
+.seo-intro {
+    text-align: center;
+    color: #7e6c61;
+    max-width: 720px;
+    margin: 0 auto 26px;
+    line-height: 1.7;
+}
+
+.seo-link-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.seo-link-card {
+    display: block;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #eadfd3;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seo-link-card h3 {
+    font-size: 18px;
+    color: #8b7355;
+    margin-bottom: 8px;
+}
+
+.seo-link-card p {
+    color: #7e6c61;
+    line-height: 1.6;
+}
+
+.seo-link-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(139, 115, 85, 0.16);
 }
 
 .faq-section {

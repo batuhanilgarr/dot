@@ -234,43 +234,110 @@ function createButterfly() {
     const butterfly = document.createElement('div');
     butterfly.className = 'butterfly';
     butterfly.textContent = '🦋';
-    
-    butterfly.style.left = Math.random() * 100 + '%';
-    butterfly.style.top = Math.random() * 100 + '%';
-    
-    const duration = 10 + Math.random() * 10;
-    butterfly.style.animationDuration = duration + 's';
-    
-    const delay = Math.random() * 5;
-    butterfly.style.animationDelay = delay + 's';
-    
+
+    butterfly.style.left = '0';
+    butterfly.style.top = '0';
     butterfliesContainer.appendChild(butterfly);
+    return butterfly;
 }
 
-for (let i = 0; i < 15; i++) {
-    createButterfly();
+const butterflyCount = isMobile ? 8 : 16;
+const butterflies = [];
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let butterflyAnimationId = null;
+
+for (let i = 0; i < butterflyCount; i += 1) {
+    const element = createButterfly();
+    const size = 16 + Math.random() * 14;
+    const depth = 0.7 + Math.random() * 0.7;
+    const speed = 0.22 + Math.random() * 0.35;
+    const direction = Math.random() * Math.PI * 2;
+
+    element.style.fontSize = `${size}px`;
+    element.style.opacity = String(0.4 + Math.random() * 0.4);
+
+    butterflies.push({
+        element,
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vx: Math.cos(direction) * speed,
+        vy: Math.sin(direction) * speed * 0.6,
+        targetVx: Math.cos(direction) * speed,
+        targetVy: Math.sin(direction) * speed * 0.6,
+        depth,
+        turnTimer: 900 + Math.random() * 1800,
+        restTimer: Math.random() * 2200,
+        wingOffset: Math.random() * Math.PI * 2,
+        driftOffset: Math.random() * Math.PI * 2
+    });
 }
 
-const butterflies = document.querySelectorAll('.butterfly');
-let rafId = null;
+function randomDirection(butterfly) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 0.2 + Math.random() * 0.45;
+    butterfly.targetVx = Math.cos(angle) * speed;
+    butterfly.targetVy = Math.sin(angle) * speed * 0.65;
+}
 
-function updateButterflyParallax() {
-    const scrollY = window.scrollY;
+function updateButterflies(now) {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const slowMotion = prefersReducedMotion ? 0.22 : 1;
+    const bobBase = prefersReducedMotion ? 2 : 10;
+    const scrollY = window.scrollY * 0.05;
 
     butterflies.forEach((butterfly, index) => {
-        const speed = 0.06 + (index % 3) * 0.03;
-        butterfly.style.transform = `translateY(${scrollY * speed}px)`;
+        butterfly.turnTimer -= 16;
+        butterfly.restTimer -= 16;
+
+        if (butterfly.turnTimer <= 0) {
+            butterfly.turnTimer = 900 + Math.random() * 2400;
+            randomDirection(butterfly);
+        }
+
+        const restFactor = butterfly.restTimer > 0 ? 0.45 : 1;
+        if (butterfly.restTimer <= 0) {
+            butterfly.restTimer = 2200 + Math.random() * 3800;
+        }
+
+        butterfly.vx += (butterfly.targetVx - butterfly.vx) * 0.012;
+        butterfly.vy += (butterfly.targetVy - butterfly.vy) * 0.012;
+
+        const driftX = Math.sin(now * 0.001 + butterfly.driftOffset + index * 0.33) * 0.38;
+        const driftY = Math.cos(now * 0.0013 + butterfly.driftOffset) * 0.24;
+
+        butterfly.x += (butterfly.vx * restFactor + driftX) * slowMotion * butterfly.depth * 2.1;
+        butterfly.y += (butterfly.vy * restFactor + driftY) * slowMotion * butterfly.depth * 2.1;
+
+        if (butterfly.x < -80) butterfly.x = width + 40;
+        if (butterfly.x > width + 80) butterfly.x = -40;
+        if (butterfly.y < -80) butterfly.y = height + 40;
+        if (butterfly.y > height + 80) butterfly.y = -40;
+
+        const wingBeat = Math.sin(now * 0.018 + butterfly.wingOffset);
+        const wingScale = 1 + wingBeat * (prefersReducedMotion ? 0.04 : 0.16);
+        const bob = Math.sin(now * 0.0016 + butterfly.wingOffset) * bobBase;
+        const rotation = Math.max(-26, Math.min(26, butterfly.vx * 45 + wingBeat * 5));
+        const parallaxY = scrollY * (0.4 + butterfly.depth * 0.6);
+
+        butterfly.element.style.transform = `translate3d(${butterfly.x}px, ${butterfly.y + bob + parallaxY}px, 0) rotate(${rotation}deg) scale(${wingScale})`;
     });
 
-    rafId = null;
+    butterflyAnimationId = window.requestAnimationFrame(updateButterflies);
 }
 
-if (!isMobile) {
-    window.addEventListener('scroll', () => {
-        if (rafId !== null) return;
-        rafId = window.requestAnimationFrame(updateButterflyParallax);
-    }, { passive: true });
+if (butterflies.length > 0) {
+    butterflyAnimationId = window.requestAnimationFrame(updateButterflies);
 }
+
+window.addEventListener('resize', () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    butterflies.forEach((butterfly) => {
+        butterfly.x = Math.min(Math.max(butterfly.x, 0), width);
+        butterfly.y = Math.min(Math.max(butterfly.y, 0), height);
+    });
+}, { passive: true });
 
 function updateCountdown() {
     const weddingDate = new Date('2026-05-10T13:00:00').getTime();
