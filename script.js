@@ -109,6 +109,7 @@ window.addEventListener('load', () => {
         content?.classList.add('visible');
         menu?.classList.add('visible');
         document.body.style.overflow = 'auto';
+        showToastBanner();
     }
     setTimeout(loadDeferredAnalytics, 2500);
 });
@@ -170,6 +171,7 @@ introVideo?.addEventListener('ended', () => {
     if (hasUserInteracted) {
         tryPlayMusic();
     }
+    showToastBanner();
 });
 
 introVideo?.addEventListener('error', () => {
@@ -183,6 +185,7 @@ introVideo?.addEventListener('error', () => {
     if (hasUserInteracted) {
         tryPlayMusic();
     }
+    showToastBanner();
 });
 
 menuToggle?.addEventListener('click', () => {
@@ -341,21 +344,45 @@ window.addEventListener('resize', () => {
 
 function updateCountdown() {
     const weddingDate = new Date('2026-05-10T13:00:00').getTime();
+    const eventEnd = new Date('2026-05-10T17:00:00').getTime();
     const now = new Date().getTime();
     const distance = weddingDate - now;
-    
+    const countdownSection = document.getElementById('geri-sayim');
+    const countdownEl = document.getElementById('countdown');
+
+    if (distance < 0) {
+        if (countdownEl && !countdownEl.querySelector('.event-day-msg')) {
+            const afterEnd = now >= eventEnd;
+            countdownEl.innerHTML = afterEnd
+                ? '<p class="event-day-msg">💕 Harika bir gün geçirdik, teşekkürler!</p>'
+                : '<p class="event-day-msg">🎉 Bugün o özel gün! Görüşmek üzere! 🌸</p>';
+        }
+        return;
+    }
+
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
+
     document.getElementById('days').textContent = String(days).padStart(2, '0');
     document.getElementById('hours').textContent = String(hours).padStart(2, '0');
     document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
     document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-    
-    if (distance < 0) {
-        document.getElementById('countdown').innerHTML = '<p style="font-size: 24px; color: #667eea;">Mutlu Günler! 💕</p>';
+
+    if (days < 7 && countdownSection) {
+        countdownSection.classList.add('last-days');
+
+        let badge = countdownSection.querySelector('.last-days-badge');
+        const badgeText = days === 0 ? '🌸 Bugün! Az kaldı!' : days === 1 ? '🌸 Yarın!' : `🌸 ${days} Gün Kaldı!`;
+
+        if (!badge) {
+            badge = document.createElement('div');
+            badge.className = 'last-days-badge';
+            const eventDateEl = countdownSection.querySelector('.event-date');
+            if (eventDateEl) eventDateEl.insertAdjacentElement('afterend', badge);
+        }
+        badge.textContent = badgeText;
     }
 }
 
@@ -453,3 +480,118 @@ if ('serviceWorker' in navigator) {
         }
     });
 }
+
+function showToastBanner() {
+    const toast = document.getElementById('toastBanner');
+    if (!toast) return;
+
+    const weddingDate = new Date('2026-05-10T13:00:00').getTime();
+    const now = new Date().getTime();
+    const distance = weddingDate - now;
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+    let message;
+    if (distance <= 0) message = '🎉 Bugün o özel gün!';
+    else if (days === 0) message = '🌸 Bu gece nişan var! Görüşmek üzere!';
+    else if (days === 1) message = '🌸 Yarın nişan! Görüşmek üzere!';
+    else message = `🌸 Nişana ${days} gün kaldı! Görüşmek üzere!`;
+
+    toast.textContent = message;
+
+    toast.addEventListener('click', () => toast.classList.remove('visible'), { once: true });
+
+    setTimeout(() => {
+        toast.classList.add('visible');
+        setTimeout(() => toast.classList.remove('visible'), 5500);
+    }, 1800);
+}
+
+async function loadWeather() {
+    const weatherCard = document.getElementById('weatherCard');
+    if (!weatherCard) return;
+
+    const WMO = {
+        0: ['☀️', 'Açık hava'],
+        1: ['🌤️', 'Çoğunlukla açık'],
+        2: ['⛅', 'Parçalı bulutlu'],
+        3: ['☁️', 'Kapalı'],
+        45: ['🌫️', 'Sisli'],
+        48: ['🌫️', 'Sisli'],
+        51: ['🌦️', 'Hafif çisenti'],
+        53: ['🌦️', 'Çisenti'],
+        55: ['🌧️', 'Yoğun çisenti'],
+        61: ['🌧️', 'Hafif yağmur'],
+        63: ['🌧️', 'Yağmur'],
+        65: ['🌧️', 'Yoğun yağmur'],
+        80: ['🌦️', 'Sağanak'],
+        81: ['🌦️', 'Kuvvetli sağanak'],
+        82: ['⛈️', 'Şiddetli sağanak'],
+        95: ['⛈️', 'Fırtınalı'],
+    };
+
+    try {
+        const res = await fetch(
+            'https://api.open-meteo.com/v1/forecast?latitude=40.9989&longitude=29.1500&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FIstanbul&start_date=2026-05-10&end_date=2026-05-10'
+        );
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        const code = data.daily.weathercode[0];
+        const tmax = Math.round(data.daily.temperature_2m_max[0]);
+        const tmin = Math.round(data.daily.temperature_2m_min[0]);
+        const [icon, desc] = WMO[code] || ['🌡️', 'Belirsiz'];
+
+        const iconEl = document.getElementById('weatherIcon');
+        const descEl = document.getElementById('weatherDesc');
+        const tempEl = document.getElementById('weatherTemp');
+
+        if (iconEl) iconEl.textContent = icon;
+        if (descEl) descEl.textContent = desc;
+        if (tempEl) tempEl.textContent = `${tmin}° — ${tmax}°C`;
+        weatherCard.classList.add('loaded');
+    } catch (err) {
+        console.log('Hava durumu alınamadı:', err);
+    }
+}
+
+function launchSakuraConfetti() {
+    if (prefersReducedMotion) return;
+    const symbols = ['🌸', '🌸', '🌸', '🌺', '✨', '🌸'];
+    const count = isMobile ? 20 : 42;
+
+    for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+            const petal = document.createElement('span');
+            petal.className = 'sakura-petal';
+            petal.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            petal.style.left = `${5 + Math.random() * 90}vw`;
+            petal.style.fontSize = `${13 + Math.random() * 14}px`;
+            petal.style.animationDuration = `${2.8 + Math.random() * 2.5}s`;
+            document.body.appendChild(petal);
+            petal.addEventListener('animationend', () => petal.remove(), { once: true });
+        }, i * 75);
+    }
+}
+
+function initConfettiObserver() {
+    if (!('IntersectionObserver' in window)) return;
+
+    const target = document.getElementById('geri-sayim');
+    if (!target) return;
+
+    let fired = false;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting && !fired) {
+                fired = true;
+                launchSakuraConfetti();
+                observer.disconnect();
+            }
+        });
+    }, { threshold: 0.35 });
+
+    observer.observe(target);
+}
+
+loadWeather();
+initConfettiObserver();

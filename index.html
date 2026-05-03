@@ -187,6 +187,8 @@
     </button>
     
     <div class="butterflies-container" id="butterflies"></div>
+
+    <div class="toast-banner" id="toastBanner" role="status" aria-live="polite"></div>
     
     <nav class="menu" id="menu" style="display: none;" aria-label="Ana menü">
         <div class="menu-toggle" id="menuToggle" role="button" tabindex="0" aria-label="Menüyü aç/kapat" aria-expanded="false" aria-controls="menuItems">
@@ -299,6 +301,14 @@
             <h2 id="lokasyon-baslik">Lokasyon</h2>
             <div class="location-image">
                 <img src="./484988162_1172576828203231_8853228718053290437_n.jpg" alt="Gloria Event" width="901" height="901" loading="lazy" decoding="async">
+            </div>
+            <div class="weather-card" id="weatherCard" aria-label="10 Mayıs hava durumu tahmini">
+                <span class="weather-icon" id="weatherIcon">🌤️</span>
+                <div class="weather-info">
+                    <div class="weather-date-label">10 Mayıs — Tahmini Hava</div>
+                    <div class="weather-desc" id="weatherDesc">Yükleniyor...</div>
+                    <div class="weather-temp" id="weatherTemp"></div>
+                </div>
             </div>
             <div class="map-container">
                 <button id="loadMapButton" class="load-map-button" type="button">Haritayi Yukle</button>

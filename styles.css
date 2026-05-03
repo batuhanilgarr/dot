@@ -950,3 +950,176 @@ section h2 {
         transition: none;
     }
 }
+
+/* ===== SON GÜNLER: COUNTDOWN EFEKTİ ===== */
+@keyframes countdownPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.07); }
+}
+
+@keyframes sectionGlow {
+    0%, 100% { box-shadow: 0 10px 40px rgba(212, 165, 165, 0.05); }
+    50% { box-shadow: 0 10px 55px rgba(212, 165, 165, 0.38), 0 0 40px rgba(212, 165, 165, 0.12); }
+}
+
+.countdown-section.last-days {
+    animation: sectionGlow 3s ease-in-out infinite;
+}
+
+.countdown-section.last-days .countdown-value {
+    color: #b86b6b;
+    animation: countdownPulse 2s ease-in-out infinite;
+}
+
+.last-days-badge {
+    display: block;
+    width: fit-content;
+    max-width: calc(100% - 24px);
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 22px;
+    text-align: center;
+    background: linear-gradient(135deg, #d4a5a5, #b86b6b);
+    color: white;
+    font-size: 13px;
+    letter-spacing: 0.8px;
+    padding: 6px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 14px rgba(212, 165, 165, 0.4);
+    animation: countdownPulse 2.4s ease-in-out infinite;
+}
+
+/* ===== TOAST BANNER ===== */
+.toast-banner {
+    position: fixed;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%) translateY(16px);
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid #eadfd3;
+    border-radius: 50px;
+    padding: 13px 24px;
+    box-shadow: 0 8px 32px rgba(139, 115, 85, 0.2);
+    font-size: 15px;
+    color: #8b7355;
+    z-index: 3000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.toast-banner.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+@media (max-width: 480px) {
+    .toast-banner {
+        font-size: 13px;
+        padding: 11px 18px;
+        white-space: normal;
+        text-align: center;
+        max-width: calc(100vw - 40px);
+    }
+}
+
+/* ===== HAVA DURUMU KARTI ===== */
+.weather-card {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid #eadfd3;
+    border-radius: 16px;
+    padding: 14px 22px;
+    margin: 0 auto 24px;
+    max-width: 300px;
+    box-shadow: 0 6px 20px rgba(139, 115, 85, 0.1);
+}
+
+.weather-card.loaded {
+    display: flex;
+}
+
+.weather-icon {
+    font-size: 34px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.weather-info {
+    text-align: left;
+}
+
+.weather-date-label {
+    font-size: 11px;
+    color: #a89080;
+    letter-spacing: 0.4px;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+}
+
+.weather-desc {
+    font-size: 15px;
+    color: #8b7355;
+    margin-bottom: 2px;
+}
+
+.weather-temp {
+    font-size: 13px;
+    color: #d4a5a5;
+    font-weight: 600;
+}
+
+/* ===== ETKİNLİK GÜNÜ MESAJI ===== */
+.event-day-msg {
+    font-size: 22px;
+    color: #d4a5a5;
+    font-style: italic;
+    padding: 10px 0;
+    line-height: 1.5;
+}
+
+/* ===== SAKURA KONFETİ ===== */
+.sakura-petal {
+    position: fixed;
+    top: -30px;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    animation: petalFall linear forwards;
+    will-change: transform, opacity;
+    user-select: none;
+}
+
+@keyframes petalFall {
+    0% {
+        opacity: 0.95;
+        transform: translateY(0) rotate(0deg) translateX(0px);
+    }
+    25% {
+        transform: translateY(25vh) rotate(90deg) translateX(28px);
+    }
+    50% {
+        transform: translateY(50vh) rotate(180deg) translateX(-18px);
+    }
+    75% {
+        transform: translateY(75vh) rotate(270deg) translateX(36px);
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(108vh) rotate(360deg) translateX(8px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .countdown-section.last-days { animation: none; }
+    .countdown-section.last-days .countdown-value { animation: none; }
+    .last-days-badge { animation: none; }
+    .sakura-petal { display: none; }
+}
