@@ -342,20 +342,22 @@ window.addEventListener('resize', () => {
     });
 }, { passive: true });
 
+const WEDDING_DATE_MS = new Date('2026-05-10T13:00:00+03:00').getTime();
+const EVENT_END_MS = new Date('2026-05-10T17:00:00+03:00').getTime();
+
 function updateCountdown() {
-    const weddingDate = new Date('2026-05-10T13:00:00').getTime();
-    const eventEnd = new Date('2026-05-10T17:00:00').getTime();
     const now = new Date().getTime();
-    const distance = weddingDate - now;
+    const distance = WEDDING_DATE_MS - now;
     const countdownSection = document.getElementById('geri-sayim');
     const countdownEl = document.getElementById('countdown');
 
     if (distance < 0) {
+        activateBloomMode();
         if (countdownEl && !countdownEl.querySelector('.event-day-msg')) {
-            const afterEnd = now >= eventEnd;
+            const afterEnd = now >= EVENT_END_MS;
             countdownEl.innerHTML = afterEnd
                 ? '<p class="event-day-msg">💕 Harika bir gün geçirdik, teşekkürler!</p>'
-                : '<p class="event-day-msg">🎉 Bugün o özel gün! Görüşmek üzere! 🌸</p>';
+                : '<p class="event-day-msg">🌸 Bugün o özel gün! Çiçekler açtı, görüşmek üzere! 💐</p>';
         }
         return;
     }
@@ -386,8 +388,8 @@ function updateCountdown() {
     }
 }
 
+let countdownTickHandle = setInterval(updateCountdown, 1000);
 updateCountdown();
-setInterval(updateCountdown, 1000);
 initScrollReveal();
 
 async function updateRsvpCount() {
@@ -595,3 +597,114 @@ function initConfettiObserver() {
 
 loadWeather();
 initConfettiObserver();
+
+/* ============================================== */
+/* BLOOM MODE — 10 Mayis 2026 Pazar 13:00 sonrasi  */
+/* Sayfa cicek bahcesine donusur                   */
+/* ============================================== */
+
+const BLOOM_FLOWERS = ['🌸', '🌺', '🌷', '🌹', '🌻', '🌼', '💮', '🏵️', '💐'];
+let bloomActivated = false;
+let bloomRainTimer = null;
+
+function activateBloomMode() {
+    if (bloomActivated) return;
+    bloomActivated = true;
+
+    window.scrollTo(0, 0);
+    document.body.classList.add('bloom-mode');
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    clearInterval(countdownTickHandle);
+
+    updateBloomMessage();
+    if (Date.now() < EVENT_END_MS) {
+        setInterval(updateBloomMessage, 60000);
+    }
+
+    if (backgroundMusic && backgroundMusic.paused) {
+        tryPlayMusic();
+    }
+
+    bloomBurst();
+    startBloomRain();
+}
+
+const BLOOM_MESSAGE_LIVE = `
+    Bu güzel günde bizimle birlikte olduğunuz için
+    <strong>çok teşekkür ederiz.</strong>
+    <br><br>
+    Şimdi günün tadını çıkarın 🌸
+`;
+
+const BLOOM_MESSAGE_AFTER = `
+    Hayatımızın bu güzel gününü bizimle paylaştığınız için
+    <strong>çok teşekkür ederiz.</strong>
+    <br><br>
+    İyi ki vardınız 💕
+`;
+
+function updateBloomMessage() {
+    const body = document.getElementById('bloomMessageBody');
+    if (!body) return;
+
+    const expected = Date.now() >= EVENT_END_MS ? 'after' : 'live';
+    if (body.dataset.state === expected) return;
+
+    body.dataset.state = expected;
+    body.innerHTML = expected === 'after' ? BLOOM_MESSAGE_AFTER : BLOOM_MESSAGE_LIVE;
+}
+
+function bloomBurst() {
+    if (prefersReducedMotion) return;
+    const burstCount = isMobile ? 24 : 48;
+
+    for (let i = 0; i < burstCount; i++) {
+        setTimeout(() => spawnBloomPetal(true), i * 60);
+    }
+}
+
+function spawnBloomPetal(burst = false) {
+    if (prefersReducedMotion) return;
+
+    const petal = document.createElement('span');
+    petal.className = 'bloom-petal';
+    petal.textContent = BLOOM_FLOWERS[Math.floor(Math.random() * BLOOM_FLOWERS.length)];
+    petal.style.left = `${Math.random() * 100}vw`;
+    petal.style.fontSize = `${16 + Math.random() * 18}px`;
+    petal.style.animationDuration = `${burst ? 3 + Math.random() * 1.5 : 4 + Math.random() * 2}s`;
+    petal.style.opacity = String(0.7 + Math.random() * 0.3);
+
+    document.body.appendChild(petal);
+    petal.addEventListener('animationend', () => petal.remove(), { once: true });
+}
+
+function startBloomRain() {
+    if (prefersReducedMotion || bloomRainTimer) return;
+    const intervalMs = isMobile ? 1100 : 650;
+
+    bloomRainTimer = setInterval(() => {
+        if (document.hidden) return;
+        spawnBloomPetal(false);
+    }, intervalMs);
+}
+
+document.addEventListener('visibilitychange', () => {
+    if (!bloomActivated) return;
+    if (document.hidden && bloomRainTimer) {
+        clearInterval(bloomRainTimer);
+        bloomRainTimer = null;
+    } else if (!document.hidden && !bloomRainTimer) {
+        startBloomRain();
+    }
+});
+
+if (Date.now() >= WEDDING_DATE_MS) {
+    activateBloomMode();
+}
+
+const bloomQueryFlag = new URLSearchParams(window.location.search).get('bloom') === '1';
+const bloomHashFlag = window.location.hash === '#bloom';
+if (bloomQueryFlag || bloomHashFlag) {
+    activateBloomMode();
+}

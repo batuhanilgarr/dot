@@ -1,19 +1,19 @@
 // Service Worker for Zeynep & Batuhan Wedding Invitation
 // Enables offline functionality
 
-const CACHE_NAME = 'zeynep-batuhan-v2';
+const CACHE_NAME = 'zeynep-batuhan-v4';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/styles.css',
-  '/script.js',
-  '/music.mp3',
-  '/favicon.ico',
-  '/favicon.png',
-  '/apple-touch-icon.png',
-  '/background.png',
-  '/484988162_1172576828203231_8853228718053290437_n.jpg',
-  '/WhatsApp Image 2026-03-29 at 9.20.17 PM.jpeg',
+  '/assets/css/styles.css',
+  '/assets/js/script.js',
+  '/assets/audio/music.mp3',
+  '/assets/images/favicon.ico',
+  '/assets/images/favicon.png',
+  '/assets/images/apple-touch-icon.png',
+  '/assets/images/background.png',
+  '/assets/images/davetiye.jpeg',
+  '/assets/images/gloria-event.jpg',
   '/assets/images/sakura-branch.png',
   '/assets/images/og-invite.jpeg',
   '/assets/videos/sakurawaxsealintrovideo.mp4'
@@ -39,8 +39,8 @@ self.addEventListener('fetch', event => {
   const isCoreAsset =
     requestUrl.pathname === '/' ||
     requestUrl.pathname.endsWith('/index.html') ||
-    requestUrl.pathname.endsWith('/script.js') ||
-    requestUrl.pathname.endsWith('/styles.css');
+    requestUrl.pathname.endsWith('/assets/js/script.js') ||
+    requestUrl.pathname.endsWith('/assets/css/styles.css');
 
   if (isSameOrigin && isCoreAsset) {
     // Keep HTML/CSS/JS fresh to avoid serving stale broken bundles.

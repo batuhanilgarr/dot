@@ -872,11 +872,11 @@ section h2 {
 
 @media (min-width: 769px) {
     body {
-        background: url('background.png') center center / cover no-repeat fixed;
+        background: url('../images/background.png') center center / cover no-repeat fixed;
     }
 
     .sakura-tree {
-        background-image: url('./assets/images/sakura-branch.png');
+        background-image: url('../images/sakura-branch.png');
     }
 }
 
@@ -1122,4 +1122,326 @@ section h2 {
     .countdown-section.last-days .countdown-value { animation: none; }
     .last-days-badge { animation: none; }
     .sakura-petal { display: none; }
+}
+
+/* ===================================================== */
+/* BLOOM MODE — 10 Mayis 2026 Pazar 13:00'da aktiflesir  */
+/* Sayfa cicek bahcesine donusur                          */
+/* ===================================================== */
+
+/* FOUC guard — script.js calismadan once gercek site gozukmesin */
+html.bloom-init,
+html.bloom-init body {
+    overflow: hidden !important;
+    height: 100vh;
+    background: radial-gradient(ellipse at center, #fff5f8 0%, #ffe9f0 60%, #ffd9e4 100%) !important;
+}
+
+html.bloom-init body .menu,
+html.bloom-init body .video-container,
+html.bloom-init body .toast-banner,
+html.bloom-init body .butterflies-container,
+html.bloom-init body .content {
+    display: none !important;
+}
+
+.bloom-garden {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0;
+    transition: opacity 1.6s ease;
+}
+
+html.bloom-init .bloom-garden,
+html.bloom-init .bloom-showcase {
+    opacity: 1;
+    visibility: visible;
+}
+
+body.bloom-mode .bloom-garden {
+    opacity: 1;
+}
+
+.garden-corner {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: scale(0);
+    transform-origin: center;
+    transition: transform 2.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 6px 18px rgba(212, 165, 165, 0.35));
+}
+
+.garden-tl {
+    top: 0;
+    left: 0;
+    background-image: radial-gradient(circle at 30% 30%, #ffd1dc 0 14px, transparent 16px),
+                      radial-gradient(circle at 60% 50%, #ffb3c6 0 12px, transparent 14px),
+                      radial-gradient(circle at 25% 65%, #f7c5cf 0 10px, transparent 12px),
+                      radial-gradient(circle at 75% 25%, #ffe0e9 0 9px, transparent 11px),
+                      radial-gradient(circle at 50% 80%, #ffc1d5 0 11px, transparent 13px);
+    transform-origin: top left;
+}
+
+.garden-tr {
+    top: 0;
+    right: 0;
+    background-image: radial-gradient(circle at 70% 30%, #ffd1dc 0 14px, transparent 16px),
+                      radial-gradient(circle at 40% 50%, #ffb3c6 0 12px, transparent 14px),
+                      radial-gradient(circle at 75% 65%, #f7c5cf 0 10px, transparent 12px),
+                      radial-gradient(circle at 25% 25%, #ffe0e9 0 9px, transparent 11px),
+                      radial-gradient(circle at 50% 80%, #ffc1d5 0 11px, transparent 13px);
+    transform-origin: top right;
+}
+
+.garden-bl {
+    bottom: 0;
+    left: 0;
+    background-image: radial-gradient(circle at 30% 70%, #ffd1dc 0 14px, transparent 16px),
+                      radial-gradient(circle at 60% 50%, #ffb3c6 0 12px, transparent 14px),
+                      radial-gradient(circle at 25% 35%, #f7c5cf 0 10px, transparent 12px),
+                      radial-gradient(circle at 75% 75%, #ffe0e9 0 9px, transparent 11px),
+                      radial-gradient(circle at 50% 20%, #ffc1d5 0 11px, transparent 13px);
+    transform-origin: bottom left;
+}
+
+.garden-br {
+    bottom: 0;
+    right: 0;
+    background-image: radial-gradient(circle at 70% 70%, #ffd1dc 0 14px, transparent 16px),
+                      radial-gradient(circle at 40% 50%, #ffb3c6 0 12px, transparent 14px),
+                      radial-gradient(circle at 75% 35%, #f7c5cf 0 10px, transparent 12px),
+                      radial-gradient(circle at 25% 75%, #ffe0e9 0 9px, transparent 11px),
+                      radial-gradient(circle at 50% 20%, #ffc1d5 0 11px, transparent 13px);
+    transform-origin: bottom right;
+}
+
+body.bloom-mode .garden-corner {
+    transform: scale(1);
+    animation: gardenSway 7s ease-in-out infinite;
+}
+
+body.bloom-mode .garden-tr { animation-delay: 0.4s; }
+body.bloom-mode .garden-bl { animation-delay: 0.8s; }
+body.bloom-mode .garden-br { animation-delay: 1.2s; }
+
+@keyframes gardenSway {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50%      { transform: scale(1.04) rotate(2deg); }
+}
+
+.garden-vine {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-image: radial-gradient(circle at 5% 50%, #ffc1d5 0 10px, transparent 12px),
+                      radial-gradient(circle at 15% 30%, #ffd1dc 0 9px, transparent 11px),
+                      radial-gradient(circle at 25% 60%, #f7c5cf 0 11px, transparent 13px),
+                      radial-gradient(circle at 38% 40%, #ffb3c6 0 10px, transparent 12px),
+                      radial-gradient(circle at 50% 55%, #ffe0e9 0 9px, transparent 11px),
+                      radial-gradient(circle at 62% 35%, #ffc1d5 0 11px, transparent 13px),
+                      radial-gradient(circle at 75% 60%, #ffd1dc 0 10px, transparent 12px),
+                      radial-gradient(circle at 88% 40%, #f7c5cf 0 11px, transparent 13px),
+                      radial-gradient(circle at 96% 55%, #ffb3c6 0 10px, transparent 12px);
+    opacity: 0;
+    transform: scaleY(0);
+    transition: opacity 1.4s ease 0.6s, transform 1.4s ease 0.6s;
+}
+
+.garden-vine-top    { top: 0;    transform-origin: top; }
+.garden-vine-bottom { bottom: 0; transform-origin: bottom; }
+
+body.bloom-mode .garden-vine {
+    opacity: 0.9;
+    transform: scaleY(1);
+}
+
+/* Bloom Showcase — davetiye gorseli tek basina ekranda */
+.bloom-showcase {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: radial-gradient(ellipse at center, #fff5f8 0%, #ffe9f0 60%, #ffd9e4 100%);
+    z-index: 50;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+
+body.bloom-mode .bloom-showcase {
+    opacity: 1;
+    visibility: visible;
+}
+
+.bloom-message {
+    position: relative;
+    max-width: min(560px, 92vw);
+    width: 100%;
+    padding: 56px 36px 48px;
+    text-align: center;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255, 232, 240, 0.9) 0%, rgba(255, 255, 255, 0.95) 60%),
+        linear-gradient(180deg, #ffffff 0%, #fff5f8 100%);
+    border-radius: 28px;
+    border: 1px solid rgba(255, 192, 213, 0.45);
+    box-shadow: 0 24px 70px rgba(212, 165, 165, 0.35),
+                0 0 0 6px rgba(255, 255, 255, 0.7),
+                0 0 90px rgba(255, 192, 213, 0.4);
+    opacity: 0;
+    transform: translateY(40px) scale(0.92);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+
+body.bloom-mode .bloom-message {
+    animation: bloomMessageRise 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards,
+               bloomMessageFloat 6s ease-in-out 1.8s infinite;
+}
+
+@keyframes bloomMessageRise {
+    from { opacity: 0; transform: translateY(40px) scale(0.92); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes bloomMessageFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-6px) scale(1.005); }
+}
+
+.bloom-message-flourish {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -28px;
+    font-size: 44px;
+    line-height: 1;
+    filter: drop-shadow(0 6px 14px rgba(212, 165, 165, 0.5));
+    animation: flourishSpin 12s linear infinite;
+}
+
+.bloom-message-flourish.bottom {
+    top: auto;
+    bottom: -22px;
+    font-size: 36px;
+    animation-direction: reverse;
+}
+
+@keyframes flourishSpin {
+    from { transform: translateX(-50%) rotate(0deg); }
+    to   { transform: translateX(-50%) rotate(360deg); }
+}
+
+.bloom-message-names {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 56px;
+    font-weight: 300;
+    color: #b86b6b;
+    margin: 0 0 24px;
+    letter-spacing: 1px;
+    line-height: 1.1;
+}
+
+.bloom-message-names span {
+    color: #d4a5a5;
+    margin: 0 6px;
+    font-size: 0.7em;
+    vertical-align: middle;
+}
+
+.bloom-message-body {
+    font-family: 'Georgia', serif;
+    font-size: 19px;
+    line-height: 1.75;
+    color: #6f5b4c;
+    margin: 0 0 28px;
+}
+
+.bloom-message-body strong {
+    color: #b86b6b;
+    font-weight: 600;
+}
+
+.bloom-message-date {
+    font-size: 13px;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: #a89080;
+    margin: 0;
+}
+
+@media (max-width: 480px) {
+    .bloom-message {
+        padding: 48px 24px 40px;
+        max-width: 92vw;
+    }
+    .bloom-message-names { font-size: 42px; }
+    .bloom-message-body  { font-size: 17px; }
+    .bloom-message-flourish { font-size: 36px; top: -22px; }
+    .bloom-message-flourish.bottom { font-size: 30px; bottom: -18px; }
+}
+
+/* Bloom modunda diger her seyi gizle — sadece davetiye + cicek + garden */
+body.bloom-mode .menu,
+body.bloom-mode .video-container,
+body.bloom-mode .toast-banner,
+body.bloom-mode .butterflies-container,
+body.bloom-mode .content {
+    display: none !important;
+}
+
+/* Muzik dugmesi bloom'da sade gozuksun, sayfa kapagi gibi */
+body.bloom-mode .music-toggle {
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+body.bloom-mode {
+    overflow: hidden !important;
+    height: 100vh;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .garden-corner {
+        width: 200px;
+        height: 200px;
+    }
+    .bloom-showcase {
+        padding: 16px;
+    }
+}
+
+/* Bloom petali — sayfaya yagacak cicekler (yagmur halinde) */
+.bloom-petal {
+    position: fixed;
+    top: -40px;
+    pointer-events: none;
+    z-index: 9997;
+    will-change: transform, opacity;
+    user-select: none;
+    transform: translate3d(0, 0, 0);
+    animation: bloomFall linear forwards;
+    contain: layout paint;
+}
+
+@keyframes bloomFall {
+    0%   { opacity: 0; transform: translate3d(0, 0, 0) rotate(0deg); }
+    10%  { opacity: 1; }
+    100% { opacity: 0; transform: translate3d(20px, 110vh, 0) rotate(540deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.bloom-mode .garden-corner { animation: none; }
+    .bloom-petal { display: none; }
 }
