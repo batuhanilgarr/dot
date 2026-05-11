@@ -180,6 +180,27 @@
             color: #a89080;
             font-style: italic;
         }
+        /* Şahitler şu an kilitli: solgun ama düzgün görünen placeholder kart */
+        .witness-locked .witness-card {
+            background: rgba(255, 252, 248, 0.4);
+            border-style: dashed;
+            border-color: rgba(184, 107, 107, 0.22);
+        }
+        .witness-locked .witness-legend { opacity: 0.7; }
+        .witness-locked input:disabled,
+        .witness-locked textarea:disabled {
+            background: rgba(255, 252, 248, 0.55);
+            color: #b6a294;
+            -webkit-text-fill-color: #b6a294;
+            opacity: 0.85;
+            cursor: not-allowed;
+            border-color: rgba(139, 115, 85, 0.15);
+        }
+        .witness-locked input:disabled::placeholder,
+        .witness-locked textarea:disabled::placeholder {
+            color: #c9b8a8;
+        }
+        .witness-locked .field-label { opacity: 0.7; }
 
         .btn {
             display: inline-flex;
@@ -752,38 +773,38 @@
             <p id="nikahStatus" class="status" aria-live="polite"></p>
         </div>
 
-        <div class="card" id="witnesses">
+        <div class="card witness-locked" id="witnesses">
             <h2 class="section-title">Şahitlerimiz</h2>
             <p class="section-hint">
                 Nikah başvurusunda <strong>2 şahit</strong> gerekli (18+, akraba olma şartı yok).
-                Belirlendikçe doldur — başvuru günü cebinde hazır olsun. Sadece bu cihazda saklanır.
+                Sadece bu cihazda saklanacak.
             </p>
-            <p class="witness-hint">Henüz belirlenmedi — şimdilik boş bırakabilirsin.</p>
+            <p class="witness-hint">Şahitler kararlaştırılana kadar bu alanlar pasif. Belirlenince açıp dolduracağız.</p>
 
             <div class="witness-grid">
                 <fieldset class="witness-card">
                     <legend class="witness-legend">Şahit 1</legend>
                     <div class="field">
                         <label class="field-label" for="w1Name">Ad Soyad</label>
-                        <input id="w1Name" type="text" autocomplete="off" placeholder="—">
+                        <input id="w1Name" type="text" autocomplete="off" placeholder="—" disabled>
                     </div>
                     <div class="witness-row">
                         <div class="field">
                             <label class="field-label" for="w1Tc">T.C. Kimlik No</label>
-                            <input id="w1Tc" type="text" inputmode="numeric" maxlength="11" autocomplete="off" placeholder="—">
+                            <input id="w1Tc" type="text" inputmode="numeric" maxlength="11" autocomplete="off" placeholder="—" disabled>
                         </div>
                         <div class="field">
                             <label class="field-label" for="w1Dob">Doğum Tarihi</label>
-                            <input id="w1Dob" type="date" autocomplete="off">
+                            <input id="w1Dob" type="date" autocomplete="off" disabled>
                         </div>
                     </div>
                     <div class="field">
                         <label class="field-label" for="w1Tel">Telefon</label>
-                        <input id="w1Tel" type="tel" inputmode="tel" autocomplete="off" placeholder="—">
+                        <input id="w1Tel" type="tel" inputmode="tel" autocomplete="off" placeholder="—" disabled>
                     </div>
                     <div class="field">
                         <label class="field-label" for="w1Addr">Adres</label>
-                        <textarea id="w1Addr" autocomplete="off" placeholder="—"></textarea>
+                        <textarea id="w1Addr" autocomplete="off" placeholder="—" disabled></textarea>
                     </div>
                 </fieldset>
 
@@ -791,33 +812,28 @@
                     <legend class="witness-legend">Şahit 2</legend>
                     <div class="field">
                         <label class="field-label" for="w2Name">Ad Soyad</label>
-                        <input id="w2Name" type="text" autocomplete="off" placeholder="—">
+                        <input id="w2Name" type="text" autocomplete="off" placeholder="—" disabled>
                     </div>
                     <div class="witness-row">
                         <div class="field">
                             <label class="field-label" for="w2Tc">T.C. Kimlik No</label>
-                            <input id="w2Tc" type="text" inputmode="numeric" maxlength="11" autocomplete="off" placeholder="—">
+                            <input id="w2Tc" type="text" inputmode="numeric" maxlength="11" autocomplete="off" placeholder="—" disabled>
                         </div>
                         <div class="field">
                             <label class="field-label" for="w2Dob">Doğum Tarihi</label>
-                            <input id="w2Dob" type="date" autocomplete="off">
+                            <input id="w2Dob" type="date" autocomplete="off" disabled>
                         </div>
                     </div>
                     <div class="field">
                         <label class="field-label" for="w2Tel">Telefon</label>
-                        <input id="w2Tel" type="tel" inputmode="tel" autocomplete="off" placeholder="—">
+                        <input id="w2Tel" type="tel" inputmode="tel" autocomplete="off" placeholder="—" disabled>
                     </div>
                     <div class="field">
                         <label class="field-label" for="w2Addr">Adres</label>
-                        <textarea id="w2Addr" autocomplete="off" placeholder="—"></textarea>
+                        <textarea id="w2Addr" autocomplete="off" placeholder="—" disabled></textarea>
                     </div>
                 </fieldset>
             </div>
-
-            <div class="actions">
-                <button id="witnessSaveBtn" class="btn" type="button">Kaydet</button>
-            </div>
-            <p id="witnessStatus" class="status" aria-live="polite"></p>
         </div>
 
         <div class="card nikah-guide-card" id="nikahGuide">
@@ -924,7 +940,7 @@
                             <ul class="step-sub">
                                 <li>Şahitlerin <strong>T.C. Kimlik numaralarını</strong> başvuruda yaz; nikah günü <strong>kimlik asıllarını</strong> getirmeleri zorunlu.</li>
                                 <li>Şehir dışından gelecekse seyahatlerini erkenden ayarla.</li>
-                                <li>Bilgileri unutmamak için yukarıdaki <a class="guide-link" href="#witnesses">Şahitlerimiz</a> kartını doldur — başvuru günü telefondan açıp okursun.</li>
+                                <li>Şahitler kararlaşınca yukarıdaki <a class="guide-link" href="#witnesses">Şahitlerimiz</a> kartı açılacak — başvuru günü telefondan açıp okursun.</li>
                             </ul>
                         </div>
                     </li>
@@ -1188,7 +1204,7 @@
 
         <div class="card">
             <h2 class="section-title">Bu cihazdaki verileri sıfırla</h2>
-            <p class="section-hint">Bu cihazda kaydettiğin nikah tarihini, şahit bilgilerini ve tüm notları siler. Diğer cihazını etkilemez.</p>
+            <p class="section-hint">Bu cihazda kaydettiğin nikah tarihini ve tüm notları siler. Diğer cihazını etkilemez.</p>
             <div class="actions">
                 <button id="wipeBtn" class="btn danger" type="button">Hepsini sil</button>
             </div>
@@ -1386,16 +1402,16 @@
 
         // ----- Wipe -----
         function handleWipe() {
-            const ok = confirm('Bu cihazdaki nikah tarihi, şahit bilgileri ve notlar silinecek. Devam edilsin mi?');
+            const ok = confirm('Bu cihazdaki nikah tarihi ve notlar silinecek. Devam edilsin mi?');
             if (!ok) return;
             try {
                 localStorage.removeItem(NIKAH_KEY);
                 localStorage.removeItem(NOTES_KEY);
+                // Şahit kartı kilitli olsa da, daha önce kaydedilmiş veri varsa o da temizlensin
                 localStorage.removeItem(WITNESS_KEY);
             } catch {}
             renderNikah();
             renderNotes();
-            renderWitnesses();
             flashStatus('wipeStatus', 'Silindi.', 'success');
         }
 
@@ -1487,23 +1503,15 @@
         document.addEventListener('DOMContentLoaded', () => {
             $('nikahSaveBtn').addEventListener('click', handleNikahSave);
             $('noteAddBtn').addEventListener('click', handleNoteAdd);
-            $('witnessSaveBtn').addEventListener('click', handleWitnessSave);
             $('wipeBtn').addEventListener('click', handleWipe);
 
             $('nikahInput').addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') { e.preventDefault(); handleNikahSave(); }
             });
 
-            // TC alanı: sadece rakam, en fazla 11 hane
-            for (const w of ['w1', 'w2']) {
-                const tc = $(w + 'Tc');
-                if (tc) {
-                    tc.addEventListener('input', () => {
-                        const clean = tc.value.replace(/\D/g, '').slice(0, 11);
-                        if (clean !== tc.value) tc.value = clean;
-                    });
-                }
-            }
+            // Şahit kartı şu an kilitli (Kaydet butonu yok, inputlar disabled).
+            // Şahitler netleşince HTML'deki `disabled` özniteliklerini kaldırıp
+            // Kaydet butonunu + handleWitnessSave bağlamasını geri açmak yeterli.
 
             $('calcReportDate').addEventListener('change', updateReportCalc);
             $('calcReportDate').addEventListener('input', updateReportCalc);
@@ -1512,7 +1520,6 @@
 
             renderNikah();
             renderNotes();
-            renderWitnesses();
 
             setupTocActive();
         });
