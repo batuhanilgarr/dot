@@ -335,6 +335,11 @@
             border-top: 1px dashed rgba(212, 165, 165, 0.32);
             scroll-margin-top: 16px;
         }
+        .guide-toc a.is-active {
+            background: #d4a5a5;
+            color: #fff;
+            border-color: #d4a5a5;
+        }
         .guide-section:first-of-type {
             border-top: none;
             padding-top: 8px;
@@ -680,6 +685,30 @@
 
         @media (max-width: 720px) {
             .witness-grid { grid-template-columns: 1fr; gap: 14px; }
+
+            /* Sticky TOC on mobile/tablet: tek satır yatay scroll, üstte sabit */
+            .guide-toc {
+                position: sticky;
+                top: -1px;
+                z-index: 20;
+                margin: 14px -18px 22px;
+                padding: 10px 14px;
+                border-left: 0;
+                border-right: 0;
+                border-radius: 0;
+                background: rgba(247, 240, 233, 0.94);
+                backdrop-filter: saturate(140%) blur(10px);
+                -webkit-backdrop-filter: saturate(140%) blur(10px);
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+                box-shadow: 0 6px 14px -10px rgba(184, 107, 107, 0.25);
+            }
+            .guide-toc::-webkit-scrollbar { display: none; }
+            .guide-toc a { flex-shrink: 0; white-space: nowrap; }
+            .guide-section { scroll-margin-top: 62px; }
         }
         @media (max-width: 480px) {
             body { padding: 24px 14px 60px; }
@@ -687,7 +716,7 @@
             .gir-title { font-size: 42px; }
             .dashboard-greet { font-size: 26px; }
             .nikah-display { font-size: 30px; }
-            .guide-toc { padding: 10px 10px; }
+            .guide-toc { padding: 8px 12px; margin: 12px -18px 18px; }
             .guide-toc a { font-size: 11.5px; padding: 4px 10px; }
             .guide-h { font-size: 14px; letter-spacing: 2px; }
             .guide-list, .guide-p { font-size: 14px; }
@@ -695,6 +724,7 @@
             .guide-contact-card { padding: 14px 14px; }
             .witness-row { grid-template-columns: 1fr; gap: 0; }
             .witness-card { padding: 12px 14px 2px; }
+            .guide-section { scroll-margin-top: 56px; }
         }
     </style>
 </head>
@@ -1483,7 +1513,46 @@
             renderNikah();
             renderNotes();
             renderWitnesses();
+
+            setupTocActive();
         });
+
+        // Sticky TOC: kaydırırken aktif bölüm chip'ini vurgula
+        function setupTocActive() {
+            const toc = document.querySelector('.guide-toc');
+            if (!toc) return;
+            const links = Array.from(toc.querySelectorAll('a[href^="#"]'));
+            if (!links.length) return;
+
+            const byId = new Map();
+            for (const a of links) byId.set(a.getAttribute('href').slice(1), a);
+
+            const sections = Array.from(document.querySelectorAll('.guide-section[id]'))
+                .filter(s => byId.has(s.id));
+            if (!sections.length || !('IntersectionObserver' in window)) return;
+
+            let current = '';
+            const setActive = (id) => {
+                if (id === current) return;
+                current = id;
+                for (const a of links) a.classList.remove('is-active');
+                const el = byId.get(id);
+                if (el) el.classList.add('is-active');
+            };
+
+            const io = new IntersectionObserver((entries) => {
+                const top = entries
+                    .filter(e => e.isIntersecting)
+                    .map(e => ({ id: e.target.id, top: e.boundingClientRect.top }))
+                    .sort((a, b) => a.top - b.top)[0];
+                if (top) setActive(top.id);
+            }, {
+                rootMargin: '-25% 0px -65% 0px',
+                threshold: 0
+            });
+
+            sections.forEach(s => io.observe(s));
+        }
     })();
     </script>
 </body>
