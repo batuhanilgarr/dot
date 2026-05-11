@@ -356,6 +356,124 @@
         }
         .guide-warn .guide-list li::marker { color: rgba(186, 142, 38, 0.85); }
 
+        /* ---- Adım Adım Süreç (timeline) ---- */
+        .step-flow {
+            list-style: none;
+            margin: 16px 0 0;
+            padding: 0;
+        }
+        .step {
+            position: relative;
+            padding-left: 56px;
+            padding-bottom: 22px;
+        }
+        .step:last-child { padding-bottom: 6px; }
+        .step:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 38px;
+            bottom: 6px;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(212, 165, 165, 0.55) 0%, rgba(212, 165, 165, 0.18) 100%);
+            border-radius: 1px;
+        }
+        .step-num {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #d4a5a5, #c98e8e);
+            color: #fff;
+            border-radius: 50%;
+            font-family: 'Georgia', serif;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 4px 12px rgba(212, 165, 165, 0.4),
+                        0 0 0 4px rgba(255, 255, 255, 0.7);
+        }
+        .step-body { padding-top: 2px; }
+        .step-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 6px;
+        }
+        .step-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #8b5454;
+            margin: 0;
+            letter-spacing: 0.3px;
+        }
+        .step-time {
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #8b7355;
+            background: rgba(212, 165, 165, 0.12);
+            border: 1px solid rgba(212, 165, 165, 0.3);
+            padding: 3px 10px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+        .step-p {
+            margin: 0 0 8px;
+            font-size: 14px;
+            color: #6f5b4c;
+            line-height: 1.7;
+        }
+        .step-p em {
+            font-style: italic;
+            color: #b86b6b;
+            background: rgba(212, 165, 165, 0.08);
+            padding: 1px 6px;
+            border-radius: 6px;
+        }
+        .step-p strong { color: #8b5454; }
+        .step-sub {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 13.5px;
+            color: #6f5b4c;
+            line-height: 1.65;
+        }
+        .step-sub li { margin-bottom: 5px; }
+        .step-sub li::marker { color: #d4a5a5; }
+        .step-sub strong { color: #8b5454; }
+
+        .step-total {
+            margin: 18px 0 6px;
+            padding: 14px 18px;
+            background: linear-gradient(135deg, rgba(212, 165, 165, 0.14), rgba(255, 232, 240, 0.45));
+            border: 1px solid rgba(212, 165, 165, 0.32);
+            border-radius: 12px;
+            text-align: center;
+            font-size: 14px;
+            color: #6f5b4c;
+            line-height: 1.6;
+        }
+        .step-total strong { color: #8b5454; }
+
+        @media (max-width: 480px) {
+            .step { padding-left: 48px; padding-bottom: 20px; }
+            .step-num {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+                box-shadow: 0 4px 10px rgba(212, 165, 165, 0.4), 0 0 0 3px rgba(255, 255, 255, 0.7);
+            }
+            .step:not(:last-child)::before { left: 15px; top: 32px; }
+            .step-title { font-size: 14px; }
+            .step-time { font-size: 10.5px; padding: 2px 8px; }
+        }
+
         /* Hesaplama kartı */
         .calc-card {
             margin: 16px 0 6px;
@@ -467,6 +585,7 @@
             </p>
 
             <nav class="guide-toc" aria-label="İçindekiler">
+                <a href="#g-adimlar">Adım Adım Süreç</a>
                 <a href="#g-belgeler">Gerekli Belgeler</a>
                 <a href="#g-saglik">Sağlık Raporu</a>
                 <a href="#g-yas">Yaş</a>
@@ -477,6 +596,135 @@
                 <a href="#g-saat">Saatler</a>
                 <a href="#g-iletisim">İletişim</a>
             </nav>
+
+            <section class="guide-section" id="g-adimlar">
+                <h3 class="guide-h">Adım Adım Süreç</h3>
+                <p class="guide-p">Sıfırdan nikah gününe kadar gerçekçi bir akış. Süreler tahmini; mevsime, yoğunluğa ve seçilen güne göre değişir.</p>
+
+                <ol class="step-flow">
+                    <li class="step">
+                        <span class="step-num">1</span>
+                        <div class="step-body">
+                            <div class="step-head">
+                                <h4 class="step-title">Sağlık ocağına / aile hekimine git</h4>
+                                <span class="step-time">⏱ 1 gün</span>
+                            </div>
+                            <p class="step-p">Aile hekimine net şekilde söyle: <em>"Evlilik için sağlık raporu almak istiyorum."</em> Hekim seni şu süreçlere yönlendirir:</p>
+                            <ul class="step-sub">
+                                <li><strong>Kan tahlili</strong> istenir (laboratuvar): tam kan sayımı + <strong>Hemoglobinopati taraması</strong> (talasemi). Bölgeye göre HIV, Hepatit B/C, VDRL de eklenebilir.</li>
+                                <li>Bazı bölgelerde <strong>dispansere</strong> (Toplum Sağlığı Merkezi) gönderip <strong>akciğer filmi</strong> isterler.</li>
+                                <li>Önemli: Raporda <em>"evlilik için"</em> ibaresi ve <em>"hemoglobinopati tetkikinin yapıldığı"</em> bilgisi <strong>açıkça yazmalı</strong>.</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="step">
+                        <span class="step-num">2</span>
+                        <div class="step-body">
+                            <div class="step-head">
+                                <h4 class="step-title">Tahlil sonuçlarını bekle, hekime dön</h4>
+                                <span class="step-time">⏱ 1–3 iş günü</span>
+                            </div>
+                            <p class="step-p">Sonuçlar geldikten sonra hekim raporu doldurur, <strong>kaşe + imza</strong>'yı atar. Bu hâliyle alınan rapor 6 ay geçerlidir.</p>
+                            <ul class="step-sub">
+                                <li>Rapor sende kalsın — orijinalini başvuruya götüreceksin, fotokopi yetmez.</li>
+                                <li><strong>Özel hastane raporu geçersizdir.</strong> Devlet hastanesinden alındıysa aile hekimi kaşesi yine olmalı.</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="step">
+                        <span class="step-num">3</span>
+                        <div class="step-body">
+                            <div class="step-head">
+                                <h4 class="step-title">Diğer evrakları topla</h4>
+                                <span class="step-time">⏱ 1–3 gün</span>
+                            </div>
+                            <p class="step-p">Başvuru günü için her ikinizin de hazır etmesi gerekenler:</p>
+                            <ul class="step-sub">
+                                <li>T.C. Kimlik kartı asılları (son 10 yıl içinde değiştirilmiş, okunaklı)</li>
+                                <li><strong>4 adet</strong> vesikalık fotoğraf (her bir kişi için; ön cephe, son 6 ay, biyometrik değil)</li>
+                                <li>İmzalı + kaşeli sağlık raporu</li>
+                                <li>Soyadı talebin varsa: bekarlık soyadını birlikte kullanmak istediğine dair <strong>dilekçe</strong> (başvuruda da imzalanabilir)</li>
+                                <li>Mal ayrılığı talebin varsa: noterden <strong>Mal Ayrılığı Sözleşmesi</strong></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="step">
+                        <span class="step-num">4</span>
+                        <div class="step-body">
+                            <div class="step-head">
+                                <h4 class="step-title">Evlendirme dairesine birlikte git</h4>
+                                <span class="step-time">⏱ Aynı gün · 30–60 dk</span>
+                            </div>
+                            <p class="step-p">Beykoz için adres: <strong>Çubuklu, Vatan Caddesi No:75 (Kavacık)</strong>. Saatler 09:00–12:00 / 13:00–16:00. Sırada beklemeyi en aza indirmek için sabah erken iyi olur.</p>
+                            <p class="step-p">Memura: <em>"Nikah müracaatı yapmak istiyoruz, evraklarımız hazır."</em></p>
+                            <ul class="step-sub">
+                                <li>Memur evrakları kontrol eder, başvuru formunu birlikte doldurursunuz.</li>
+                                <li>Müsait <strong>nikah günü ve saati</strong> seçilir. Popüler dönem (Haziran–Ekim) için <strong>2–3 ay önceden</strong> tarih almak gerekebilir; sakin dönemde 1–4 hafta yeterlidir.</li>
+                                <li>Aynı gün veya kısa süre sonra ödeme alınır: <strong>nikah akdi ücreti + cüzdan bedeli</strong> (Belediye Meclisi'nin güncel tarifesi).</li>
+                                <li>Birlikte gelemeyen taraf için noterden <strong>özel vekaletname</strong> şart.</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="step">
+                        <span class="step-num">5</span>
+                        <div class="step-body">
+                            <div class="step-head">
+                                <h4 class="step-title">Şahitleri belirle ve bilgilerini ver</h4>
+                                <span class="step-time">⏱ Önceden</span>
+                            </div>
+                            <p class="step-p"><strong>2 şahit</strong> gerekli. Akraba olmaları gerekmez; 18 yaşını doldurmuş herhangi biri olabilir.</p>
+                            <ul class="step-sub">
+                                <li>Şahitlerin <strong>T.C. Kimlik numaralarını</strong> başvuruda yaz; nikah günü <strong>kimlik asıllarını</strong> getirmeleri zorunlu.</li>
+                                <li>Şehir dışından gelecekse seyahatlerini erkenden ayarla.</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="step">
+                        <span class="step-num">6</span>
+                        <div class="step-body">
+                            <div class="step-head">
+                                <h4 class="step-title">Nikah günü</h4>
+                                <span class="step-time">⏱ Yarım gün ayır</span>
+                            </div>
+                            <p class="step-p">Belirlenen saatten <strong>15–20 dk önce</strong> salonda hazır olun. Tören kendisi 10–20 dakika sürer.</p>
+                            <ul class="step-sub">
+                                <li>Yanınızda: ikinizin <strong>kimlik asılları</strong>, <strong>2 şahit + kimlik asılları</strong>.</li>
+                                <li>Tören sonunda <strong>evlilik cüzdanı</strong> elden teslim edilir.</li>
+                                <li>Ertelemek/iptal etmek 3 günden geç bildirilirse ücret iadesi yok (15 gün kala iptalde ücret iade edilmez).</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="step">
+                        <span class="step-num">7</span>
+                        <div class="step-body">
+                            <div class="step-head">
+                                <h4 class="step-title">Sonrası — otomatik ve manuel işler</h4>
+                                <span class="step-time">⏱ 1–2 hafta</span>
+                            </div>
+                            <p class="step-p">Evlilik <strong>otomatik olarak nüfus müdürlüğüne işlenir</strong>; ayrıca gitmeye gerek yok. Ama bazı şeyleri sen yenileyeceksin:</p>
+                            <ul class="step-sub">
+                                <li>Soyadı değiştiyse: <strong>nüfus cüzdanı / kimlik kartı</strong> (e-devlet → randevu), ehliyet, pasaport, banka kartları, SGK</li>
+                                <li>İsteğe bağlı: pasaportta yeni soyadı, vergi dairesi, vakıf/dernek üyelikleri</li>
+                                <li>Tüm bunlar normalde <strong>e-devlet</strong> üzerinden başlatılabilir.</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ol>
+
+                <div class="step-total">
+                    <strong>Toplam tahmini süre:</strong> En erken <strong>2–3 hafta</strong> (boş gün varsa), genelde <strong>1–2 ay</strong>, yoğun düğün sezonunda <strong>3 ay+</strong>.
+                </div>
+
+                <div class="guide-callout">
+                    <strong>İpucu:</strong> Salon gününü erken al — sağlık raporu son 180 günü, müracaat evrakları son 180 günü kapsamalı. Yani gerçekçi sıralama: önce <em>tarih al</em>, sonra <em>tarihten ~60 gün önce sağlık raporu al</em>, sonra <em>müracaatı tamamla</em>.
+                </div>
+            </section>
 
             <section class="guide-section" id="g-belgeler">
                 <h3 class="guide-h">Gerekli Belgeler</h3>
