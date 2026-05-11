@@ -1,7 +1,7 @@
 // Service Worker for Zeynep & Batuhan Wedding Invitation
 // Enables offline functionality
 
-const CACHE_NAME = 'zeynep-batuhan-v5';
+const CACHE_NAME = 'zeynep-batuhan-v6';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -36,6 +36,15 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', event => {
   const requestUrl = new URL(event.request.url);
   const isSameOrigin = requestUrl.origin === self.location.origin;
+  const isPrivateArea = requestUrl.pathname === '/gir' ||
+    requestUrl.pathname.startsWith('/gir/');
+
+  // Private area: always network, never touch the cache.
+  if (isSameOrigin && isPrivateArea) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   const isCoreAsset =
     requestUrl.pathname === '/' ||
     requestUrl.pathname.endsWith('/index.html') ||

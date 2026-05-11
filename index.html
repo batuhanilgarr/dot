@@ -215,18 +215,29 @@
         <div class="garden-vine garden-vine-bottom"></div>
     </div>
     <div class="bloom-showcase" id="bloomShowcase" aria-hidden="true">
-        <article class="bloom-message" id="bloomMessage">
-            <div class="bloom-message-flourish" aria-hidden="true">🌸</div>
-            <h2 class="bloom-message-names">Zeynep <span>&amp;</span> Batuhan</h2>
-            <p class="bloom-message-body" id="bloomMessageBody" data-state="live">
-                Bu güzel günde bizimle birlikte olduğunuz için
-                <strong>çok teşekkür ederiz.</strong>
-                <br><br>
-                Şimdi günün tadını çıkarın 🌸
-            </p>
-            <p class="bloom-message-date">10 Mayıs 2026 · Gloria Event</p>
-            <div class="bloom-message-flourish bottom" aria-hidden="true">💐</div>
-        </article>
+        <div class="bloom-stack">
+            <article class="bloom-message" id="bloomMessage">
+                <div class="bloom-message-flourish" aria-hidden="true">🌸</div>
+                <h2 class="bloom-message-names">Zeynep <span>&amp;</span> Batuhan</h2>
+                <p class="bloom-message-body" id="bloomMessageBody" data-state="live">
+                    Bu güzel günde bizimle birlikte olduğunuz için
+                    <strong>çok teşekkür ederiz.</strong>
+                    <br><br>
+                    Şimdi günün tadını çıkarın 🌸
+                </p>
+                <p class="bloom-message-date">10 Mayıs 2026 · Gloria Event</p>
+                <div class="bloom-message-flourish bottom" aria-hidden="true">💐</div>
+            </article>
+            <article class="bloom-upcoming-card" id="bloomUpcomingCard" aria-labelledby="bloomUpcomingTitle">
+                <div class="bloom-message-flourish" aria-hidden="true">🌸</div>
+                <p class="bloom-upcoming-eyebrow">Bir sonraki adım</p>
+                <h3 id="bloomUpcomingTitle" class="bloom-upcoming-heading">Nikah Tarihimiz</h3>
+                <p class="bloom-upcoming-big">Yakında</p>
+                <span class="bloom-upcoming-divider" aria-hidden="true"></span>
+                <p class="bloom-upcoming-foot">Detayları paylaşmak için sabırsızlanıyoruz <span aria-hidden="true">💕</span></p>
+                <div class="bloom-message-flourish bottom" aria-hidden="true">💐</div>
+            </article>
+        </div>
     </div>
 
     <div class="toast-banner" id="toastBanner" role="status" aria-live="polite"></div>
@@ -282,6 +293,21 @@
         <div class="sakura-divider">
             <img src="./assets/images/davetiye.jpeg" class="davetiye" width="900" height="1268" loading="lazy" decoding="async" alt="Nisan davetiye gorseli">
         </div>
+
+        <section class="upcoming-section reveal" id="nikah-tarihi" aria-labelledby="nikah-baslik">
+            <article class="upcoming-card">
+                <span class="upcoming-flourish top" aria-hidden="true">🌸</span>
+                <p class="upcoming-eyebrow">Bir sonraki adım</p>
+                <h2 id="nikah-baslik" class="upcoming-heading">Nikah Tarihimiz</h2>
+                <p class="upcoming-big">Yakında</p>
+                <span class="upcoming-divider" aria-hidden="true"></span>
+                <p class="upcoming-foot">
+                    Detayları paylaşmak için sabırsızlanıyoruz
+                    <span aria-hidden="true">💕</span>
+                </p>
+                <span class="upcoming-flourish bottom" aria-hidden="true">💐</span>
+            </article>
+        </section>
 
         <div class="sakura-divider">
             <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" width="2912" height="416" loading="lazy" decoding="async">

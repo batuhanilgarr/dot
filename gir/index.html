@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="referrer" content="no-referrer">
+    <meta name="theme-color" content="#f4eee8">
+    <meta http-equiv="X-Robots-Tag" content="noindex, nofollow">
+    <link rel="icon" href="../assets/images/favicon.ico" sizes="any">
+    <title>Bizim Köşemiz</title>
+    <style>
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Georgia', serif;
+            color: #6f5b4c;
+            background: linear-gradient(180deg, #f7efe7 0%, #efe3d6 100%);
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 32px 20px 80px;
+        }
+
+        .gir-shell { width: 100%; max-width: 760px; }
+
+        .gir-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .gir-title {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 52px;
+            color: #b86b6b;
+            margin: 0 0 6px;
+            letter-spacing: 1px;
+            line-height: 1.05;
+        }
+        .gir-subtitle {
+            font-size: 12px;
+            letter-spacing: 2.6px;
+            text-transform: uppercase;
+            color: #a89080;
+            margin: 0;
+        }
+        .gir-flourish {
+            display: inline-block;
+            font-size: 30px;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 4px 10px rgba(212, 165, 165, 0.35));
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(212, 165, 165, 0.35);
+            border-radius: 24px;
+            padding: 32px 28px;
+            box-shadow: 0 18px 50px rgba(212, 165, 165, 0.18);
+            backdrop-filter: blur(6px);
+            margin-bottom: 20px;
+        }
+
+        h2.section-title {
+            font-size: 22px;
+            font-weight: 400;
+            color: #8b7355;
+            margin: 0 0 8px;
+            letter-spacing: 1px;
+        }
+        .section-hint {
+            font-size: 13px;
+            color: #a89080;
+            margin: 0 0 18px;
+            line-height: 1.6;
+        }
+        .section-hint code {
+            background: rgba(212, 165, 165, 0.12);
+            padding: 1px 6px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #b86b6b;
+        }
+
+        label.field-label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #a89080;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid rgba(139, 115, 85, 0.25);
+            border-radius: 12px;
+            background: #fff;
+            font-family: 'Georgia', serif;
+            font-size: 15px;
+            color: #6f5b4c;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        textarea {
+            min-height: 96px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #d4a5a5;
+            box-shadow: 0 0 0 3px rgba(212, 165, 165, 0.18);
+        }
+
+        .field { margin-bottom: 16px; }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 11px 22px;
+            border: none;
+            border-radius: 999px;
+            font-family: 'Georgia', serif;
+            font-size: 14px;
+            letter-spacing: 0.6px;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+            background: #d4a5a5;
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(212, 165, 165, 0.35);
+        }
+        .btn:hover { transform: translateY(-1px); background: #c98e8e; }
+        .btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+        .btn.secondary {
+            background: #fff;
+            color: #8b7355;
+            border: 1px solid rgba(139, 115, 85, 0.25);
+            box-shadow: 0 4px 14px rgba(139, 115, 85, 0.08);
+        }
+        .btn.secondary:hover { background: #faf3ec; }
+        .btn.ghost {
+            background: transparent;
+            color: #8b7355;
+            box-shadow: none;
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+        .btn.ghost:hover { color: #b86b6b; background: rgba(255, 255, 255, 0.4); }
+        .btn.danger { background: #c97676; }
+        .btn.danger:hover { background: #b86464; }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .status {
+            min-height: 18px;
+            font-size: 13px;
+            margin-top: 12px;
+            color: #b86b6b;
+        }
+        .status.success { color: #6b9e6b; }
+        .status.muted   { color: #a89080; }
+
+        /* Dashboard */
+        .dashboard-greet {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 32px;
+            color: #b86b6b;
+            margin: 0 0 14px;
+            text-align: center;
+        }
+
+        .nikah-display {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 36px;
+            color: #b86b6b;
+            margin: 6px 0 4px;
+            text-align: center;
+        }
+        .nikah-display.empty { color: #a89080; font-size: 22px; }
+
+        /* Notes */
+        .note-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .note-item {
+            background: #fffaf5;
+            border: 1px solid rgba(212, 165, 165, 0.25);
+            border-radius: 14px;
+            padding: 14px 16px;
+        }
+        .note-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #a89080;
+        }
+        .note-title {
+            font-weight: 600;
+            color: #8b7355;
+            text-transform: none;
+            letter-spacing: 0.4px;
+            font-size: 14px;
+        }
+        .note-body {
+            white-space: pre-wrap;
+            line-height: 1.65;
+            font-size: 15px;
+            color: #6f5b4c;
+            margin: 0;
+        }
+        .note-actions { display: flex; gap: 6px; }
+        .note-date { margin-right: 6px; }
+
+        /* ---- Nikah Guide ---- */
+        .nikah-guide-card .section-hint a.guide-link {
+            color: #b86b6b;
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(184, 107, 107, 0.5);
+        }
+        .nikah-guide-card .section-hint a.guide-link:hover { color: #8b5454; }
+
+        .guide-toc {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 14px 0 24px;
+            padding: 12px 14px;
+            background: rgba(212, 165, 165, 0.09);
+            border: 1px solid rgba(212, 165, 165, 0.18);
+            border-radius: 14px;
+        }
+        .guide-toc a {
+            color: #b86b6b;
+            text-decoration: none;
+            padding: 4px 12px;
+            font-size: 12px;
+            letter-spacing: 0.4px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(212, 165, 165, 0.28);
+            transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+        }
+        .guide-toc a:hover {
+            background: #d4a5a5;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .guide-section {
+            padding: 22px 0 8px;
+            border-top: 1px dashed rgba(212, 165, 165, 0.32);
+            scroll-margin-top: 16px;
+        }
+        .guide-section:first-of-type {
+            border-top: none;
+            padding-top: 8px;
+        }
+
+        .guide-h {
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            font-weight: 400;
+            color: #8b7355;
+            letter-spacing: 2.4px;
+            text-transform: uppercase;
+            margin: 0 0 14px;
+        }
+
+        .guide-list {
+            margin: 0 0 10px;
+            padding-left: 22px;
+            line-height: 1.7;
+            color: #6f5b4c;
+            font-size: 14.5px;
+        }
+        .guide-list li { margin-bottom: 6px; }
+        .guide-list li::marker { color: #d4a5a5; }
+        .guide-list .guide-list {
+            margin-top: 6px;
+            margin-bottom: 0;
+            font-size: 13.5px;
+            color: #7a6757;
+        }
+
+        .guide-p {
+            margin: 0 0 10px;
+            line-height: 1.7;
+            color: #6f5b4c;
+            font-size: 14.5px;
+        }
+        .guide-p.small { font-size: 13px; color: #8b7355; }
+        .guide-p strong { color: #8b5454; }
+
+        .guide-sub {
+            margin: 14px 0;
+            padding: 14px 18px;
+            background: #fffaf5;
+            border: 1px solid rgba(212, 165, 165, 0.22);
+            border-radius: 14px;
+        }
+        .guide-sub-h {
+            font-size: 14px;
+            font-weight: 600;
+            color: #b86b6b;
+            margin: 0 0 8px;
+            letter-spacing: 0.5px;
+            text-transform: none;
+        }
+        .guide-sub .guide-p:last-child { margin-bottom: 0; }
+
+        .guide-callout {
+            margin: 12px 0;
+            padding: 12px 16px;
+            background: rgba(212, 165, 165, 0.10);
+            border-left: 3px solid #d4a5a5;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.65;
+            color: #6f5b4c;
+        }
+        .guide-callout strong { color: #8b5454; }
+        .guide-callout.muted {
+            background: rgba(168, 144, 128, 0.10);
+            border-left-color: #a89080;
+        }
+        .guide-callout.muted strong { color: #6f5b4c; }
+
+        .guide-warn .guide-list {
+            background: rgba(216, 175, 80, 0.08);
+            border-left: 3px solid rgba(216, 175, 80, 0.5);
+            border-radius: 8px;
+            padding: 12px 16px 12px 38px;
+            margin: 0;
+        }
+        .guide-warn .guide-list li::marker { color: rgba(186, 142, 38, 0.85); }
+
+        .guide-contact-card {
+            margin: 14px 0;
+            padding: 16px 18px;
+            background: linear-gradient(135deg, #fffaf5 0%, #fff5f8 100%);
+            border: 1px solid rgba(212, 165, 165, 0.3);
+            border-radius: 14px;
+        }
+        .guide-contact-card a {
+            color: #b86b6b;
+            text-decoration: none;
+            border-bottom: 1px dashed rgba(184, 107, 107, 0.4);
+        }
+        .guide-contact-card a:hover { color: #8b5454; }
+        .guide-contact-card .btn { margin-top: 10px; }
+        .guide-contact-card .contact-icon {
+            display: inline-block;
+            width: 22px;
+            margin-right: 2px;
+            font-size: 13px;
+        }
+        .guide-contact-card .guide-sub-h { margin-bottom: 10px; }
+
+        @media (max-width: 480px) {
+            body { padding: 24px 14px 60px; }
+            .card { padding: 24px 18px; border-radius: 20px; }
+            .gir-title { font-size: 42px; }
+            .dashboard-greet { font-size: 26px; }
+            .nikah-display { font-size: 30px; }
+            .guide-toc { padding: 10px 10px; }
+            .guide-toc a { font-size: 11.5px; padding: 4px 10px; }
+            .guide-h { font-size: 14px; letter-spacing: 2px; }
+            .guide-list, .guide-p { font-size: 14px; }
+            .guide-sub { padding: 12px 14px; }
+            .guide-contact-card { padding: 14px 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="gir-shell">
+        <header class="gir-header">
+            <span class="gir-flourish" aria-hidden="true">🌸</span>
+            <h1 class="gir-title">Bizim Köşemiz</h1>
+            <p class="gir-subtitle">Zeynep &amp; Batuhan · Hazırlık Köşesi</p>
+        </header>
+
+        <h2 class="dashboard-greet">Hoş geldin 💕</h2>
+
+        <div class="card">
+            <h2 class="section-title">Nikah Tarihimiz</h2>
+            <p class="section-hint">Tarih netleşince buraya yaz. Sadece bu cihazda saklanır.</p>
+            <p id="nikahDisplay" class="nikah-display empty">— Henüz belirlenmedi —</p>
+            <div class="field">
+                <label class="field-label" for="nikahInput">Tarih / not</label>
+                <input id="nikahInput" type="text" placeholder="ör: 14 Şubat 2027 · Beylerbeyi">
+            </div>
+            <div class="actions">
+                <button id="nikahSaveBtn" class="btn" type="button">Kaydet</button>
+            </div>
+            <p id="nikahStatus" class="status" aria-live="polite"></p>
+        </div>
+
+        <div class="card nikah-guide-card" id="nikahGuide">
+            <h2 class="section-title">📋 Nikah İşlemleri Rehberi</h2>
+            <p class="section-hint">
+                Beykoz Belediyesi · Evlendirme Dairesi'nden derlenen evrak ve prosedür özeti.
+                Aslı için
+                <a class="guide-link" href="https://beykoz.bel.tr/nikah-islemleri" target="_blank" rel="noopener">beykoz.bel.tr/nikah-islemleri</a>.
+            </p>
+
+            <nav class="guide-toc" aria-label="İçindekiler">
+                <a href="#g-belgeler">Gerekli Belgeler</a>
+                <a href="#g-saglik">Sağlık Raporu</a>
+                <a href="#g-yas">Yaş</a>
+                <a href="#g-foto">Fotoğraf</a>
+                <a href="#g-soyad">Soyadı</a>
+                <a href="#g-ozel">Özel Belgeler</a>
+                <a href="#g-onemli">Önemli Notlar</a>
+                <a href="#g-saat">Saatler</a>
+                <a href="#g-iletisim">İletişim</a>
+            </nav>
+
+            <section class="guide-section" id="g-belgeler">
+                <h3 class="guide-h">Gerekli Belgeler</h3>
+                <ol class="guide-list">
+                    <li>Aile hekiminden evlilik için <strong>sağlık raporu</strong></li>
+                    <li><strong>4 adet</strong> ön cepheden çekilmiş vesikalık fotoğraf</li>
+                    <li><strong>T.C. Kimlik kartı</strong> (Nüfus cüzdanı aslı)
+                        <ul class="guide-list">
+                            <li>Resimli, son 10 yıl içerisinde değiştirilmiş olmalı</li>
+                            <li>Son medeni duruma dair bilgileri içeren, okunaklı</li>
+                            <li>Başka bir kimlikle başvuru yapılamaz</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+
+            <section class="guide-section" id="g-saglik">
+                <h3 class="guide-h">Sağlık Raporu</h3>
+                <p class="guide-p">Aile hekiminden alınır. <strong>Hemoglobinopati</strong> tetkikinin yapıldığına dair bilgi içermeli.</p>
+                <ul class="guide-list">
+                    <li>Aile hekiminin <strong>kaşe ve imzası şart</strong></li>
+                    <li><strong>Özel hastanelerden</strong> alınan rapor <strong>kabul edilmez</strong></li>
+                    <li>Devlet hastanesinden alınırsa <strong>aile hekimi olan doktorun</strong> onay/kaşesi olmalı</li>
+                    <li>Diğer bölümlerden alınan rapor kabul edilmez</li>
+                </ul>
+                <div class="guide-callout">
+                    <strong>65 yaş üstü çiftler:</strong> Evlenmelerine mani ruhsal durumlarının olmadığını belirten <strong>heyet raporunu</strong> tam teşekküllü <strong>Devlet Hastanesinden</strong> almalı.
+                </div>
+                <div class="guide-callout muted">
+                    Belediye sitesinde tarih hesaplayıcı var: sağlık raporu alındığı tarihten itibaren 180 gün içinde nikah günü alabilirsiniz / nikah tarihine 180 gün kala sağlık raporu alabilirsiniz.
+                </div>
+            </section>
+
+            <section class="guide-section" id="g-yas">
+                <h3 class="guide-h">Evlenme Yaşı</h3>
+                <p class="guide-p"><strong>18 yaşını doldurmuş</strong> olmak zorunludur. Doldurmayanlar:</p>
+                <ul class="guide-list">
+                    <li><strong>17 yaşını doldurmuş ise:</strong> anne ve babanın imzalı izinleri ile</li>
+                    <li><strong>16 yaşını doldurmuş ise:</strong> mahkemenin vereceği "evlenebilir kararı" ile</li>
+                </ul>
+            </section>
+
+            <section class="guide-section" id="g-foto">
+                <h3 class="guide-h">Fotoğraf</h3>
+                <p class="guide-p">
+                    Ön cepheden, <strong>son 6 ay içinde</strong> çekilmiş <strong>4 adet</strong> vesikalık fotoğraf.
+                    <strong>Biyometrik olmamalı.</strong> Fotokopiler geçersizdir.
+                </p>
+            </section>
+
+            <section class="guide-section" id="g-soyad">
+                <h3 class="guide-h">Soyadı Kullanımı</h3>
+                <p class="guide-p">
+                    Bekarlık soyadını evlilik soyadıyla birlikte kullanmak isteyen çiftler,
+                    <strong>4721 sayılı Türk Medeni Kanunu'nun 187. maddesi</strong> uyarınca,
+                    müracaat sırasında ilgili dilekçeyi doldurup imzalamalıdır.
+                </p>
+            </section>
+
+            <section class="guide-section" id="g-ozel">
+                <h3 class="guide-h">Özel Belgeler</h3>
+
+                <div class="guide-sub">
+                    <h4 class="guide-sub-h">İddet Kararı</h4>
+                    <p class="guide-p">
+                        Medeni durumu değişen kadınlar için tescil tarihinden itibaren
+                        <strong>300 günlük evlenme yasağı</strong> mahkeme kararı ile kaldırılır.
+                        Karar Nüfus Müdürlüğüne işletilmeli, oradan evlenme ehliyet belgesi alınmalı.
+                    </p>
+                </div>
+
+                <div class="guide-sub">
+                    <h4 class="guide-sub-h">Bekarlık ve Doğum Belgesi</h4>
+                    <p class="guide-p">
+                        <strong>Yabancı uyruklu</strong> başvuru sahipleri için. Noter onaylı pasaport çevirileri gerekir.
+                    </p>
+                </div>
+
+                <div class="guide-sub">
+                    <h4 class="guide-sub-h">Çok Dilli Evlenme Ehliyet Belgesi</h4>
+                    <p class="guide-p">
+                        Türk + yabancı uyruklu çiftler için. Nüfus Müdürlüğü'nden
+                        <strong>versiyon 2</strong> alınmalı. Pasaporttaki yazı karakteri ile diğer belgelerdeki yazı karakterleri <strong>aynı</strong> olmalı.
+                    </p>
+                </div>
+
+                <div class="guide-sub">
+                    <h4 class="guide-sub-h">Vekaletname</h4>
+                    <p class="guide-p">
+                        Çiftin <strong>beraber gelmesi</strong> ya da gelemeyenin <strong>vekalet vermesi zorunlu</strong>.
+                        Noterden <strong>ÖZEL VEKALETNAME</strong>; vekalet veren, vekil ve evleneceği kişinin tam kimliği
+                        ile evlenme işlemlerinin yürütülmesi için verildiği açıkça yazılmalı.
+                    </p>
+                    <p class="guide-p small">
+                        Nüfus cüzdanı fotokopileri arka sayfada onaylı olmalı.
+                        <strong>Sürücü Belgesi / Pasaport dökümü kabul edilmez.</strong>
+                    </p>
+                </div>
+            </section>
+
+            <section class="guide-section guide-warn" id="g-onemli">
+                <h3 class="guide-h">Önemli Notlar</h3>
+                <ul class="guide-list">
+                    <li>Tüm evrakların geçerlilik süresi <strong>6 ay (180 gün)</strong></li>
+                    <li>Nikah tarihine <strong>15 gün ya da daha az</strong> kala iptal/izin için <strong>ücret iade edilmez</strong></li>
+                    <li>Nikah şahitlerinin evlenecek kişileri tanıması ve <strong>T.C. Kimlik numaralarını bildirmesi zorunlu</strong></li>
+                    <li>Mal ayrılığı talebi olanlar: noterden <strong>Mal Ayrılığı Sözleşmesi</strong> dosyaya eklenir</li>
+                    <li>Eksik evrakla müracaat <strong>yasa gereği kabul edilmez</strong></li>
+                </ul>
+            </section>
+
+            <section class="guide-section" id="g-saat">
+                <h3 class="guide-h">Başvuru Saatleri</h3>
+                <ul class="guide-list">
+                    <li><strong>Beykoz Nikah Salonu (Kavacık):</strong> 09:00 – 12:00 · 13:00 – 16:00</li>
+                    <li><strong>Beykoz Spor Ormanı Nikah Salonu:</strong> 09:00 – 14:00</li>
+                </ul>
+                <p class="guide-p small">
+                    <strong>Dış Nikah</strong> (özel mekan) ve <strong>yabancı evlilik</strong> müracaatları yalnızca <strong>Kavacık</strong>'tan yapılır.
+                </p>
+            </section>
+
+            <section class="guide-section" id="g-iletisim">
+                <h3 class="guide-h">İletişim &amp; Adres</h3>
+
+                <div class="guide-contact-card">
+                    <h4 class="guide-sub-h">Beykoz Belediyesi Evlendirme Dairesi</h4>
+                    <p class="guide-p">
+                        <span class="contact-icon" aria-hidden="true">📞</span>
+                        <a href="tel:+904446661">444 666 1</a> · Dahili: <strong>8701</strong><br>
+                        <span class="contact-icon" aria-hidden="true">✉️</span>
+                        <a href="mailto:beykozevlendirme@beykoz.bel.tr">beykozevlendirme@beykoz.bel.tr</a><br>
+                        <span class="contact-icon" aria-hidden="true">📍</span>
+                        Çubuklu Mahallesi Vatan Caddesi No:75, Beykoz / İstanbul
+                    </p>
+                    <a class="btn secondary" target="_blank" rel="noopener"
+                       href="https://www.google.com/maps/search/?api=1&query=Beykoz+Belediyesi+Evlendirme+Dairesi+%C3%87ubuklu+Vatan+Caddesi+75">
+                        Haritada Gör
+                    </a>
+                </div>
+
+                <div class="guide-contact-card">
+                    <h4 class="guide-sub-h">Beykoz Spor Ormanı Nikah Salonu</h4>
+                    <p class="guide-p">
+                        <span class="contact-icon" aria-hidden="true">📍</span>
+                        Kanuni, İstanbul Kent Ormanı, Yeni Mahalle, Küçüksu Cd., 34820 Beykoz
+                    </p>
+                    <a class="btn secondary" target="_blank" rel="noopener"
+                       href="https://www.google.com/maps/search/?api=1&query=Beykoz+Spor+Orman%C4%B1+Nikah+Salonu">
+                        Haritada Gör
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Belgeler &amp; Notlar</h2>
+            <p class="section-hint">Düğün/nikah hazırlığı, randevular, telefon numaraları… aklınıza ne gelirse. Sadece bu cihazda saklanır.</p>
+
+            <div class="field">
+                <label class="field-label" for="noteTitle">Başlık</label>
+                <input id="noteTitle" type="text" placeholder="ör: Salon kontrat tarihi">
+            </div>
+            <div class="field">
+                <label class="field-label" for="noteBody">İçerik</label>
+                <textarea id="noteBody" placeholder="Notun, tarih, kişi, link… serbest metin."></textarea>
+            </div>
+            <div class="actions">
+                <button id="noteAddBtn" class="btn" type="button">Not Ekle</button>
+            </div>
+            <p id="noteStatus" class="status" aria-live="polite"></p>
+
+            <ul id="noteList" class="note-list" style="margin-top: 22px;"></ul>
+            <p id="noteEmpty" class="section-hint" style="margin-top: 18px;">Henüz not yok.</p>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Bu cihazdaki verileri sıfırla</h2>
+            <p class="section-hint">Bu cihazda kaydettiğin nikah tarihini ve tüm notları siler. Diğer cihazını etkilemez.</p>
+            <div class="actions">
+                <button id="wipeBtn" class="btn danger" type="button">Hepsini sil</button>
+            </div>
+            <p id="wipeStatus" class="status" aria-live="polite"></p>
+        </div>
+    </div>
+
+    <script>
+    (() => {
+        'use strict';
+
+        const NIKAH_KEY = 'zb_gir_nikah';
+        const NOTES_KEY = 'zb_gir_notes';
+
+        const $ = (id) => document.getElementById(id);
+        const setStatus = (id, msg, kind = '') => {
+            const el = $(id);
+            if (!el) return;
+            el.textContent = msg || '';
+            el.className = 'status' + (kind ? ' ' + kind : '');
+        };
+        const flashStatus = (id, msg, kind, ms = 2200) => {
+            setStatus(id, msg, kind);
+            setTimeout(() => { if ($(id).textContent === msg) setStatus(id, ''); }, ms);
+        };
+
+        // ----- Nikah tarihi -----
+        function loadNikah() {
+            try { return localStorage.getItem(NIKAH_KEY) || ''; }
+            catch { return ''; }
+        }
+        function saveNikah(v) {
+            try { localStorage.setItem(NIKAH_KEY, v); } catch {}
+        }
+        function renderNikah() {
+            const val = (loadNikah() || '').trim();
+            const el = $('nikahDisplay');
+            if (val) {
+                el.textContent = val;
+                el.classList.remove('empty');
+            } else {
+                el.textContent = '— Henüz belirlenmedi —';
+                el.classList.add('empty');
+            }
+            $('nikahInput').value = val;
+        }
+        function handleNikahSave() {
+            const val = $('nikahInput').value.trim();
+            saveNikah(val);
+            renderNikah();
+            flashStatus('nikahStatus', 'Kaydedildi.', 'success');
+        }
+
+        // ----- Notlar -----
+        function loadNotes() {
+            try {
+                const raw = localStorage.getItem(NOTES_KEY);
+                if (!raw) return [];
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch { return []; }
+        }
+        function saveNotes(arr) {
+            try { localStorage.setItem(NOTES_KEY, JSON.stringify(arr)); } catch {}
+        }
+
+        function renderNotes() {
+            const notes = loadNotes();
+            const list = $('noteList');
+            list.innerHTML = '';
+            if (!notes.length) {
+                $('noteEmpty').style.display = '';
+                return;
+            }
+            $('noteEmpty').style.display = 'none';
+            const sorted = [...notes].sort((a, b) => (b.ts || 0) - (a.ts || 0));
+            for (const note of sorted) {
+                const li = document.createElement('li');
+                li.className = 'note-item';
+                const date = new Date(note.ts || Date.now()).toLocaleString('tr-TR', {
+                    day: '2-digit', month: 'short', year: 'numeric',
+                    hour: '2-digit', minute: '2-digit'
+                });
+                const meta = document.createElement('div');
+                meta.className = 'note-meta';
+                const titleSpan = document.createElement('span');
+                titleSpan.className = 'note-title';
+                titleSpan.textContent = note.title || '(başlıksız)';
+                const right = document.createElement('div');
+                right.className = 'note-actions';
+                const dateSpan = document.createElement('span');
+                dateSpan.className = 'note-date';
+                dateSpan.textContent = date;
+                const delBtn = document.createElement('button');
+                delBtn.className = 'btn ghost';
+                delBtn.type = 'button';
+                delBtn.textContent = 'Sil';
+                delBtn.addEventListener('click', () => deleteNote(note.id));
+                right.appendChild(dateSpan);
+                right.appendChild(delBtn);
+                meta.appendChild(titleSpan);
+                meta.appendChild(right);
+                const body = document.createElement('p');
+                body.className = 'note-body';
+                body.textContent = note.body || '';
+                li.appendChild(meta);
+                li.appendChild(body);
+                list.appendChild(li);
+            }
+        }
+
+        function handleNoteAdd() {
+            const title = $('noteTitle').value.trim();
+            const body  = $('noteBody').value.trim();
+            if (!title && !body) {
+                flashStatus('noteStatus', 'Başlık veya içerik gerekli.');
+                return;
+            }
+            const notes = loadNotes();
+            notes.push({
+                id: 'n_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36),
+                title,
+                body,
+                ts: Date.now()
+            });
+            saveNotes(notes);
+            $('noteTitle').value = '';
+            $('noteBody').value  = '';
+            renderNotes();
+            flashStatus('noteStatus', 'Not eklendi.', 'success');
+        }
+
+        function deleteNote(id) {
+            const notes = loadNotes();
+            const note = notes.find(n => n.id === id);
+            if (!note) return;
+            const ok = confirm(`Bu notu silmek istediğine emin misin?\n\n"${note.title || '(başlıksız)'}"`);
+            if (!ok) return;
+            saveNotes(notes.filter(n => n.id !== id));
+            renderNotes();
+        }
+
+        // ----- Wipe -----
+        function handleWipe() {
+            const ok = confirm('Bu cihazdaki nikah tarihi ve notlar silinecek. Devam edilsin mi?');
+            if (!ok) return;
+            try {
+                localStorage.removeItem(NIKAH_KEY);
+                localStorage.removeItem(NOTES_KEY);
+            } catch {}
+            renderNikah();
+            renderNotes();
+            flashStatus('wipeStatus', 'Silindi.', 'success');
+        }
+
+        // ----- Init -----
+        document.addEventListener('DOMContentLoaded', () => {
+            $('nikahSaveBtn').addEventListener('click', handleNikahSave);
+            $('noteAddBtn').addEventListener('click', handleNoteAdd);
+            $('wipeBtn').addEventListener('click', handleWipe);
+
+            $('nikahInput').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') { e.preventDefault(); handleNikahSave(); }
+            });
+
+            renderNikah();
+            renderNotes();
+        });
+    })();
+    </script>
+</body>
+</html>
