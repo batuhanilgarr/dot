@@ -356,6 +356,47 @@
         }
         .guide-warn .guide-list li::marker { color: rgba(186, 142, 38, 0.85); }
 
+        /* Hesaplama kartı */
+        .calc-card {
+            margin: 16px 0 6px;
+            padding: 16px 18px;
+            background: linear-gradient(135deg, #fffaf5 0%, #fff5f8 100%);
+            border: 1px solid rgba(212, 165, 165, 0.32);
+            border-radius: 14px;
+        }
+        .calc-card .guide-sub-h { margin-bottom: 12px; }
+        .calc-row { margin-bottom: 10px; }
+        .calc-row input[type="date"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid rgba(139, 115, 85, 0.25);
+            border-radius: 10px;
+            background: #fff;
+            font-family: 'Georgia', serif;
+            font-size: 14px;
+            color: #6f5b4c;
+        }
+        .calc-row input[type="date"]:focus {
+            outline: none;
+            border-color: #d4a5a5;
+            box-shadow: 0 0 0 3px rgba(212, 165, 165, 0.18);
+        }
+        .calc-out {
+            margin: 8px 0 0;
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: #6f5b4c;
+        }
+        .calc-out.muted { color: #a89080; font-style: italic; }
+        .calc-out.success { color: #6b9e6b; }
+        .calc-out.warn    { color: #c97676; }
+        .calc-out strong  { color: #8b5454; }
+        .calc-divider {
+            height: 1px;
+            margin: 12px 0;
+            background: linear-gradient(90deg, transparent, rgba(212, 165, 165, 0.35), transparent);
+        }
+
         .guide-contact-card {
             margin: 14px 0;
             padding: 16px 18px;
@@ -465,7 +506,22 @@
                     <strong>65 yaş üstü çiftler:</strong> Evlenmelerine mani ruhsal durumlarının olmadığını belirten <strong>heyet raporunu</strong> tam teşekküllü <strong>Devlet Hastanesinden</strong> almalı.
                 </div>
                 <div class="guide-callout muted">
-                    Belediye sitesinde tarih hesaplayıcı var: sağlık raporu alındığı tarihten itibaren 180 gün içinde nikah günü alabilirsiniz / nikah tarihine 180 gün kala sağlık raporu alabilirsiniz.
+                    <strong>Geçerlilik:</strong> Sağlık raporu, alındığı günden itibaren <strong>tam 6 ay (180 gün)</strong> geçerlidir. Bu süre içinde nikah kıyılmalıdır; süre dolduğunda rapor geçersiz olur, yenisini almak gerekir.
+                </div>
+
+                <div class="calc-card" id="saglikCalc">
+                    <h4 class="guide-sub-h">📅 Tarih Hesaplama</h4>
+                    <div class="calc-row">
+                        <label class="field-label" for="calcReportDate">Sağlık raporu alış tarihi</label>
+                        <input id="calcReportDate" type="date">
+                        <p id="calcReportOut" class="calc-out muted">— tarih seç —</p>
+                    </div>
+                    <div class="calc-divider" aria-hidden="true"></div>
+                    <div class="calc-row">
+                        <label class="field-label" for="calcWedDate">Nikah tarihi (planladığın gün)</label>
+                        <input id="calcWedDate" type="date">
+                        <p id="calcWedOut" class="calc-out muted">— tarih seç —</p>
+                    </div>
                 </div>
             </section>
 
@@ -771,6 +827,90 @@
         }
 
         // ----- Init -----
+        // ----- Sağlık raporu / nikah tarihi hesaplayıcı -----
+        // Kural: rapor alındığı günden itibaren tam 6 ay (180 gün) geçerli.
+        const REPORT_VALID_DAYS = 180;
+
+        function fmtTR(d) {
+            return d.toLocaleDateString('tr-TR', {
+                day: '2-digit', month: 'long', year: 'numeric', weekday: 'long'
+            });
+        }
+        function parseISODate(s) {
+            if (!s) return null;
+            // input type=date "YYYY-MM-DD" — saat dilimi sürprizi olmasın diye yerel saatte oluştur
+            const [y, m, d] = s.split('-').map(Number);
+            if (!y || !m || !d) return null;
+            return new Date(y, m - 1, d);
+        }
+        function addDays(date, n) {
+            const out = new Date(date);
+            out.setDate(out.getDate() + n);
+            return out;
+        }
+        function daysBetween(a, b) {
+            const ms = b.getTime() - a.getTime();
+            return Math.round(ms / 86400000);
+        }
+        function startOfDay(d) {
+            const out = new Date(d);
+            out.setHours(0, 0, 0, 0);
+            return out;
+        }
+
+        function updateReportCalc() {
+            const out = $('calcReportOut');
+            const date = parseISODate($('calcReportDate').value);
+            if (!date) {
+                out.textContent = '— tarih seç —';
+                out.className = 'calc-out muted';
+                return;
+            }
+            const last = addDays(date, REPORT_VALID_DAYS);
+            const today = startOfDay(new Date());
+            const remaining = daysBetween(today, last);
+            let kind = 'success';
+            let extra = '';
+            if (remaining < 0) {
+                kind = 'warn';
+                extra = ` Bugün itibarıyla <strong>${Math.abs(remaining)} gün önce</strong> süre dolmuş — yeni rapor gerek.`;
+            } else if (remaining <= 30) {
+                kind = 'warn';
+                extra = ` Bugünden itibaren yalnızca <strong>${remaining} gün</strong> kaldı.`;
+            } else {
+                extra = ` Bugünden itibaren <strong>${remaining} gün</strong> daha geçerli.`;
+            }
+            out.className = 'calc-out ' + kind;
+            out.innerHTML = `Bu rapor ile en geç <strong>${fmtTR(last)}</strong> tarihine kadar nikah kıyılabilir.${extra}`;
+        }
+
+        function updateWedCalc() {
+            const out = $('calcWedOut');
+            const date = parseISODate($('calcWedDate').value);
+            if (!date) {
+                out.textContent = '— tarih seç —';
+                out.className = 'calc-out muted';
+                return;
+            }
+            const earliest = addDays(date, -REPORT_VALID_DAYS);
+            const today = startOfDay(new Date());
+            const daysToWed = daysBetween(today, date);
+            let extra = '';
+            let kind = 'success';
+            if (daysToWed < 0) {
+                kind = 'warn';
+                extra = ` Bu tarih geçmişte kalmış.`;
+            } else if (daysToWed > REPORT_VALID_DAYS) {
+                kind = 'warn';
+                const wait = daysToWed - REPORT_VALID_DAYS;
+                extra = ` Bugün rapor alırsan süresi nikahtan önce dolar — <strong>${wait} gün</strong> daha bekle.`;
+            } else {
+                extra = ` Bugün rapor alabilirsin; nikaha <strong>${daysToWed} gün</strong> var.`;
+            }
+            out.className = 'calc-out ' + kind;
+            out.innerHTML = `Sağlık raporunu en erken <strong>${fmtTR(earliest)}</strong> tarihinden itibaren alabilirsin.${extra}`;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             $('nikahSaveBtn').addEventListener('click', handleNikahSave);
             $('noteAddBtn').addEventListener('click', handleNoteAdd);
@@ -779,6 +919,11 @@
             $('nikahInput').addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') { e.preventDefault(); handleNikahSave(); }
             });
+
+            $('calcReportDate').addEventListener('change', updateReportCalc);
+            $('calcReportDate').addEventListener('input', updateReportCalc);
+            $('calcWedDate').addEventListener('change', updateWedCalc);
+            $('calcWedDate').addEventListener('input', updateWedCalc);
 
             renderNikah();
             renderNotes();
