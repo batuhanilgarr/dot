@@ -121,7 +121,7 @@
             margin-bottom: 6px;
         }
 
-        input[type="text"], textarea {
+        input[type="text"], input[type="tel"], input[type="date"], textarea {
             width: 100%;
             padding: 12px 14px;
             border: 1px solid rgba(139, 115, 85, 0.25);
@@ -131,6 +131,9 @@
             font-size: 15px;
             color: #6f5b4c;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        input[type="date"] {
+            font-family: 'Georgia', serif;
         }
         textarea {
             min-height: 96px;
@@ -144,6 +147,39 @@
         }
 
         .field { margin-bottom: 16px; }
+
+        .witness-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 14px;
+        }
+        .witness-card {
+            margin: 0;
+            padding: 14px 18px 4px;
+            border: 1px dashed rgba(184, 107, 107, 0.32);
+            border-radius: 16px;
+            background: rgba(255, 252, 248, 0.6);
+        }
+        .witness-legend {
+            padding: 0 8px;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 24px;
+            color: #b86b6b;
+        }
+        .witness-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .witness-card .field { margin-bottom: 12px; }
+        .witness-card textarea { min-height: 64px; }
+        .witness-hint {
+            margin: -2px 0 16px;
+            font-size: 12px;
+            color: #a89080;
+            font-style: italic;
+        }
 
         .btn {
             display: inline-flex;
@@ -642,6 +678,9 @@
         }
         .guide-contact-card .guide-sub-h { margin-bottom: 10px; }
 
+        @media (max-width: 720px) {
+            .witness-grid { grid-template-columns: 1fr; gap: 14px; }
+        }
         @media (max-width: 480px) {
             body { padding: 24px 14px 60px; }
             .card { padding: 24px 18px; border-radius: 20px; }
@@ -654,6 +693,8 @@
             .guide-list, .guide-p { font-size: 14px; }
             .guide-sub { padding: 12px 14px; }
             .guide-contact-card { padding: 14px 14px; }
+            .witness-row { grid-template-columns: 1fr; gap: 0; }
+            .witness-card { padding: 12px 14px 2px; }
         }
     </style>
 </head>
@@ -679,6 +720,74 @@
                 <button id="nikahSaveBtn" class="btn" type="button">Kaydet</button>
             </div>
             <p id="nikahStatus" class="status" aria-live="polite"></p>
+        </div>
+
+        <div class="card" id="witnesses">
+            <h2 class="section-title">Şahitlerimiz</h2>
+            <p class="section-hint">
+                Nikah başvurusunda <strong>2 şahit</strong> gerekli (18+, akraba olma şartı yok).
+                Belirlendikçe doldur — başvuru günü cebinde hazır olsun. Sadece bu cihazda saklanır.
+            </p>
+            <p class="witness-hint">Henüz belirlenmedi — şimdilik boş bırakabilirsin.</p>
+
+            <div class="witness-grid">
+                <fieldset class="witness-card">
+                    <legend class="witness-legend">Şahit 1</legend>
+                    <div class="field">
+                        <label class="field-label" for="w1Name">Ad Soyad</label>
+                        <input id="w1Name" type="text" autocomplete="off" placeholder="—">
+                    </div>
+                    <div class="witness-row">
+                        <div class="field">
+                            <label class="field-label" for="w1Tc">T.C. Kimlik No</label>
+                            <input id="w1Tc" type="text" inputmode="numeric" maxlength="11" autocomplete="off" placeholder="—">
+                        </div>
+                        <div class="field">
+                            <label class="field-label" for="w1Dob">Doğum Tarihi</label>
+                            <input id="w1Dob" type="date" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="w1Tel">Telefon</label>
+                        <input id="w1Tel" type="tel" inputmode="tel" autocomplete="off" placeholder="—">
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="w1Addr">Adres</label>
+                        <textarea id="w1Addr" autocomplete="off" placeholder="—"></textarea>
+                    </div>
+                </fieldset>
+
+                <fieldset class="witness-card">
+                    <legend class="witness-legend">Şahit 2</legend>
+                    <div class="field">
+                        <label class="field-label" for="w2Name">Ad Soyad</label>
+                        <input id="w2Name" type="text" autocomplete="off" placeholder="—">
+                    </div>
+                    <div class="witness-row">
+                        <div class="field">
+                            <label class="field-label" for="w2Tc">T.C. Kimlik No</label>
+                            <input id="w2Tc" type="text" inputmode="numeric" maxlength="11" autocomplete="off" placeholder="—">
+                        </div>
+                        <div class="field">
+                            <label class="field-label" for="w2Dob">Doğum Tarihi</label>
+                            <input id="w2Dob" type="date" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="w2Tel">Telefon</label>
+                        <input id="w2Tel" type="tel" inputmode="tel" autocomplete="off" placeholder="—">
+                    </div>
+                    <div class="field">
+                        <label class="field-label" for="w2Addr">Adres</label>
+                        <textarea id="w2Addr" autocomplete="off" placeholder="—"></textarea>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="actions">
+                <button id="witnessSaveBtn" class="btn" type="button">Kaydet</button>
+            </div>
+            <p id="witnessStatus" class="status" aria-live="polite"></p>
         </div>
 
         <div class="card nikah-guide-card" id="nikahGuide">
@@ -785,6 +894,7 @@
                             <ul class="step-sub">
                                 <li>Şahitlerin <strong>T.C. Kimlik numaralarını</strong> başvuruda yaz; nikah günü <strong>kimlik asıllarını</strong> getirmeleri zorunlu.</li>
                                 <li>Şehir dışından gelecekse seyahatlerini erkenden ayarla.</li>
+                                <li>Bilgileri unutmamak için yukarıdaki <a class="guide-link" href="#witnesses">Şahitlerimiz</a> kartını doldur — başvuru günü telefondan açıp okursun.</li>
                             </ul>
                         </div>
                     </li>
@@ -1048,7 +1158,7 @@
 
         <div class="card">
             <h2 class="section-title">Bu cihazdaki verileri sıfırla</h2>
-            <p class="section-hint">Bu cihazda kaydettiğin nikah tarihini ve tüm notları siler. Diğer cihazını etkilemez.</p>
+            <p class="section-hint">Bu cihazda kaydettiğin nikah tarihini, şahit bilgilerini ve tüm notları siler. Diğer cihazını etkilemez.</p>
             <div class="actions">
                 <button id="wipeBtn" class="btn danger" type="button">Hepsini sil</button>
             </div>
@@ -1062,6 +1172,8 @@
 
         const NIKAH_KEY = 'zb_gir_nikah';
         const NOTES_KEY = 'zb_gir_notes';
+        const WITNESS_KEY = 'zb_gir_witnesses';
+        const WITNESS_FIELDS = ['name', 'tc', 'dob', 'tel', 'addr'];
 
         const $ = (id) => document.getElementById(id);
         const setStatus = (id, msg, kind = '') => {
@@ -1191,16 +1303,69 @@
             renderNotes();
         }
 
+        // ----- Şahitler -----
+        function emptyWitnesses() {
+            return { w1: {}, w2: {} };
+        }
+        function loadWitnesses() {
+            try {
+                const raw = localStorage.getItem(WITNESS_KEY);
+                if (!raw) return emptyWitnesses();
+                const parsed = JSON.parse(raw);
+                return {
+                    w1: (parsed && parsed.w1 && typeof parsed.w1 === 'object') ? parsed.w1 : {},
+                    w2: (parsed && parsed.w2 && typeof parsed.w2 === 'object') ? parsed.w2 : {},
+                };
+            } catch { return emptyWitnesses(); }
+        }
+        function saveWitnessesObj(obj) {
+            try { localStorage.setItem(WITNESS_KEY, JSON.stringify(obj)); } catch {}
+        }
+        function renderWitnesses() {
+            const data = loadWitnesses();
+            for (const w of ['w1', 'w2']) {
+                for (const f of WITNESS_FIELDS) {
+                    const id = w + f.charAt(0).toUpperCase() + f.slice(1);
+                    const el = $(id);
+                    if (el) el.value = (data[w] && data[w][f]) || '';
+                }
+            }
+        }
+        function readWitnessesFromForm() {
+            const out = emptyWitnesses();
+            for (const w of ['w1', 'w2']) {
+                for (const f of WITNESS_FIELDS) {
+                    const id = w + f.charAt(0).toUpperCase() + f.slice(1);
+                    const el = $(id);
+                    if (!el) continue;
+                    const v = (el.value || '').trim();
+                    if (v) out[w][f] = v;
+                }
+            }
+            return out;
+        }
+        function handleWitnessSave() {
+            const data = readWitnessesFromForm();
+            saveWitnessesObj(data);
+            const filled = ['w1', 'w2'].filter(w => Object.keys(data[w]).length > 0).length;
+            const msg = filled === 0
+                ? 'Kaydedildi (henüz alan doldurulmadı).'
+                : `Kaydedildi · ${filled}/2 şahit bilgisi var.`;
+            flashStatus('witnessStatus', msg, 'success');
+        }
+
         // ----- Wipe -----
         function handleWipe() {
-            const ok = confirm('Bu cihazdaki nikah tarihi ve notlar silinecek. Devam edilsin mi?');
+            const ok = confirm('Bu cihazdaki nikah tarihi, şahit bilgileri ve notlar silinecek. Devam edilsin mi?');
             if (!ok) return;
             try {
                 localStorage.removeItem(NIKAH_KEY);
                 localStorage.removeItem(NOTES_KEY);
+                localStorage.removeItem(WITNESS_KEY);
             } catch {}
             renderNikah();
             renderNotes();
+            renderWitnesses();
             flashStatus('wipeStatus', 'Silindi.', 'success');
         }
 
@@ -1292,11 +1457,23 @@
         document.addEventListener('DOMContentLoaded', () => {
             $('nikahSaveBtn').addEventListener('click', handleNikahSave);
             $('noteAddBtn').addEventListener('click', handleNoteAdd);
+            $('witnessSaveBtn').addEventListener('click', handleWitnessSave);
             $('wipeBtn').addEventListener('click', handleWipe);
 
             $('nikahInput').addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') { e.preventDefault(); handleNikahSave(); }
             });
+
+            // TC alanı: sadece rakam, en fazla 11 hane
+            for (const w of ['w1', 'w2']) {
+                const tc = $(w + 'Tc');
+                if (tc) {
+                    tc.addEventListener('input', () => {
+                        const clean = tc.value.replace(/\D/g, '').slice(0, 11);
+                        if (clean !== tc.value) tc.value = clean;
+                    });
+                }
+            }
 
             $('calcReportDate').addEventListener('change', updateReportCalc);
             $('calcReportDate').addEventListener('input', updateReportCalc);
@@ -1305,6 +1482,7 @@
 
             renderNikah();
             renderNotes();
+            renderWitnesses();
         });
     })();
     </script>
