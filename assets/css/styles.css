@@ -413,6 +413,40 @@ body::before {
     aspect-ratio: 900 / 1268;
 }
 
+.davetiye-placeholder {
+    max-width: 420px;
+    width: 100%;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    padding: 60px 40px;
+    text-align: center;
+    border: 1.5px dashed #d4a5a5;
+}
+
+.davetiye-placeholder-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.davetiye-placeholder-text {
+    font-size: 18px;
+    color: #8b7355;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.schedule-soon,
+.location-soon {
+    text-align: center;
+    color: #8b7355;
+    font-size: 16px;
+    padding: 20px;
+    letter-spacing: 0.5px;
+}
+
 section {
     padding: 60px 20px;
     max-width: 900px;
