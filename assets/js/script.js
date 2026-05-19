@@ -342,8 +342,8 @@ window.addEventListener('resize', () => {
     });
 }, { passive: true });
 
-const WEDDING_DATE_MS = new Date('2026-05-10T13:00:00+03:00').getTime();
-const EVENT_END_MS = new Date('2026-05-10T17:00:00+03:00').getTime();
+const WEDDING_DATE_MS = new Date('2026-10-25T15:00:00+03:00').getTime();
+const EVENT_END_MS = new Date('2026-10-25T20:00:00+03:00').getTime();
 
 /* ============================================== */
 /* BLOOM MODE — 10 Mayis 2026 Pazar 13:00 sonrasi  */
@@ -590,16 +590,16 @@ function showToastBanner() {
     const toast = document.getElementById('toastBanner');
     if (!toast) return;
 
-    const weddingDate = new Date('2026-05-10T13:00:00').getTime();
+    const weddingDate = new Date('2026-10-25T15:00:00').getTime();
     const now = new Date().getTime();
     const distance = weddingDate - now;
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
 
     let message;
     if (distance <= 0) message = '🎉 Bugün o özel gün!';
-    else if (days === 0) message = '🌸 Bu gece nişan var! Görüşmek üzere!';
-    else if (days === 1) message = '🌸 Yarın nişan! Görüşmek üzere!';
-    else message = `🌸 Nişana ${days} gün kaldı! Görüşmek üzere!`;
+    else if (days === 0) message = '🌸 Bu gece nikah var! Görüşmek üzere!';
+    else if (days === 1) message = '🌸 Yarın nikah! Görüşmek üzere!';
+    else message = `🌸 Nikaha ${days} gün kaldı! Görüşmek üzere!`;
 
     toast.textContent = message;
 
@@ -636,7 +636,7 @@ async function loadWeather() {
 
     try {
         const res = await fetch(
-            'https://api.open-meteo.com/v1/forecast?latitude=40.9989&longitude=29.1500&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FIstanbul&start_date=2026-05-10&end_date=2026-05-10'
+            'https://api.open-meteo.com/v1/forecast?latitude=40.9989&longitude=29.1500&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FIstanbul&start_date=2026-10-25&end_date=2026-10-25'
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
