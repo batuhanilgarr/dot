@@ -20,8 +20,8 @@ const rsvpGuestCount = document.getElementById('rsvpGuestCount');
 const RSVP_API_URL = 'https://zeynepbatuhan-rsvp-api.batuhannilgarr.workers.dev/rsvp-count';
 const RSVP_POST_URL = RSVP_API_URL.replace('/rsvp-count', '/rsvp');
 const RSVP_LOCAL_KEY = 'rsvp-confirmed-v1';
-/** Nişan döneminden kalan API sayısı; nikah için sıfırdan gösterilir */
-const RSVP_BASELINE_OFFSET = 23;
+/** Nişan döneminden kalan ham API sayısı (Cloudflare KV); gösterimde düşülür */
+const RSVP_NISAN_BASELINE = 23;
 const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
 let isMusicPlaying = false;
@@ -104,6 +104,8 @@ document.addEventListener('click', onFirstInteraction, { passive: true });
 document.addEventListener('touchstart', onFirstInteraction, { passive: true });
 document.addEventListener('keydown', onFirstInteraction);
 
+const INTRO_TEXT_MIN_MS = 5000;
+
 function showMobileIntroSplash() {
     if (!introWelcome) return;
 
@@ -115,12 +117,68 @@ function showMobileIntroSplash() {
     window.setTimeout(() => {
         splash.classList.add('fade-out');
         window.setTimeout(() => splash.remove(), 800);
-    }, 5500);
+    }, INTRO_TEXT_MIN_MS);
+}
+
+function beginIntroVideoAfterText() {
+    if (!introVideo || isMobile) return;
+
+    introVideo.classList.add('intro-video-hidden');
+    videoContainer?.classList.add('intro-text-phase');
+
+    const startedAt = Date.now();
+    let beganPlayback = false;
+
+    const startPlayback = () => {
+        if (beganPlayback) return;
+        beganPlayback = true;
+
+        const waitMs = Math.max(0, INTRO_TEXT_MIN_MS - (Date.now() - startedAt));
+        window.setTimeout(() => {
+            introWelcome?.classList.add('fade-out');
+            introVideo.classList.remove('intro-video-hidden');
+            videoContainer?.classList.remove('intro-text-phase');
+
+            introVideo.play().catch(() => {
+                finishIntro();
+            });
+        }, waitMs);
+    };
+
+    introVideo.addEventListener('playing', () => {
+        introWelcome?.classList.add('fade-out');
+    }, { once: true });
+
+    introVideo.addEventListener('canplay', startPlayback, { once: true });
+    introVideo.addEventListener('error', finishIntro, { once: true });
+
+    window.setTimeout(() => {
+        if (!beganPlayback) finishIntro();
+    }, INTRO_TEXT_MIN_MS + 8000);
+}
+
+function finishIntro() {
+    videoContainer?.classList.add('hidden');
+    videoContainer?.classList.remove('intro-text-phase');
+    content?.classList.add('visible');
+    menu?.classList.add('visible');
+    document.body.style.overflow = 'auto';
+    introWelcome?.classList.add('fade-out');
+    updateMusicButton();
+    if (hasUserInteracted) tryPlayMusic();
+    showToastBanner();
+}
+
+function getDisplayedRsvpCount(rawCount) {
+    const count = Number(rawCount);
+    if (!Number.isFinite(count)) return 0;
+    return Math.max(0, count - RSVP_NISAN_BASELINE);
 }
 
 window.addEventListener('load', () => {
     if (!isMobile) {
         ensureVideoSource();
+        beginIntroVideoAfterText();
     } else {
         videoContainer?.classList.add('hidden');
         content?.classList.add('visible');
@@ -360,8 +418,8 @@ window.addEventListener('resize', () => {
     });
 }, { passive: true });
 
-const WEDDING_DATE_MS = new Date('2026-10-25T15:00:00+03:00').getTime();
-const EVENT_END_MS = new Date('2026-10-25T20:00:00+03:00').getTime();
+const WEDDING_DATE_MS = new Date('2026-10-26T15:00:00+03:00').getTime();
+const EVENT_END_MS = new Date('2026-10-26T20:00:00+03:00').getTime();
 
 /* ============================================== */
 /* BLOOM MODE — 10 Mayis 2026 Pazar 13:00 sonrasi  */
@@ -523,7 +581,7 @@ async function updateRsvpCount() {
         const count = Number(data.count || 0);
         const updatedAt = data.updatedAt || new Date().toISOString();
 
-        rsvpCountValue.textContent = String(Math.max(0, count - RSVP_BASELINE_OFFSET));
+        rsvpCountValue.textContent = String(getDisplayedRsvpCount(count));
         rsvpCountUpdated.textContent = new Date(updatedAt).toLocaleString('tr-TR', {
             day: '2-digit',
             month: '2-digit',
@@ -608,7 +666,7 @@ function showToastBanner() {
     const toast = document.getElementById('toastBanner');
     if (!toast) return;
 
-    const weddingDate = new Date('2026-10-25T15:00:00').getTime();
+    const weddingDate = new Date('2026-10-26T15:00:00+03:00').getTime();
     const now = new Date().getTime();
     const distance = weddingDate - now;
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -664,7 +722,7 @@ async function loadWeather() {
 
     try {
         const res = await fetch(
-            'https://api.open-meteo.com/v1/forecast?latitude=40.9989&longitude=29.1500&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FIstanbul&start_date=2026-10-25&end_date=2026-10-25'
+            'https://api.open-meteo.com/v1/forecast?latitude=40.9989&longitude=29.1500&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FIstanbul&start_date=2026-10-26&end_date=2026-10-26'
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
