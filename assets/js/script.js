@@ -634,6 +634,16 @@ async function loadWeather() {
         95: ['⛈️', 'Fırtınalı'],
     };
 
+    const FORECAST_HORIZON_MS = 16 * 24 * 60 * 60 * 1000;
+    if (WEDDING_DATE_MS - Date.now() > FORECAST_HORIZON_MS) {
+        const descEl = document.getElementById('weatherDesc');
+        const iconEl = document.getElementById('weatherIcon');
+        if (iconEl) iconEl.textContent = '🌤️';
+        if (descEl) descEl.textContent = 'Nikaha yakın güncellenir';
+        weatherCard.classList.add('loaded');
+        return;
+    }
+
     try {
         const res = await fetch(
             'https://api.open-meteo.com/v1/forecast?latitude=40.9989&longitude=29.1500&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FIstanbul&start_date=2026-10-25&end_date=2026-10-25'
