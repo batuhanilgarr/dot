@@ -110,6 +110,62 @@ body::before {
     object-fit: cover;
 }
 
+.intro-welcome {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 28px;
+    text-align: center;
+    background: linear-gradient(
+        180deg,
+        rgba(20, 12, 14, 0.72) 0%,
+        rgba(40, 22, 28, 0.55) 45%,
+        rgba(20, 12, 14, 0.78) 100%
+    );
+    pointer-events: none;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.intro-welcome.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.intro-welcome-names {
+    font-family: 'Brush Script MT', cursive;
+    font-size: clamp(36px, 8vw, 56px);
+    color: #f8e8ec;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.intro-welcome-names span {
+    color: #e8b4b8;
+    font-size: 0.65em;
+}
+
+.intro-welcome-text {
+    max-width: 520px;
+    font-size: clamp(15px, 2.4vw, 18px);
+    line-height: 1.75;
+    color: rgba(255, 248, 245, 0.95);
+    font-weight: 300;
+}
+
+.intro-welcome-text strong {
+    color: #ffd4dc;
+    font-weight: 600;
+}
+
+.intro-welcome.mobile-splash {
+    position: fixed;
+    z-index: 2500;
+}
+
 .menu {
     position: fixed;
     top: 0;
@@ -277,7 +333,7 @@ body::before {
 .upcoming-card {
     position: relative;
     text-align: center;
-    padding: 64px 36px 56px;
+    padding: 48px 32px 44px;
     background:
         radial-gradient(circle at 50% 0%, rgba(255, 232, 240, 0.85) 0%, rgba(255, 255, 255, 0.96) 60%),
         linear-gradient(180deg, #ffffff 0%, #fff5f8 100%);
@@ -332,6 +388,43 @@ body::before {
     margin: 0 0 18px;
 }
 
+.upcoming-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 28px;
+    margin: 8px 0 28px;
+    align-items: start;
+}
+
+.upcoming-event {
+    padding: 20px 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 192, 213, 0.35);
+}
+
+.upcoming-event-main {
+    background: rgba(255, 240, 245, 0.9);
+    border-color: rgba(212, 165, 165, 0.4);
+}
+
+.upcoming-date {
+    font-family: 'Brush Script MT', cursive;
+    font-size: clamp(32px, 5vw, 44px);
+    line-height: 1.1;
+    color: #b86b6b;
+    margin: 0;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 12px rgba(212, 165, 165, 0.25);
+}
+
+.upcoming-time {
+    margin: 8px 0 0;
+    font-size: 15px;
+    color: #a89080;
+    letter-spacing: 1px;
+}
+
 .upcoming-big {
     font-family: 'Brush Script MT', cursive;
     font-size: 84px;
@@ -360,16 +453,18 @@ body::before {
 
 @media (max-width: 768px) {
     .upcoming-section { padding: 40px 16px 60px; }
-    .upcoming-card { padding: 52px 24px 44px; border-radius: 22px; }
-    .upcoming-big { font-size: 68px; }
+    .upcoming-card { padding: 48px 20px 40px; border-radius: 22px; }
+    .upcoming-grid { grid-template-columns: 1fr; gap: 14px; }
+    .upcoming-date { font-size: 36px; }
     .upcoming-heading { font-size: 17px; letter-spacing: 3px; }
     .upcoming-flourish { font-size: 34px; top: -22px; }
     .upcoming-flourish.bottom { font-size: 28px; bottom: -16px; }
 }
 
 @media (max-width: 480px) {
-    .upcoming-big { font-size: 56px; }
+    .upcoming-date { font-size: 32px; }
     .upcoming-foot { font-size: 14px; }
+    .intro-welcome { padding: 24px 20px; }
 }
 
 .scroll-indicator {
@@ -445,6 +540,53 @@ body::before {
     font-size: 16px;
     padding: 20px;
     letter-spacing: 0.5px;
+}
+
+.coming-soon-card {
+    max-width: 420px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 40px 32px 36px;
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255, 232, 240, 0.9) 0%, rgba(255, 255, 255, 0.97) 55%),
+        linear-gradient(180deg, #ffffff 0%, #fff8fa 100%);
+    border: 1px dashed rgba(212, 165, 165, 0.55);
+    box-shadow: 0 12px 40px rgba(212, 165, 165, 0.15);
+}
+
+.coming-soon-badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #b86b6b;
+    background: rgba(255, 228, 235, 0.9);
+    border: 1px solid rgba(212, 165, 165, 0.4);
+    border-radius: 999px;
+    padding: 6px 16px;
+    margin-bottom: 16px;
+}
+
+.coming-soon-title {
+    font-family: 'Georgia', serif;
+    font-size: 26px;
+    color: #8b7355;
+    margin: 0 0 10px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.coming-soon-text {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+    color: #7e6c61;
+    font-style: italic;
+}
+
+.faq-coming-soon {
+    margin-top: 8px;
 }
 
 section {
@@ -701,12 +843,22 @@ section h2 {
     text-align: center;
 }
 
-.story-section p {
-    max-width: 680px;
+.story-body {
+    max-width: 720px;
     margin: 0 auto;
+}
+
+.story-section p,
+.story-body p {
+    max-width: 680px;
+    margin: 0 auto 1.1em;
     font-size: 18px;
-    line-height: 1.7;
+    line-height: 1.75;
     color: #7e6c61;
+}
+
+.story-body p:last-child {
+    margin-bottom: 0;
 }
 
 .seo-landing-section {
