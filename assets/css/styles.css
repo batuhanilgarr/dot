@@ -551,6 +551,116 @@ body::before {
     .intro-welcome { padding: 24px 20px; }
 }
 
+/* ---- Two-event grid layout ---- */
+.upcoming-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+}
+
+.upcoming-grid .upcoming-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.upcoming-grid .upcoming-big {
+    font-size: 52px;
+}
+
+.upcoming-big.upcoming-soon {
+    color: #c98a9a;
+    font-size: 60px;
+}
+
+@media (max-width: 640px) {
+    .upcoming-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .upcoming-grid .upcoming-big,
+    .upcoming-big.upcoming-soon {
+        font-size: 68px;
+    }
+}
+
+/* ---- Aileler section ---- */
+.aileler-section {
+    padding: 60px 20px 40px;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.aileler-eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #a89080;
+    margin: 0 0 36px;
+}
+
+.aileler-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 20px;
+}
+
+.aile-card {
+    padding: 32px 24px;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255, 232, 240, 0.7) 0%, rgba(255, 255, 255, 0.92) 60%),
+        linear-gradient(180deg, #ffffff 0%, #fff5f8 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 192, 213, 0.35);
+    box-shadow: 0 8px 32px rgba(212, 165, 165, 0.15);
+    height: 100%;
+}
+
+.aile-rol {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #b86b6b;
+    margin: 0 0 10px;
+}
+
+.aile-isim {
+    font-family: 'Georgia', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: #5a4a42;
+    margin: 0 0 12px;
+    line-height: 1.4;
+}
+
+.aile-ebeveyn {
+    font-size: 14px;
+    color: #8b7355;
+    font-style: italic;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.aileler-orta {
+    font-size: 30px;
+    line-height: 1;
+    filter: drop-shadow(0 4px 8px rgba(212, 165, 165, 0.4));
+    animation: flourishSpin 14s linear infinite;
+}
+
+@media (max-width: 600px) {
+    .aileler-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .aileler-orta { font-size: 22px; }
+    .aile-card { padding: 24px 20px; }
+}
+
 .scroll-indicator {
     font-size: 32px;
     color: #d4a5a5;
