@@ -477,7 +477,6 @@ body::before {
     grid-template-columns: 1fr 1fr;
     gap: 20px 28px;
     margin: 8px 0 28px;
-    align-items: start;
 }
 
 .upcoming-event {
