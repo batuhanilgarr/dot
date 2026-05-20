@@ -370,40 +370,7 @@ body::before {
     animation: flourishSpin 14s linear infinite;
 }
 
-/* ---- Two-event grid layout ---- */
-.upcoming-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    align-items: stretch;
-}
 
-.upcoming-grid .upcoming-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.upcoming-grid .upcoming-big {
-    font-size: 52px;
-}
-
-.upcoming-big.upcoming-soon {
-    color: #c98a9a;
-    font-size: 60px;
-}
-
-@media (max-width: 640px) {
-    .upcoming-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    .upcoming-grid .upcoming-big,
-    .upcoming-big.upcoming-soon {
-        font-size: 68px;
-    }
-}
 
 /* ---- Aileler section ---- */
 .aileler-section {
@@ -544,7 +511,7 @@ body::before {
 
 .upcoming-big {
     font-family: 'Brush Script MT', cursive;
-    font-size: 84px;
+    font-size: 60px;
     line-height: 1;
     color: #b86b6b;
     margin: 0 0 24px;
