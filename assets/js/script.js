@@ -418,8 +418,8 @@ window.addEventListener('resize', () => {
     });
 }, { passive: true });
 
-const WEDDING_DATE_MS = new Date('2026-10-26T15:00:00+03:00').getTime();
-const EVENT_END_MS = new Date('2026-10-26T20:00:00+03:00').getTime();
+const WEDDING_DATE_MS = new Date('2026-10-25T14:00:00+03:00').getTime();
+const EVENT_END_MS = new Date('2026-10-25T22:00:00+03:00').getTime();
 
 /* ============================================== */
 /* BLOOM MODE — 10 Mayis 2026 Pazar 13:00 sonrasi  */
@@ -666,7 +666,7 @@ function showToastBanner() {
     const toast = document.getElementById('toastBanner');
     if (!toast) return;
 
-    const weddingDate = new Date('2026-10-26T15:00:00+03:00').getTime();
+    const weddingDate = new Date('2026-10-25T14:00:00+03:00').getTime();
     const now = new Date().getTime();
     const distance = weddingDate - now;
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
