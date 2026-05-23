@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0b0b">
+  <title>♡</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:   #0b0b0b;
+      --ink:  #e8e4de;
+      --dim:  rgba(232,228,222,.35);
+      --gap:  3px;
+      --ease: cubic-bezier(.4,0,.2,1);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100dvh;
+    }
+
+    /* ─── Header ─── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: linear-gradient(to bottom, rgba(11,11,11,.95) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .hdr-left {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 22px;
+      letter-spacing: .03em;
+      color: var(--ink);
+      pointer-events: auto;
+    }
+
+    .hdr-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .hdr-count {
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--dim);
+      pointer-events: auto;
+    }
+
+    .hdr-year {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--dim);
+      pointer-events: auto;
+    }
+
+    /* ─── Canvas ─── */
+    .canvas {
+      padding-top: 56px;
+    }
+
+    /* ─── Masonry (CSS columns) ─── */
+    .masonry {
+      columns: 2;
+      column-gap: var(--gap);
+      padding: var(--gap);
+    }
+    @media (min-width: 540px)  { .masonry { columns: 3; } }
+    @media (min-width: 900px)  { .masonry { columns: 4; } }
+    @media (min-width: 1300px) { .masonry { columns: 5; } }
+    @media (min-width: 1700px) { .masonry { columns: 6; } }
+
+    /* ─── Item ─── */
+    .item {
+      break-inside: avoid;
+      margin-bottom: var(--gap);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      display: block;
+      background: #1a1a1a;
+      opacity: 0;
+      transition: opacity .55s var(--ease);
+    }
+    .item.vis { opacity: 1; }
+
+    .item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform .65s var(--ease), filter .4s var(--ease);
+      will-change: transform;
+    }
+    .item:hover img {
+      transform: scale(1.035);
+      filter: brightness(.65);
+    }
+
+    /* ─── Overlay ─── */
+    .item-ov {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .3s var(--ease);
+      pointer-events: none;
+    }
+    .item:hover .item-ov {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    @media (hover: none) {
+      .item img { filter: brightness(.65); }
+      .item-ov { opacity: 1; pointer-events: auto; }
+    }
+
+    /* ─── Download circle ─── */
+    .dl-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(232,228,222,.6);
+      background: rgba(11,11,11,.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, transform .15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .dl-circle:hover  { background: rgba(232,228,222,.18); border-color: var(--ink); }
+    .dl-circle:active { transform: scale(.9); }
+    .dl-circle.loading { opacity: .5; pointer-events: none; }
+    .dl-circle.done {
+      border-color: rgba(160,220,180,.7);
+      background: rgba(45,106,79,.35);
+      color: #a0dcb4;
+    }
+
+    /* ─── Lightbox ─── */
+    #lb {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6,6,6,.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s var(--ease);
+    }
+    #lb.open { opacity: 1; pointer-events: auto; }
+
+    .lb-frame {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      max-width: min(94vw, 1200px);
+      max-height: 96dvh;
+      transform: scale(.97);
+      transition: transform .35s var(--ease);
+    }
+    #lb.open .lb-frame { transform: none; }
+
+    #lb-img {
+      display: block;
+      max-width: 100%;
+      max-height: calc(96dvh - 72px);
+      object-fit: contain;
+      border-radius: 2px;
+    }
+
+    .lb-bar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 2px;
+    }
+
+    .lb-info {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 13px;
+      color: rgba(232,228,222,.3);
+      letter-spacing: .03em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Lightbox download */
+    .lb-dl {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 16px;
+      border-radius: 2px;
+      background: transparent;
+      border: 1px solid rgba(232,228,222,.22);
+      color: rgba(232,228,222,.6);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color .2s, color .2s, background .2s;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lb-dl:hover  { border-color: var(--ink); color: var(--ink); background: rgba(232,228,222,.05); }
+    .lb-dl:active { background: rgba(232,228,222,.1); }
+    .lb-dl.loading { opacity: .5; pointer-events: none; }
+    .lb-dl.done   { border-color: rgba(160,220,180,.5); color: #a0dcb4; }
+
+    /* Nav & Close */
+    .lb-close {
+      position: fixed;
+      top: 16px; right: 18px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(255,255,255,.5);
+      font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lb-close:hover { border-color: rgba(255,255,255,.4); color: #fff; }
+
+    .lb-nav {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.4);
+      font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: border-color .2s, color .2s, opacity .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lb-nav:hover { border-color: rgba(255,255,255,.35); color: #fff; }
+    .lb-nav.off   { opacity: .1; pointer-events: none; }
+    #lb-prev { left: 10px; }
+    #lb-next { right: 10px; }
+    @media (max-width: 639px) { .lb-nav { display: none; } }
+
+    /* ─── Toast ─── */
+    #toast {
+      position: fixed;
+      bottom: 20px; left: 50%;
+      transform: translateX(-50%) translateY(6px);
+      background: rgba(232,228,222,.1);
+      border: 1px solid rgba(232,228,222,.15);
+      backdrop-filter: blur(12px);
+      color: rgba(232,228,222,.8);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: 2px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s, transform .2s;
+      white-space: nowrap;
+      z-index: 2000;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ─── Shimmer skeleton ─── */
+    @keyframes sk {
+      0%   { background-position: -600px 0; }
+      100% { background-position:  600px 0; }
+    }
+    .item.sk::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(90deg,#1a1a1a 25%,#252525 50%,#1a1a1a 75%);
+      background-size: 1200px 100%;
+      animation: sk 1.5s infinite linear;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="hdr-left">♡</span>
+  <div class="hdr-right">
+    <span class="hdr-count" id="hdr-count"></span>
+    <span class="hdr-year">2026</span>
+  </div>
+</header>
+
+<div class="canvas">
+  <div class="masonry" id="masonry"></div>
+</div>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="Önizleme">
+  <button class="lb-close" id="lb-close" aria-label="Kapat">✕</button>
+  <button class="lb-nav" id="lb-prev" aria-label="Önceki">‹</button>
+  <button class="lb-nav" id="lb-next" aria-label="Sonraki">›</button>
+  <div class="lb-frame">
+    <img id="lb-img" src="" alt="">
+    <div class="lb-bar">
+      <span class="lb-info" id="lb-info"></span>
+      <button class="lb-dl" id="lb-dl"></button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  'use strict';
+
+  const IMGS = [
+    'DSC09069.JPG','DSC09070.JPG','DSC09075.JPG','DSC09090.JPG',
+    'DSC09105.JPG','DSC09110.JPG','DSC09112.JPG','DSC09125.JPG',
+    'DSC09130.JPG','DSC09136.JPG','DSC09138.JPG','DSC09144.JPG',
+    'DSC09145.JPG','DSC09175.JPG','DSC09177.JPG','DSC09186.JPG',
+    'DSC09188.JPG','DSC09215.JPG','DSC09227.JPG','DSC09232.JPG',
+    'DSC09235.JPG','DSC09243.JPG','DSC09276.JPG','DSC09286.JPG',
+    'DSC09291.JPG','DSC09321.JPG','DSC09347.JPG','DSC09365.JPG',
+    'DSC09366.JPG','DSC09367.JPG','DSC09392.JPG','DSC09396.JPG',
+    'DSC09403.JPG','DSC09404.JPG','DSC09410.JPG','DSC09414.JPG',
+    'DSC09421.JPG','DSC09427.JPG','DSC09453.JPG','DSC09493.JPG',
+    'DSC09510.JPG','DSC09513.JPG','DSC09528.JPG','DSC09531.JPG',
+    'DSC09566.JPG','DSC09567.JPG','DSC09631.JPG','DSC09634.JPG',
+    'DSC09636.JPG',
+  ];
+
+  let cur = 0;
+
+  /* ── Icon helpers ── */
+  function mkSvg(d, sz) {
+    const s = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    s.setAttribute('width',sz); s.setAttribute('height',sz);
+    s.setAttribute('viewBox','0 0 16 16'); s.setAttribute('fill','currentColor');
+    s.setAttribute('aria-hidden','true');
+    const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',d); s.appendChild(p); return s;
+  }
+  const I_DL  = 'M8 12L3 7h3V1h4v6h3L8 12zM2 14h12v1.5H2V14z';
+  const I_OK  = 'M6.5 12L2 7.5l1.4-1.4 3.1 3.1 6.1-6.1L14 4.5z';
+
+  function renderBtn(btn, state, type) {
+    btn.textContent = '';
+    if (type === 'circle') {
+      btn.appendChild(mkSvg(state === 'done' ? I_OK : I_DL, 15));
+      btn.classList.toggle('done', state === 'done');
+      btn.classList.remove('loading');
+    } else {
+      btn.appendChild(mkSvg(state === 'done' ? I_OK : I_DL, 12));
+      btn.appendChild(document.createTextNode(state === 'done' ? ' Kaydedildi' : ' İndir'));
+      btn.classList.toggle('done', state === 'done');
+      btn.classList.remove('loading');
+    }
+  }
+
+  /* ── Build grid ── */
+  const masonry = document.getElementById('masonry');
+  document.getElementById('hdr-count').textContent = IMGS.length + ' kare';
+
+  IMGS.forEach(function(name, i) {
+    const item = document.createElement('div');
+    item.className = 'item sk';
+
+    const img = document.createElement('img');
+    img.alt = name; img.loading = 'lazy'; img.decoding = 'async';
+    img.onload  = function() { item.classList.remove('sk'); };
+    img.onerror = function() { item.classList.remove('sk'); };
+    img.src = name;
+
+    const ov  = document.createElement('div');
+    ov.className = 'item-ov';
+
+    const btn = document.createElement('button');
+    btn.className = 'dl-circle';
+    btn.setAttribute('aria-label', 'İndir');
+    renderBtn(btn, 'default', 'circle');
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      dlPhoto(i, btn, 'circle');
+    });
+
+    ov.appendChild(btn);
+    item.appendChild(img);
+    item.appendChild(ov);
+    item.addEventListener('click', function() { openLb(i); });
+    masonry.appendChild(item);
+  });
+
+  /* ── Stagger reveal ── */
+  const io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (!e.isIntersecting) return;
+      const i = Array.from(masonry.children).indexOf(e.target);
+      setTimeout(function() { e.target.classList.add('vis'); }, (i % 5) * 50);
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.03 });
+  document.querySelectorAll('.item').forEach(function(el) { io.observe(el); });
+
+  /* ── Download ── */
+  /* Canvas üzerinden yeniden render eder:
+     - Tarayıcı EXIF Orientation'ı drawImage sırasında otomatik uygular → doğru yön
+     - Canvas export'ta EXIF yok → galeri dosya tarihini (bugün) kullanır          */
+  async function dlPhoto(idx, btn, type) {
+    const name = IMGS[idx];
+    btn.classList.add('loading');
+    try {
+      const blob = await new Promise(function(resolve, reject) {
+        const img = new Image();
+        img.onload = function() {
+          const c = document.createElement('canvas');
+          c.width  = img.naturalWidth;
+          c.height = img.naturalHeight;
+          c.getContext('2d').drawImage(img, 0, 0);
+          c.toBlob(function(b) { b ? resolve(b) : reject(new Error('toBlob failed')); },
+                   'image/jpeg', 0.95);
+        };
+        img.onerror = reject;
+        img.src = name;
+      });
+      const file = new File([blob], name, { type: 'image/jpeg', lastModified: Date.now() });
+      const url  = URL.createObjectURL(file);
+      const a    = document.createElement('a');
+      a.href = url; a.download = name;
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a); URL.revokeObjectURL(url);
+      renderBtn(btn, 'done', type);
+      toast('Kaydedildi');
+      setTimeout(function() { renderBtn(btn, 'default', type); }, 2800);
+    } catch (_) {
+      btn.classList.remove('loading');
+      window.open(name, '_blank');
+      toast('Tarayıcıda açıldı');
+    }
+  }
+
+  /* ── Lightbox ── */
+  const lb     = document.getElementById('lb');
+  const lbImg  = document.getElementById('lb-img');
+  const lbInfo = document.getElementById('lb-info');
+  const lbDl   = document.getElementById('lb-dl');
+  const lbPrev = document.getElementById('lb-prev');
+  const lbNext = document.getElementById('lb-next');
+
+  renderBtn(lbDl, 'default', 'text');
+  lbDl.addEventListener('click', function() { dlPhoto(cur, lbDl, 'text'); });
+
+  function openLb(i) {
+    cur = i;
+    lbImg.src = IMGS[i]; lbImg.alt = IMGS[i];
+    syncLb();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLb() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    lbImg.src = '';
+    renderBtn(lbDl, 'default', 'text');
+  }
+  function syncLb() {
+    lbInfo.textContent = (cur + 1) + ' — ' + IMGS.length;
+    lbPrev.classList.toggle('off', cur === 0);
+    lbNext.classList.toggle('off', cur === IMGS.length - 1);
+  }
+  function go(d) {
+    const n = cur + d;
+    if (n < 0 || n >= IMGS.length) return;
+    cur = n;
+    lbImg.style.opacity = '0';
+    lbImg.style.transition = 'opacity .15s';
+    setTimeout(function() {
+      lbImg.src = IMGS[cur];
+      lbImg.onload = function() { lbImg.style.opacity = '1'; };
+    }, 130);
+    syncLb();
+    renderBtn(lbDl, 'default', 'text');
+  }
+
+  document.getElementById('lb-close').addEventListener('click', closeLb);
+  lbPrev.addEventListener('click', function() { go(-1); });
+  lbNext.addEventListener('click', function() { go(1); });
+  lb.addEventListener('click', function(e) { if (e.target === lb) closeLb(); });
+
+  let tx = 0;
+  lb.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', function(e) {
+    const d = e.changedTouches[0].clientX - tx;
+    if (Math.abs(d) > 48) go(d < 0 ? 1 : -1);
+  });
+  document.addEventListener('keydown', function(e) {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape')     closeLb();
+    if (e.key === 'ArrowLeft')  go(-1);
+    if (e.key === 'ArrowRight') go(1);
+  });
+
+  /* ── Toast ── */
+  let tt;
+  function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg; el.classList.add('show');
+    clearTimeout(tt);
+    tt = setTimeout(function() { el.classList.remove('show'); }, 2500);
+  }
+</script>
+</body>
+</html>
