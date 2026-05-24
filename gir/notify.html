@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="theme-color" content="#f4eee8">
+  <title>Bildirim Gönder · Z&B</title>
+  <link rel="icon" href="../assets/images/favicon.ico" sizes="any">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100dvh;
+      background: #f4eee8;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: #5a3e36;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 4px 24px rgba(139,94,82,0.10);
+      margin-top: 2rem;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #8b5e52;
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #b09080;
+      margin-bottom: 2rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #8b7355;
+      margin-bottom: 5px;
+      margin-top: 14px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #e8d8d0;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      color: #5a3e36;
+      background: #fdfaf8;
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #c8967e;
+    }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    .templates {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .tpl-btn {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border: 1px solid #e0c8bc;
+      border-radius: 12px;
+      background: #fdf5f0;
+      color: #8b6050;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .tpl-btn:hover { background: #f5e0d8; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #f0e4dc;
+      margin: 20px 0;
+    }
+
+    .secret-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .secret-row input { flex: 1; }
+    .eye-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #b09080;
+      padding: 4px;
+      font-size: 1rem;
+    }
+
+    .send-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      background: #c8967e;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      font-family: inherit;
+    }
+    .send-btn:hover:not(:disabled) { background: #a87060; }
+    .send-btn:active:not(:disabled) { transform: scale(0.98); }
+    .send-btn:disabled { opacity: 0.6; cursor: default; }
+
+    .result {
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .result.ok    { background: #edf7ee; color: #2e7d32; border: 1px solid #c8e6c9; }
+    .result.error { background: #fdecea; color: #c62828; border: 1px solid #ffcdd2; }
+
+    .stats {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: #b09080;
+      text-align: center;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: #b09080;
+      text-decoration: none;
+    }
+    .back-link:hover { color: #8b5e52; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">🔔</div>
+  <h1>Bildirim Gönder</h1>
+  <p class="subtitle">zeynepbatuhan.com abonelerine</p>
+
+  <label>Başlık</label>
+  <input type="text" id="notifTitle" value="Zeynep &amp; Batuhan 💍" maxlength="80">
+
+  <label>Mesaj</label>
+  <textarea id="notifBody" maxlength="200">Davetiyede yeni bir güncelleme var!</textarea>
+
+  <div class="templates">
+    <button class="tpl-btn" data-body="Davetiyede yeni bir güncelleme var! 🌸">🌸 Güncelleme</button>
+    <button class="tpl-btn" data-body="Kına gecesine sayılı günler kaldı! 🌷">🌷 Kına yaklaşıyor</button>
+    <button class="tpl-btn" data-body="Nikaha sayılı günler kaldı! 💍">💍 Nikah yaklaşıyor</button>
+    <button class="tpl-btn" data-body="Katılım bildiriminizi yapmayı unutmayın! ⏳">⏳ RSVP hatırlatma</button>
+  </div>
+
+  <label>Link (opsiyonel)</label>
+  <input type="text" id="notifUrl" value="/">
+
+  <hr class="divider">
+
+  <label>Admin Şifresi</label>
+  <div class="secret-row">
+    <input type="password" id="adminSecret" placeholder="••••••••••••">
+    <button class="eye-btn" id="eyeBtn" title="Göster/Gizle">👁</button>
+  </div>
+
+  <button class="send-btn" id="sendBtn">📤 Gönder</button>
+
+  <div class="result" id="result"></div>
+  <p class="stats" id="stats"></p>
+</div>
+
+<a href="/gir/" class="back-link">← Köşemize dön</a>
+
+<script>
+  const WORKER_URL = 'https://zeynepbatuhan-rsvp-api.batuhannilgarr.workers.dev/push-notify';
+  const SECRET_KEY = 'notify-admin-secret';
+
+  const titleEl  = document.getElementById('notifTitle');
+  const bodyEl   = document.getElementById('notifBody');
+  const urlEl    = document.getElementById('notifUrl');
+  const secretEl = document.getElementById('adminSecret');
+  const sendBtn  = document.getElementById('sendBtn');
+  const resultEl = document.getElementById('result');
+  const statsEl  = document.getElementById('stats');
+  const eyeBtn   = document.getElementById('eyeBtn');
+
+  // Şifreyi sessionStorage'dan yükle
+  const saved = sessionStorage.getItem(SECRET_KEY);
+  if (saved) secretEl.value = saved;
+
+  eyeBtn.addEventListener('click', () => {
+    secretEl.type = secretEl.type === 'password' ? 'text' : 'password';
+  });
+
+  document.querySelectorAll('.tpl-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      bodyEl.value = btn.dataset.body;
+    });
+  });
+
+  sendBtn.addEventListener('click', async () => {
+    const title  = titleEl.value.trim();
+    const body   = bodyEl.value.trim();
+    const url    = urlEl.value.trim() || '/';
+    const secret = secretEl.value.trim();
+
+    if (!title || !body) {
+      show('error', 'Başlık ve mesaj boş olamaz.');
+      return;
+    }
+    if (!secret) {
+      show('error', 'Admin şifresini gir.');
+      return;
+    }
+
+    sessionStorage.setItem(SECRET_KEY, secret);
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Gönderiliyor...';
+    resultEl.style.display = 'none';
+    statsEl.textContent = '';
+
+    try {
+      const res  = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Admin-Secret': secret,
+        },
+        body: JSON.stringify({ title, body, url }),
+      });
+      const data = await res.json();
+
+      if (res.status === 401) {
+        show('error', '❌ Yanlış admin şifresi.');
+      } else if (!res.ok) {
+        show('error', `❌ Hata: ${JSON.stringify(data)}`);
+      } else {
+        show('ok', `✅ Bildirim gönderildi!`);
+        statsEl.textContent = `${data.sent} / ${data.total} abone ulaştı`;
+      }
+    } catch (err) {
+      show('error', `❌ Bağlantı hatası: ${err.message}`);
+    } finally {
+      sendBtn.disabled = false;
+      sendBtn.textContent = '📤 Gönder';
+    }
+  });
+
+  function show(type, msg) {
+    resultEl.className = `result ${type}`;
+    resultEl.textContent = msg;
+    resultEl.style.display = 'block';
+  }
+</script>
+</body>
+</html>
