@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="./assets/images/apple-touch-icon.png">
     <meta name="theme-color" content="#f4eee8">
     <meta name="format-detection" content="telephone=no">
-    <meta name="description" content="Kına gecesi 24 Ekim, nikahımız 25 Ekim 2026. Zeynep &amp; Batuhan.">
+    <meta name="description" content="Zeynep ve Batuhan'ın nikah töreni — 25 Ekim 2026, Beykoz Belediyesi Nikah Salonu. Kına gecesi 24 Ekim 2026, Aşk-ı Lavinya Davet Salonu, Beykoz.">
 
     <!-- Open Graph (WhatsApp, Telegram, Facebook, LinkedIn) -->
     <meta property="og:type" content="website">
@@ -45,16 +45,55 @@
       "@context": "https://schema.org",
       "@type": "Event",
       "name": "Zeynep & Batuhan Nikah Töreni",
-      "description": "Zeynep ve Batuhan'ın nikah töreni daveti. 25 Ekim 2026.",
+      "description": "Zeynep ve Batuhan'ın nikah töreni — 25 Ekim 2026 saat 14:00, Beykoz Belediyesi Nikah Salonu.",
       "startDate": "2026-10-25T14:00:00+03:00",
+      "endDate": "2026-10-25T17:00:00+03:00",
       "eventStatus": "https://schema.org/EventScheduled",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
       "image": [
         "https://zeynepbatuhan.com/assets/images/og-invite.jpeg"
       ],
+      "location": {
+        "@type": "Place",
+        "name": "Beykoz Belediyesi Nikah Salonu",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Merkez Mahallesi",
+          "addressLocality": "Beykoz",
+          "addressRegion": "İstanbul",
+          "addressCountry": "TR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 41.0619082,
+          "longitude": 29.1107091
+        }
+      },
       "organizer": {
         "@type": "Person",
         "name": "Zeynep & Batuhan"
+      },
+      "subEvent": {
+        "@type": "Event",
+        "name": "Zeynep & Batuhan Kına Gecesi",
+        "startDate": "2026-10-24T12:00:00+03:00",
+        "endDate": "2026-10-24T17:00:00+03:00",
+        "location": {
+          "@type": "Place",
+          "name": "Aşk-ı Lavinya Davet & Balo Salonu",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Elmalıkköy Mahallesi",
+            "addressLocality": "Beykoz",
+            "addressRegion": "İstanbul",
+            "addressCountry": "TR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 41.0165514,
+            "longitude": 29.1561369
+          }
+        }
       }
     }
     </script>
@@ -113,26 +152,18 @@
         },
         {
           "@type": "Question",
-          "name": "Nişan ne zaman?",
+          "name": "Nikah ve kına nerede yapılacak?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Nişan törenimiz 10 Mayıs 2026 tarihinde, saat 13:00'te başladı."
+            "text": "Kına gecesi: 24 Ekim 2026, Aşk-ı Lavinya Davet & Balo Salonu, Elmalıkköy Mahallesi, Beykoz — 12:00–17:00. Nikah: 25 Ekim 2026, Beykoz Belediyesi Nikah Salonu, Merkez Mahallesi, Beykoz — Saat 14:00."
           }
         },
         {
           "@type": "Question",
-          "name": "Nikah ne zaman?",
+          "name": "Saat kaçta gelmem gerekiyor?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Nikahımız 25 Ekim 2026 Pazar günü saat 14:00'te Beykoz Belediyesi Nikah Salonu'nda gerçekleşecek. Kına gecemiz ise 24 Ekim 2026, Aşk-ı Lavinya Davet Salonu'nda 12:00–17:00 arası."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Nerede yapılacak?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nikah: 25 Ekim 2026, Beykoz Belediyesi Nikah Salonu. Kına gecesi: 24 Ekim 2026, Aşk-ı Lavinya Davet &amp; Balo Salonu."
+            "text": "Nikah töreni saat 14:00'te başlayacak. Yerinizi rahatça alabilmek için 13:30'da salonda olmanızı öneririz."
           }
         },
         {
@@ -149,6 +180,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Evet, çocuklar da davetlidir. Ailece katılmanızdan mutluluk duyarız."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "İletişim için nasıl ulaşabilirim?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Damat Batuhan'a WhatsApp üzerinden ulaşabilirsiniz: 0507 709 07 23"
           }
         }
       ]
@@ -245,6 +284,7 @@
             <li role="none"><a href="#program" role="menuitem">Program</a></li>
             <li role="none"><a href="#lokasyon" role="menuitem">Lokasyon</a></li>
             <li role="none"><a href="#sss" role="menuitem">S.S.S.</a></li>
+            <li role="none"><a href="#rsvp" role="menuitem" class="menu-item-rsvp">Katılım</a></li>
         </ul>
     </nav>
 
@@ -273,6 +313,7 @@
                 </h1>
                 <p class="wedding-date">25 Ekim 2026</p>
                 <p class="wedding-time">14:00 — Nikah</p>
+                <p class="hero-tagline">Hayatımızın en güzel gününde sizi aramızda görmek için sabırsızlanıyoruz.</p>
                 <div class="scroll-indicator">
                     <span>↓</span>
                 </div>
@@ -282,7 +323,10 @@
         <section class="story-section reveal" id="hikayemiz" aria-labelledby="hikaye-baslik">
             <h2 id="hikaye-baslik">Hikayemiz</h2>
             <div class="story-photo-wrap">
-                <img src="./assets/images/hikaye.jpg" alt="Zeynep ve Batuhan" class="story-photo" loading="lazy" decoding="async">
+                <img src="./assets/images/hikaye.jpg"
+                     srcset="./assets/images/hikaye-600.jpg 600w, ./assets/images/hikaye.jpg 1200w"
+                     sizes="(max-width: 480px) 100vw, 360px"
+                     alt="Zeynep ve Batuhan" class="story-photo" loading="lazy" decoding="async">
             </div>
             <div class="story-body">
                 <p>
@@ -302,10 +346,7 @@
         </section>
 
         <div class="sakura-divider">
-            <div class="davetiye-placeholder">
-                <span class="davetiye-placeholder-icon">💌</span>
-                <p class="davetiye-placeholder-text">Nikah daveti yakında</p>
-            </div>
+            <img src="./assets/images/sakura-branch.png" alt="" class="sakura-branch" width="2912" height="416" loading="lazy" decoding="async" aria-hidden="true">
         </div>
 
         <section class="aileler-section reveal" id="aileler" aria-labelledby="aileler-baslik">
@@ -378,11 +419,58 @@
         </div>
 
         <section class="schedule-section" id="program" aria-labelledby="akis-baslik">
-            <h2 id="akis-baslik">Akış</h2>
-            <div class="coming-soon-card" role="status">
-                <span class="coming-soon-badge">Yakında</span>
-                <p class="coming-soon-title">Program</p>
-                <p class="coming-soon-text">Kına ve nikah gününün akışı burada paylaşılacak.</p>
+            <h2 id="akis-baslik">Program</h2>
+            <div class="schedule-days">
+                <div class="schedule-day">
+                    <div class="schedule-day-header">
+                        <span class="schedule-day-emoji" aria-hidden="true">🌷</span>
+                        <h3 class="schedule-day-title">Kına Gecesi</h3>
+                        <p class="schedule-day-date">24 Ekim 2026 · Aşk-ı Lavinya</p>
+                    </div>
+                    <ul class="schedule-timeline" role="list">
+                        <li class="schedule-item">
+                            <span class="schedule-time">12:00</span>
+                            <span class="schedule-event">Kapılar açılıyor, misafirler karşılanıyor</span>
+                        </li>
+                        <li class="schedule-item">
+                            <span class="schedule-time">12:30</span>
+                            <span class="schedule-event">İkramlar ve sohbet</span>
+                        </li>
+                        <li class="schedule-item">
+                            <span class="schedule-time">14:00</span>
+                            <span class="schedule-event">Kına töreni</span>
+                        </li>
+                        <li class="schedule-item">
+                            <span class="schedule-time">15:30</span>
+                            <span class="schedule-event">Müzik ve eğlence</span>
+                        </li>
+                        <li class="schedule-item">
+                            <span class="schedule-time">17:00</span>
+                            <span class="schedule-event">Program sona eriyor</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="schedule-day">
+                    <div class="schedule-day-header">
+                        <span class="schedule-day-emoji" aria-hidden="true">💍</span>
+                        <h3 class="schedule-day-title">Nikah</h3>
+                        <p class="schedule-day-date">25 Ekim 2026 · Beykoz Belediyesi</p>
+                    </div>
+                    <ul class="schedule-timeline" role="list">
+                        <li class="schedule-item schedule-item--highlight">
+                            <span class="schedule-time">13:30</span>
+                            <span class="schedule-event">Misafirler teşrif ediyor <span class="schedule-note">lütfen geç kalmayın</span></span>
+                        </li>
+                        <li class="schedule-item">
+                            <span class="schedule-time">14:00</span>
+                            <span class="schedule-event">Nikah töreni başlıyor</span>
+                        </li>
+                        <li class="schedule-item">
+                            <span class="schedule-time">14:30</span>
+                            <span class="schedule-event">Tebrikler ve fotoğraf çekimi</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </section>
 
@@ -501,10 +589,43 @@
 
         <section class="faq-section" id="sss" aria-labelledby="sss-baslik">
             <h2 id="sss-baslik">Sık Sorulan Sorular</h2>
-            <div class="coming-soon-card faq-coming-soon" role="status">
-                <span class="coming-soon-badge">Yakında</span>
-                <p class="coming-soon-title">S.S.S.</p>
-                <p class="coming-soon-text">Dress code, ulaşım ve diğer soruların yanıtları burada paylaşılacak.</p>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">👗 Dress code var mı?</button>
+                    <div class="faq-answer">
+                        <p>Şık kıyafetler tercih edebilirsiniz. <strong>Beyaz renk</strong> gelin için ayrılmıştır.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">👶 Çocuklar davetli mi?</button>
+                    <div class="faq-answer">
+                        <p>Evet, çocuklar da davetlidir. Ailece katılmanızdan mutluluk duyarız.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">📍 Nikah ve kına nerede yapılacak?</button>
+                    <div class="faq-answer">
+                        <p><strong>Kına gecesi:</strong> 24 Ekim 2026, Aşk-ı Lavinya Davet &amp; Balo Salonu, Elmalıkköy, Beykoz — 12:00–17:00.<br><br><strong>Nikah:</strong> 25 Ekim 2026, Beykoz Belediyesi Nikah Salonu, Merkez Mh., Beykoz — Saat 14:00.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">🎁 Hediye almalı mıyım?</button>
+                    <div class="faq-answer">
+                        <p>Katılımınız en büyük hediyemizdir. Başka bir şey getirmenize gerek yok.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">🕐 Saat kaçta gelmem gerekiyor?</button>
+                    <div class="faq-answer">
+                        <p>Nikah töreni saat <strong>14:00'te</strong> başlayacak. Yerinizi rahatça alabilmek için <strong>13:30'da</strong> salonda olmanızı öneririz.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">📱 İletişim için nasıl ulaşabilirim?</button>
+                    <div class="faq-answer">
+                        <p>Damat Batuhan'a WhatsApp üzerinden ulaşabilirsiniz: <a href="https://wa.me/905077090723" style="color:#b86b6b;">0507 709 07 23</a></p>
+                    </div>
+                </div>
             </div>
         </section>
     </div>

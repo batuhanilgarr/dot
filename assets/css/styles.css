@@ -236,6 +236,20 @@ body::before {
     color: #d4a5a5;
 }
 
+.menu-item-rsvp {
+    background: #d4a5a5;
+    color: #ffffff !important;
+    padding: 6px 16px;
+    border-radius: 999px;
+    transition: background 0.2s ease, transform 0.2s ease !important;
+}
+
+.menu-item-rsvp:hover {
+    background: #c49090 !important;
+    color: #ffffff !important;
+    transform: none;
+}
+
 .content {
     opacity: 0;
     visibility: hidden;
@@ -327,7 +341,17 @@ body::before {
 .wedding-time {
     font-size: 18px;
     color: #a89080;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
+}
+
+.hero-tagline {
+    font-size: clamp(13px, 2vw, 15px);
+    color: #a89080;
+    font-style: italic;
+    max-width: 340px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+    letter-spacing: 0.2px;
 }
 
 /* ---- Nikah "Yakında" section ---- */
@@ -899,6 +923,133 @@ section h2 {
     background: rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     padding: 50px 30px;
+}
+
+.schedule-days {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.schedule-day {
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 18px;
+    padding: 28px 20px 24px;
+    border: 1px solid rgba(255, 192, 213, 0.3);
+}
+
+.schedule-day-header {
+    text-align: center;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(212, 165, 165, 0.2);
+}
+
+.schedule-day-emoji {
+    font-size: 26px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.schedule-day-title {
+    font-family: 'Georgia', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: #8b7355;
+    margin: 0 0 4px;
+    letter-spacing: 0.5px;
+}
+
+.schedule-day-date {
+    font-size: 11px;
+    color: #a89080;
+    letter-spacing: 0.3px;
+    margin: 0;
+    font-style: italic;
+}
+
+.schedule-timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    border-left: 3px solid rgba(212, 165, 165, 0.4);
+}
+
+.schedule-item--highlight {
+    border-left-color: #b86b6b;
+    background: rgba(255, 236, 236, 0.55);
+}
+
+.schedule-time {
+    font-size: 13px;
+    font-weight: 600;
+    color: #d4a5a5;
+    min-width: 42px;
+    flex-shrink: 0;
+}
+
+.schedule-item--highlight .schedule-time {
+    color: #b86b6b;
+}
+
+.schedule-event {
+    font-size: 13px;
+    color: #8b7355;
+    line-height: 1.45;
+}
+
+.schedule-note {
+    display: block;
+    font-size: 11px;
+    color: #b86b6b;
+    font-style: italic;
+    margin-top: 2px;
+}
+
+@media (max-width: 640px) {
+    .schedule-days {
+        grid-template-columns: 1fr;
+    }
+}
+
+.faq-list {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.faq-question::after {
+    content: '﹢';
+    font-size: 18px;
+    color: #d4a5a5;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    line-height: 1;
+}
+
+.faq-item.active .faq-question::after {
+    transform: rotate(45deg);
 }
 
 .schedule-timeline {
