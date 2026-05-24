@@ -1,7 +1,7 @@
 // Service Worker for Zeynep & Batuhan Wedding Invitation
 // Enables offline functionality
 
-const CACHE_NAME = 'zeynep-batuhan-v14';
+const CACHE_NAME = 'zeynep-batuhan-v15';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -84,8 +84,8 @@ self.addEventListener('push', event => {
   event.waitUntil(
     self.registration.showNotification(title, {
       body,
-      icon: '/assets/images/og-invite.jpeg',
-      badge: '/assets/images/favicon.png',
+      icon: '/assets/images/notif-heart.png',
+      badge: '/assets/images/notif-heart.png',
       data: { url: data.url || '/' }
     })
   );
