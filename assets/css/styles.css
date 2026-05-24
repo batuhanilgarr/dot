@@ -142,7 +142,7 @@ body::before {
 }
 
 .intro-welcome-names {
-    font-family: 'Brush Script MT', cursive;
+    font-family: 'Dancing Script', cursive;
     font-size: clamp(36px, 8vw, 56px);
     color: #f8e8ec;
     margin-bottom: 20px;
@@ -315,7 +315,7 @@ body::before {
     font-weight: 300;
     color: #8b7355;
     margin-bottom: 20px;
-    font-family: 'Brush Script MT', cursive;
+    font-family: 'Dancing Script', cursive;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -517,7 +517,7 @@ body::before {
 }
 
 .upcoming-date {
-    font-family: 'Brush Script MT', cursive;
+    font-family: 'Dancing Script', cursive;
     font-size: clamp(32px, 5vw, 44px);
     line-height: 1.1;
     color: #b86b6b;
@@ -534,7 +534,7 @@ body::before {
 }
 
 .upcoming-big {
-    font-family: 'Brush Script MT', cursive;
+    font-family: 'Dancing Script', cursive;
     font-size: 60px;
     line-height: 1;
     color: #b86b6b;
@@ -916,7 +916,7 @@ section h2 {
 .photo-caption {
     font-size: 16px;
     color: #8b7355;
-    font-family: 'Brush Script MT', cursive;
+    font-family: 'Dancing Script', cursive;
 }
 
 .schedule-section {
@@ -1361,6 +1361,25 @@ section h2 {
 
 .faq-wa-link:hover {
     text-decoration: underline;
+}
+
+.faq-moovit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #5B3FD9;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 13px;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    transition: opacity 0.2s ease;
+}
+
+.faq-moovit-btn:hover {
+    opacity: 0.88;
 }
 
 .rsvp-text {
@@ -2235,7 +2254,7 @@ body.bloom-mode .bloom-message {
 }
 
 .bloom-message-names {
-    font-family: 'Brush Script MT', cursive;
+    font-family: 'Dancing Script', cursive;
     font-size: 56px;
     font-weight: 300;
     color: #b86b6b;
@@ -2318,7 +2337,7 @@ body.bloom-mode .bloom-upcoming-card {
 }
 
 .bloom-upcoming-big {
-    font-family: 'Brush Script MT', cursive;
+    font-family: 'Dancing Script', cursive;
     font-size: 64px;
     line-height: 1;
     color: #b86b6b;
