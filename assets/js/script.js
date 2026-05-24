@@ -200,6 +200,18 @@ if (musicToggle && backgroundMusic) {
             updateMusicButton();
         }
     });
+
+    // Tooltip — mobilde tap ile göster/gizle
+    const tooltip = musicToggle.querySelector('.music-tooltip');
+    if (tooltip) {
+        const songName = musicToggle.dataset.song || '';
+        tooltip.textContent = songName;
+
+        musicToggle.addEventListener('touchstart', () => {
+            musicToggle.classList.add('tooltip-visible');
+            setTimeout(() => musicToggle.classList.remove('tooltip-visible'), 2800);
+        }, { passive: true });
+    }
 }
 
 function initScrollReveal() {
@@ -758,9 +770,6 @@ function showToastBanner() {
 }
 
 async function loadWeather() {
-    const weatherCard = document.getElementById('weatherCard');
-    if (!weatherCard) return;
-
     const WMO = {
         0: ['☀️', 'Açık hava'],
         1: ['🌤️', 'Çoğunlukla açık'],
@@ -780,36 +789,57 @@ async function loadWeather() {
         95: ['⛈️', 'Fırtınalı'],
     };
 
-    const FORECAST_HORIZON_MS = 16 * 24 * 60 * 60 * 1000;
-    if (WEDDING_DATE_MS - Date.now() > FORECAST_HORIZON_MS) {
-        const descEl = document.getElementById('weatherDesc');
-        const iconEl = document.getElementById('weatherIcon');
+    function applyWeather(iconId, descId, tempId, cardId, code, tmin, tmax) {
+        const [icon, desc] = WMO[code] || ['🌡️', 'Belirsiz'];
+        const iconEl = document.getElementById(iconId);
+        const descEl = document.getElementById(descId);
+        const tempEl = document.getElementById(tempId);
+        const card   = document.getElementById(cardId);
+        if (iconEl) iconEl.textContent = icon;
+        if (descEl) descEl.textContent = desc;
+        if (tempEl) tempEl.textContent = `${tmin}° — ${tmax}°C`;
+        if (card)   card.classList.add('loaded');
+    }
+
+    function applyPlaceholder(iconId, descId, cardId, msg) {
+        const iconEl = document.getElementById(iconId);
+        const descEl = document.getElementById(descId);
+        const card   = document.getElementById(cardId);
         if (iconEl) iconEl.textContent = '🌤️';
-        if (descEl) descEl.textContent = 'Nikaha yakın güncellenir';
-        weatherCard.classList.add('loaded');
+        if (descEl) descEl.textContent = msg;
+        if (card)   card.classList.add('loaded');
+    }
+
+    const FORECAST_HORIZON_MS = 16 * 24 * 60 * 60 * 1000;
+    const kinaMs = KINA_DATE_MS;
+    const now = Date.now();
+
+    if (kinaMs - now > FORECAST_HORIZON_MS) {
+        applyPlaceholder('weatherIconKina', 'weatherDescKina', 'weatherCardKina', 'Kınaya yakın güncellenir');
+        applyPlaceholder('weatherIcon',     'weatherDesc',     'weatherCard',     'Nikaha yakın güncellenir');
         return;
     }
 
     try {
         const res = await fetch(
-            'https://api.open-meteo.com/v1/forecast?latitude=40.9989&longitude=29.1500&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FIstanbul&start_date=2026-10-25&end_date=2026-10-25'
+            'https://api.open-meteo.com/v1/forecast?latitude=40.9989&longitude=29.1500&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FIstanbul&start_date=2026-10-24&end_date=2026-10-25'
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
 
-        const code = data.daily.weathercode[0];
-        const tmax = Math.round(data.daily.temperature_2m_max[0]);
-        const tmin = Math.round(data.daily.temperature_2m_min[0]);
-        const [icon, desc] = WMO[code] || ['🌡️', 'Belirsiz'];
-
-        const iconEl = document.getElementById('weatherIcon');
-        const descEl = document.getElementById('weatherDesc');
-        const tempEl = document.getElementById('weatherTemp');
-
-        if (iconEl) iconEl.textContent = icon;
-        if (descEl) descEl.textContent = desc;
-        if (tempEl) tempEl.textContent = `${tmin}° — ${tmax}°C`;
-        weatherCard.classList.add('loaded');
+        // index 0 = 24 Ekim (kına), index 1 = 25 Ekim (nikah)
+        applyWeather(
+            'weatherIconKina', 'weatherDescKina', 'weatherTempKina', 'weatherCardKina',
+            data.daily.weathercode[0],
+            Math.round(data.daily.temperature_2m_min[0]),
+            Math.round(data.daily.temperature_2m_max[0])
+        );
+        applyWeather(
+            'weatherIcon', 'weatherDesc', 'weatherTemp', 'weatherCard',
+            data.daily.weathercode[1],
+            Math.round(data.daily.temperature_2m_min[1]),
+            Math.round(data.daily.temperature_2m_max[1])
+        );
     } catch (err) {
         console.log('Hava durumu alınamadı:', err);
     }

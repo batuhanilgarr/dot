@@ -236,7 +236,8 @@
     <audio id="backgroundMusic" loop preload="none" data-src="./assets/audio/music.mp3">
     </audio>
 
-    <button id="musicToggle" class="music-toggle" aria-label="Müzik aç/kapat" type="button">
+    <button id="musicToggle" class="music-toggle" aria-label="Müzik aç/kapat" type="button" data-song="♪ Yükleniyor...">
+        <span class="music-tooltip" aria-hidden="true"></span>
         <svg class="music-icon play" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 18V5l12-2v13"></path>
             <circle cx="6" cy="18" r="3"></circle>
@@ -594,12 +595,22 @@
                     </div>
                 </article>
             </div>
-            <div class="weather-card" id="weatherCard" aria-label="25 Ekim hava durumu tahmini">
-                <span class="weather-icon" id="weatherIcon">🌤️</span>
-                <div class="weather-info">
-                    <div class="weather-date-label">25 Ekim — Tahmini Hava</div>
-                    <div class="weather-desc" id="weatherDesc">Yükleniyor...</div>
-                    <div class="weather-temp" id="weatherTemp"></div>
+            <div class="weather-row">
+                <div class="weather-card" id="weatherCardKina" aria-label="24 Ekim kına hava durumu tahmini">
+                    <span class="weather-icon" id="weatherIconKina">🌤️</span>
+                    <div class="weather-info">
+                        <div class="weather-date-label">24 Ekim — Kına</div>
+                        <div class="weather-desc" id="weatherDescKina">Yükleniyor...</div>
+                        <div class="weather-temp" id="weatherTempKina"></div>
+                    </div>
+                </div>
+                <div class="weather-card" id="weatherCard" aria-label="25 Ekim nikah hava durumu tahmini">
+                    <span class="weather-icon" id="weatherIcon">🌤️</span>
+                    <div class="weather-info">
+                        <div class="weather-date-label">25 Ekim — Nikah</div>
+                        <div class="weather-desc" id="weatherDesc">Yükleniyor...</div>
+                        <div class="weather-temp" id="weatherTemp"></div>
+                    </div>
                 </div>
             </div>
         </section>

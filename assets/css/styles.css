@@ -54,6 +54,32 @@ body::before {
     box-shadow: 0 6px 25px rgba(212, 165, 165, 0.6);
 }
 
+.music-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    right: 0;
+    background: rgba(90, 62, 54, 0.92);
+    color: #fff;
+    font-size: 12px;
+    white-space: nowrap;
+    padding: 6px 12px;
+    border-radius: 20px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.2s, transform 0.2s;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    max-width: 220px;
+    white-space: normal;
+    text-align: center;
+}
+
+.music-toggle:hover .music-tooltip,
+.music-toggle.tooltip-visible .music-tooltip {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .music-toggle:active {
     transform: scale(0.95);
 }
@@ -2031,6 +2057,14 @@ section h2 {
 }
 
 /* ===== HAVA DURUMU KARTI ===== */
+.weather-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
 .weather-card {
     display: none;
     align-items: center;
@@ -2040,8 +2074,9 @@ section h2 {
     border: 1px solid #eadfd3;
     border-radius: 16px;
     padding: 14px 22px;
-    margin: 0 auto 24px;
-    max-width: 300px;
+    flex: 1;
+    min-width: 200px;
+    max-width: 280px;
     box-shadow: 0 6px 20px rgba(139, 115, 85, 0.1);
 }
 
