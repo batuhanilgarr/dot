@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Zeynep & Batuhan//Nikah Davetiyesi//TR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+DTSTART:20261025T110000Z
+DTEND:20261025T140000Z
+SUMMARY:Zeynep & Batuhan – Nikah Töreni 💍
+DESCRIPTION:Beykoz Belediyesi Nikah Salonu\nMerkez Mh.\, Beykoz\, İstanbul\n\nhttps://zeynepbatuhan.com/
+LOCATION:Beykoz Belediyesi Nikah Salonu\, Merkez Mh.\, Beykoz\, İstanbul
+URL:https://zeynepbatuhan.com/
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+END:VCALENDAR

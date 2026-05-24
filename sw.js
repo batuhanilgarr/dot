@@ -1,7 +1,7 @@
 // Service Worker for Zeynep & Batuhan Wedding Invitation
 // Enables offline functionality
 
-const CACHE_NAME = 'zeynep-batuhan-v11';
+const CACHE_NAME = 'zeynep-batuhan-v12';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -20,7 +20,9 @@ const urlsToCache = [
   '/assets/images/hikaye-600.jpg',
   '/assets/images/askilavinya.jpg',
   '/assets/images/beykozevlendirme.jpg',
-  '/assets/videos/sakurawaxsealintrovideo.mp4'
+  '/assets/videos/sakurawaxsealintrovideo.mp4',
+  '/kina.ics',
+  '/nikah.ics'
 ];
 
 // Install event - cache assets

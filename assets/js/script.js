@@ -300,6 +300,41 @@ if (loadMapButton && mapFrame) {
     loadMapButton.addEventListener('click', loadMap);
 }
 
+document.querySelectorAll('.ctab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+        const targetId = tab.dataset.target;
+        document.querySelectorAll('.ctab').forEach((t) => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.ctab-panel').forEach((p) => { p.hidden = true; });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        const panel = document.getElementById(targetId);
+        if (panel) panel.hidden = false;
+    });
+});
+
+const shareBtn = document.getElementById('shareBtn');
+if (shareBtn) {
+    shareBtn.addEventListener('click', async () => {
+        const shareData = {
+            title: 'Zeynep & Batuhan Nikah Davetiyesi',
+            text: 'Zeynep & Batuhan\'ın nikah törenine davetlisiniz! 💍',
+            url: 'https://zeynepbatuhan.com/'
+        };
+        if (navigator.share) {
+            try { await navigator.share(shareData); }
+            catch (err) { if (err.name !== 'AbortError') console.log('Share failed:', err); }
+        } else {
+            window.open(
+                `https://wa.me/?text=${encodeURIComponent(shareData.text + ' ' + shareData.url)}`,
+                '_blank', 'noopener,noreferrer'
+            );
+        }
+    });
+}
+
 const faqButtons = document.querySelectorAll('.faq-question');
 faqButtons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -431,6 +466,7 @@ window.addEventListener('resize', () => {
 
 const WEDDING_DATE_MS = new Date('2026-10-25T14:00:00+03:00').getTime();
 const EVENT_END_MS = new Date('2026-10-25T22:00:00+03:00').getTime();
+const KINA_DATE_MS = new Date('2026-10-24T12:00:00+03:00').getTime();
 
 /* ============================================== */
 /* BLOOM MODE — 10 Mayis 2026 Pazar 13:00 sonrasi  */
@@ -561,6 +597,21 @@ function updateCountdown() {
     document.getElementById('hours').textContent = String(hours).padStart(2, '0');
     document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
     document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+    const kinaDistance = KINA_DATE_MS - now;
+    if (kinaDistance > 0) {
+        const kd = Math.floor(kinaDistance / (1000 * 60 * 60 * 24));
+        const kh = Math.floor((kinaDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const km = Math.floor((kinaDistance % (1000 * 60 * 60)) / (1000 * 60));
+        const ks = Math.floor((kinaDistance % (1000 * 60)) / 1000);
+        const kinaEl = document.getElementById('kina-days');
+        if (kinaEl) {
+            document.getElementById('kina-days').textContent = String(kd).padStart(2, '0');
+            document.getElementById('kina-hours').textContent = String(kh).padStart(2, '0');
+            document.getElementById('kina-minutes').textContent = String(km).padStart(2, '0');
+            document.getElementById('kina-seconds').textContent = String(ks).padStart(2, '0');
+        }
+    }
 
     if (days < 7 && countdownSection) {
         countdownSection.classList.add('last-days');
