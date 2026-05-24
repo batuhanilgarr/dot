@@ -85,8 +85,8 @@ async function encryptWebPush(subscription, plaintext) {
   const authSecret  = b64uDecode(subscription.keys.auth);
 
   // Geçici gönderici EC key pair
-  const senderKP  = await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveBits']);
-  const senderPub = new Uint8Array(await crypto.subtle.exportKey('raw', senderKP.publicKey));
+  const senderKP  = /** @type {CryptoKeyPair} */ (await crypto.subtle.generateKey({ name: 'ECDH', namedCurve: 'P-256' }, true, ['deriveBits']));
+  const senderPub = new Uint8Array(/** @type {ArrayBuffer} */ (await crypto.subtle.exportKey('raw', senderKP.publicKey)));
 
   // Alıcı public key import
   const receiverKey = await crypto.subtle.importKey(
@@ -191,7 +191,7 @@ export default {
         }
         // Endpoint hash'ini key olarak kullan
         const key = b64uEncode(
-          new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(sub.endpoint)))
+          new Uint8Array(/** @type {ArrayBuffer} */ (await crypto.subtle.digest('SHA-256', new TextEncoder().encode(sub.endpoint))))
         );
         await env.PUSH_SUBS.put(key, JSON.stringify(sub), { expirationTtl: 60 * 60 * 24 * 365 });
         return json({ ok: true });
