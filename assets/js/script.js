@@ -722,7 +722,7 @@ async function loadWeather() {
 
     try {
         const res = await fetch(
-            'https://api.open-meteo.com/v1/forecast?latitude=40.9989&longitude=29.1500&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FIstanbul&start_date=2026-10-26&end_date=2026-10-26'
+            'https://api.open-meteo.com/v1/forecast?latitude=40.9989&longitude=29.1500&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FIstanbul&start_date=2026-10-25&end_date=2026-10-25'
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
@@ -786,6 +786,39 @@ function initConfettiObserver() {
 
 loadWeather();
 initConfettiObserver();
+initVenueDistances();
+
+function initVenueDistances() {
+    if (!('geolocation' in navigator)) return;
+
+    const venues = [
+        { id: 'dist-kina',  lat: 41.0165514, lng: 29.1561369 },
+        { id: 'dist-nikah', lat: 41.0619082, lng: 29.1107091 },
+    ];
+
+    navigator.geolocation.getCurrentPosition(
+        (pos) => {
+            const { latitude: srcLat, longitude: srcLng } = pos.coords;
+            venues.forEach(({ id, lat, lng }) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+
+                fetch(
+                    `https://router.project-osrm.org/route/v1/driving/${srcLng},${srcLat};${lng},${lat}?overview=false`,
+                    { cache: 'no-store' }
+                )
+                    .then((r) => r.ok ? r.json() : Promise.reject())
+                    .then((data) => {
+                        const mins = Math.round(data.routes[0].duration / 60);
+                        el.textContent = ` · ~${mins} dk`;
+                    })
+                    .catch(() => {});
+            });
+        },
+        () => {},
+        { timeout: 8000 }
+    );
+}
 
 if (Date.now() >= WEDDING_DATE_MS) {
     activateBloomMode();

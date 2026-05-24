@@ -1037,6 +1037,25 @@ section h2 {
     text-align: center;
 }
 
+.story-photo-wrap {
+    margin: 0 auto 36px;
+    max-width: 360px;
+    width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(139, 115, 85, 0.18);
+}
+
+.story-photo {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 480px) {
+    .story-photo-wrap { max-width: 100%; border-radius: 14px; }
+}
+
 .story-body {
     max-width: 720px;
     margin: 0 auto;
@@ -1273,6 +1292,27 @@ section h2 {
     font-size: 14px;
     color: #8b7355;
     line-height: 1.6;
+}
+
+.whatsapp-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    background: #25D366;
+    color: #ffffff;
+    padding: 9px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.whatsapp-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(37, 211, 102, 0.42);
 }
 
 @keyframes fadeInUp {
@@ -1601,20 +1641,56 @@ section h2 {
     letter-spacing: 0.3px;
 }
 
+.venue-address {
+    font-size: 12px;
+    color: #a89080;
+    margin: 0 0 14px;
+    letter-spacing: 0.2px;
+}
+
+.venue-dist {
+    color: #b86b6b;
+    font-size: 11px;
+    margin-left: 6px;
+    letter-spacing: 0;
+}
+
+.venue-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
 .venue-directions {
     display: inline-flex;
     align-items: center;
     gap: 7px;
     background: #d4a5a5;
     color: #ffffff;
-    padding: 10px 20px;
+    padding: 10px 16px;
     border-radius: 999px;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 0.3px;
     box-shadow: 0 4px 14px rgba(212, 165, 165, 0.35);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    margin-top: auto;
+    flex: 1;
+    justify-content: center;
+}
+
+.venue-directions--outline {
+    background: transparent;
+    color: #8b7355;
+    border: 1px solid rgba(212, 165, 165, 0.55);
+    box-shadow: none;
+}
+
+.venue-directions--outline:hover {
+    background: rgba(212, 165, 165, 0.08);
+    box-shadow: none;
 }
 
 .venue-directions:hover {
@@ -1630,10 +1706,8 @@ section h2 {
     }
     .venue-photo-wrap { height: 220px; }
     .venue-name { font-size: 17px; }
-    .venue-directions {
-        width: 100%;
-        justify-content: center;
-    }
+    .venue-actions { flex-wrap: nowrap; }
+    .venue-directions { flex: 1; font-size: 12px; padding: 10px 10px; }
 }
 
 /* ===== HAVA DURUMU KARTI ===== */
