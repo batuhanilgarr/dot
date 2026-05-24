@@ -1,7 +1,7 @@
 // Service Worker for Zeynep & Batuhan Wedding Invitation
 // Enables offline functionality
 
-const CACHE_NAME = 'zeynep-batuhan-v12';
+const CACHE_NAME = 'zeynep-batuhan-v13';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -73,6 +73,34 @@ self.addEventListener('fetch', event => {
 
   event.respondWith(
     caches.match(event.request).then(response => response || fetch(event.request))
+  );
+});
+
+// Push notification event
+self.addEventListener('push', event => {
+  const data = event.data ? event.data.json() : {};
+  const title = data.title || 'Zeynep & Batuhan';
+  const body = data.body || 'Davetiyede yeni bir güncelleme var!';
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body,
+      icon: '/assets/images/apple-touch-icon.png',
+      badge: '/assets/images/favicon.png',
+      data: { url: data.url || '/' }
+    })
+  );
+});
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const url = event.notification.data?.url || '/';
+  event.waitUntil(
+    clients.matchAll({ type: 'window' }).then(list => {
+      for (const client of list) {
+        if (client.url === url && 'focus' in client) return client.focus();
+      }
+      if (clients.openWindow) return clients.openWindow(url);
+    })
   );
 });
 

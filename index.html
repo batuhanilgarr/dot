@@ -10,6 +10,10 @@
     <link rel="icon" href="./assets/images/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" href="./assets/images/favicon.png" sizes="32x32">
     <link rel="apple-touch-icon" href="./assets/images/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Z &amp; B Davetiye">
     <meta name="theme-color" content="#f4eee8">
     <meta name="format-detection" content="telephone=no">
     <meta name="description" content="Zeynep ve Batuhan'ın nikah töreni — 25 Ekim 2026, Beykoz Belediyesi Nikah Salonu. Kına gecesi 24 Ekim 2026, Aşk-ı Lavinya Davet Salonu, Ümraniye.">
@@ -343,7 +347,7 @@
                 <img src="./assets/images/hikaye.jpg"
                      srcset="./assets/images/hikaye-600.jpg 600w, ./assets/images/hikaye.jpg 1200w"
                      sizes="(max-width: 480px) 100vw, 360px"
-                     alt="Zeynep ve Batuhan" class="story-photo" loading="lazy" decoding="async">
+                     alt="Zeynep ve Batuhan" class="story-photo" id="storyPhoto" loading="lazy" decoding="async">
             </div>
             <div class="story-body">
                 <p>
@@ -614,6 +618,7 @@
             </div>
             <div class="rsvp-action-card">
                 <p class="rsvp-action-title">Kaç kişi geleceğinizi yazıp katılımı onaylayın</p>
+                <p class="rsvp-deadline">⏳ Son bildirim tarihi: <strong>20 Ekim 2026</strong></p>
                 <label for="rsvpGuestCount" class="rsvp-guest-label">Kişi sayısı</label>
                 <input id="rsvpGuestCount" class="rsvp-guest-select" type="number" min="1" step="1" value="1" inputmode="numeric" aria-label="Katılım kişi sayısı">
                 <button id="rsvpConfirmButton" class="rsvp-confirm-button" type="button">Katılacağım</button>
@@ -631,6 +636,11 @@
                 <div class="info-item">
                     <h3>👗 Dress Code</h3>
                     <p>Şık kıyafetler tercih edebilirsiniz. Beyazı gelinimize saklayalım 🤍</p>
+                </div>
+                <div class="info-item" id="notifyItem">
+                    <h3>🔔 Güncellemeler</h3>
+                    <p>Davetiyeye yeni ekleme yapıldığında bildirim alın.</p>
+                    <button id="notifyBtn" class="notify-btn" type="button">🔔 Bildirimlere Abone Ol</button>
                 </div>
             </div>
         </section>

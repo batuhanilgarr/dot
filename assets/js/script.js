@@ -611,6 +611,14 @@ function updateCountdown() {
             document.getElementById('kina-minutes').textContent = String(km).padStart(2, '0');
             document.getElementById('kina-seconds').textContent = String(ks).padStart(2, '0');
         }
+    } else {
+        const kinaPanel = document.getElementById('ctab-kina');
+        if (kinaPanel && !kinaPanel.querySelector('.event-day-msg')) {
+            const msg = document.createElement('p');
+            msg.className = 'event-day-msg';
+            msg.textContent = '🌷 Kına gecesi güzeldi, teşekkürler!';
+            kinaPanel.replaceChildren(msg);
+        }
     }
 
     if (days < 7 && countdownSection) {
@@ -891,3 +899,87 @@ const bloomHashFlag = window.location.hash === '#bloom';
 if (bloomQueryFlag || bloomHashFlag) {
     activateBloomMode();
 }
+
+/* ——— Hikayemiz: rastgele nişan fotoğrafı ——— */
+const NISAN_PHOTOS = [
+    'dsc09069.jpg','dsc09070.jpg','dsc09075.jpg','dsc09090.jpg','dsc09105.jpg',
+    'dsc09110.jpg','dsc09112.jpg','dsc09125.jpg','dsc09130.jpg','dsc09136.jpg',
+    'dsc09138.jpg','dsc09144.jpg','dsc09145.jpg','dsc09175.jpg','dsc09177.jpg',
+    'dsc09186.jpg','dsc09188.jpg','dsc09215.jpg','dsc09227.jpg','dsc09232.jpg',
+    'dsc09235.jpg','dsc09243.jpg','dsc09276.jpg','dsc09286.jpg','dsc09291.jpg',
+    'dsc09321.jpg','dsc09347.jpg','dsc09365.jpg','dsc09366.jpg','dsc09367.jpg',
+    'dsc09392.jpg','dsc09396.jpg','dsc09403.jpg','dsc09404.jpg','dsc09410.jpg',
+    'dsc09414.jpg','dsc09421.jpg','dsc09427.jpg','dsc09453.jpg','dsc09493.jpg',
+    'dsc09510.jpg','dsc09513.jpg','dsc09528.jpg','dsc09531.jpg','dsc09566.jpg',
+    'dsc09567.jpg','dsc09631.jpg','dsc09634.jpg','dsc09636.jpg'
+];
+
+(function initStoryPhoto() {
+    const img = document.getElementById('storyPhoto');
+    if (!img) return;
+    const pick = NISAN_PHOTOS[Math.floor(Math.random() * NISAN_PHOTOS.length)];
+    img.src = `./assets/images/nisan/${pick}`;
+    img.removeAttribute('srcset');
+})();
+
+/* ——— Push Notifications ——— */
+const VAPID_PUBLIC_KEY = 'BEy1KoVu7x7X0-677GF1EV0P4ViPeL7RSNz1IygEVl8Zbzqw19XgVkMS0jL6E0u6AejFRTgtMIYu1vTSDcaDp0U';
+const PUSH_SUBSCRIBE_URL = 'https://zeynepbatuhan-rsvp-api.batuhannilgarr.workers.dev/push-subscribe';
+
+function urlBase64ToUint8Array(b64) {
+    const pad = '='.repeat((4 - b64.length % 4) % 4);
+    const raw = atob((b64 + pad).replace(/-/g, '+').replace(/_/g, '/'));
+    return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
+}
+
+async function sendPushSubscription(sub) {
+    await fetch(PUSH_SUBSCRIBE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(sub)
+    });
+}
+
+async function initPushNotifications() {
+    if (!('Notification' in window) || !('PushManager' in window)) return;
+    const btn = document.getElementById('notifyBtn');
+    const item = document.getElementById('notifyItem');
+    if (!btn) return;
+
+    if (Notification.permission === 'denied') {
+        item?.remove();
+        return;
+    }
+
+    if (Notification.permission === 'granted') {
+        const reg = await navigator.serviceWorker.ready.catch(() => null);
+        if (!reg) return;
+        const existing = await reg.pushManager.getSubscription();
+        if (existing) {
+            btn.textContent = '✅ Bildirimler açık';
+            btn.disabled = true;
+            return;
+        }
+    }
+
+    btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        btn.textContent = '...';
+        try {
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') { item?.remove(); return; }
+            const reg = await navigator.serviceWorker.ready;
+            const sub = await reg.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+            });
+            await sendPushSubscription(sub);
+            btn.textContent = '✅ Bildirimler açık';
+        } catch {
+            btn.disabled = false;
+            btn.textContent = '🔔 Bildirimlere Abone Ol';
+        }
+    });
+}
+
+initPushNotifications();

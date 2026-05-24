@@ -1,0 +1,22 @@
+{
+  "name": "Zeynep & Batuhan Nikah Davetiyesi",
+  "short_name": "Z & B Davetiye",
+  "description": "Zeynep ve Batuhan'ın nikah töreni — 25 Ekim 2026",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4eee8",
+  "theme_color": "#f4eee8",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "/assets/images/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/images/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
