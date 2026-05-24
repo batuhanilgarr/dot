@@ -300,12 +300,23 @@ if (loadMapButton && mapFrame) {
     loadMapButton.addEventListener('click', loadMap);
 }
 
-document.querySelectorAll('.faq-question').forEach((button) => {
+const faqButtons = document.querySelectorAll('.faq-question');
+faqButtons.forEach((button) => {
     button.addEventListener('click', () => {
         const item = button.closest('.faq-item');
         if (!item) return;
 
-        item.classList.toggle('active');
+        const isActive = item.classList.contains('active');
+
+        faqButtons.forEach((b) => {
+            b.closest('.faq-item')?.classList.remove('active');
+            b.setAttribute('aria-expanded', 'false');
+        });
+
+        if (!isActive) {
+            item.classList.add('active');
+            button.setAttribute('aria-expanded', 'true');
+        }
     });
 });
 
