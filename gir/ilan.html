@@ -17,13 +17,70 @@
 
     /* ── Header ── */
     header {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      background: linear-gradient(160deg, #0f172a 0%, #1e293b 55%, #1a2744 100%);
       color: #fff;
-      padding: 28px 20px 22px;
+      padding: 36px 20px 30px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-    header h1 { font-size: clamp(1.15rem, 4vw, 1.5rem); font-weight: 700; }
-    header p  { margin-top: 6px; font-size: .82rem; color: #a0aec0; }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,130,246,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .header-inner { position: relative; max-width: 700px; margin: 0 auto; }
+    .header-eyebrow {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #60a5fa;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: clamp(1.4rem, 5vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -.4px;
+      line-height: 1.2;
+    }
+    .header-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 16px;
+    }
+    .hchip {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      color: #cbd5e1;
+      font-size: .72rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .header-ref {
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(96,165,250,.12);
+      border: 1px solid rgba(96,165,250,.25);
+      border-radius: 24px;
+      padding: 6px 14px;
+      font-size: .74rem;
+      color: #93c5fd;
+    }
+    .header-ref strong { color: #bfdbfe; }
+    .header-note {
+      margin-top: 12px;
+      font-size: .68rem;
+      color: #64748b;
+    }
 
     /* ── Price strip ── */
     .summary {
@@ -317,7 +374,7 @@
     .compare { max-width: 1200px; margin: 4px auto 36px; padding: 0 20px; }
     .compare h2 { font-size: .95rem; font-weight: 700; color: #2d3748; margin-bottom: 10px; }
     .tbl-wrap { overflow-x: auto; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.08); -webkit-overflow-scrolling: touch; }
-    table { width: 100%; border-collapse: collapse; background: #fff; font-size: .75rem; min-width: 620px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; font-size: .75rem; min-width: 760px; }
     th { background: #2d3748; color: #fff; padding: 9px 11px; text-align: left; font-weight: 600; font-size: .68rem; text-transform: uppercase; letter-spacing: .4px; }
     td { padding: 9px 11px; border-bottom: 1px solid #f0f0f0; }
     tr:last-child td { border-bottom: none; }
@@ -326,6 +383,10 @@
     .t-best  { color: #276749; font-weight: 700; }
     .ok { color: #38a169; font-weight: 700; }
     .no { color: #e53e3e; font-weight: 700; }
+    .t-dist { font-weight: 700; font-size: .72rem; }
+    .t-dist.ok  { color: #276749; }
+    .t-dist.mid { color: #744210; }
+    .t-dist.far { color: #9b2c2c; }
     .rank1 td:first-child { border-left: 3px solid #38a169; }
 
     footer { text-align: center; padding: 18px; font-size: .7rem; color: #a0aec0; }
@@ -334,9 +395,20 @@
 <body>
 
 <header>
-  <h1>🏠 Kiralık Daire İlanları</h1>
-  <p>Ümraniye · 6 ilan · 2+1 · Sıfır &amp; Yeni Bina · 25 Mayıs 2026</p>
-  <p style="margin-top:6px;font-size:.76rem;color:#90b4ce;">📍 Mesafeler aile evinden kuş uçuşu hesaplandı</p>
+  <div class="header-inner">
+    <div class="header-eyebrow">Kiralık Daire Araştırması</div>
+    <h1>🏠 Ümraniye · 6 İlan</h1>
+    <div class="header-chips">
+      <span class="hchip">33.000 – 37.700 TL / ay</span>
+      <span class="hchip">70 – 80 m²</span>
+      <span class="hchip">2+1 · Sıfır Bina</span>
+      <span class="hchip">25 Mayıs 2026</span>
+    </div>
+    <div style="margin-top:14px;">
+      <div class="header-ref">📍 Referans: <strong>Aile Evi · Çekmeköy</strong></div>
+    </div>
+    <p class="header-note">Mesafeler kuş uçuşu · Harita butonları aile evinden yol tarifi açar</p>
+  </div>
 </header>
 
 <div class="summary">
@@ -377,7 +449,7 @@
     </div>
     <div class="card-body">
       <div class="card-title">Garden Emlak · Sıfır Binada Kiralık Daire</div>
-      <div class="card-loc">📍 Ümraniye / Huzur Mah. · Huzur Metro 7 dk <span class="dist-badge">🏠 ~1.35 km</span></div>
+      <div class="card-loc">📍 Ümraniye / Huzur Mah. · <span style="color:#c05621;font-weight:600;">⚠ Metro/otobüs bağlantısı zayıf</span> <span class="dist-badge">🏠 ~1.35 km</span></div>
       <div class="specs">
         <div class="spec"><div class="spec-val">85</div><div class="spec-lbl">Brüt m²</div></div>
         <div class="spec"><div class="spec-val">75</div><div class="spec-lbl">Net m²</div></div>
@@ -641,52 +713,64 @@
     <table>
       <thead>
         <tr>
-          <th>Mahalle</th><th>Fiyat/ay</th><th>Net m²</th><th>Kat</th>
+          <th>Mahalle</th><th>Mesafe</th><th>Toplu Taşıma</th><th>Fiyat/ay</th><th>Net m²</th><th>Kat</th>
           <th>Balkon</th><th>Asansör</th><th>Otopark</th><th>Isıtma</th><th>Depozito</th>
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>Esenşehir Mh.</td>
+          <td class="t-dist ok">1.32 km</td>
+          <td>Dudullu Metro yakın</td>
+          <td class="t-price">35.000 TL</td>
+          <td>70 m²</td><td>2/5</td>
+          <td class="ok">✓</td><td class="ok">✓</td><td class="no">✗</td>
+          <td>Yerden</td><td>35.000 TL</td>
+        </tr>
         <tr class="rank1">
           <td><strong>🏆 Huzur Mah.</strong></td>
+          <td class="t-dist ok">1.35 km</td>
+          <td style="color:#c05621;font-weight:600;">⚠ Metro/otobüs zayıf</td>
           <td class="t-price t-best">33.000 TL</td>
           <td>75 m²</td><td>2/5</td>
           <td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td>
           <td>Kombi</td><td>30.000 TL</td>
         </tr>
         <tr>
-          <td>Esenşehir Mh.</td>
-          <td class="t-price">35.000 TL</td>
-          <td>70 m²</td><td>2/5</td>
-          <td class="ok">✓</td><td class="ok">✓</td><td class="no">✗</td>
-          <td>Yerden</td><td>35.000 TL</td>
-        </tr>
-        <tr>
-          <td>Altınşehir Mh.</td>
-          <td class="t-price">35.000 TL</td>
-          <td>75 m²</td><td>3/3</td>
-          <td class="no">✗</td><td class="no">✗</td><td class="no">✗</td>
-          <td>Kombi</td><td>—</td>
-        </tr>
-        <tr>
-          <td>Esenkent Mah.</td>
-          <td class="t-price">37.000 TL</td>
-          <td>80 m²</td><td>3/4</td>
-          <td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td>
-          <td>Kombi</td><td>37.000 TL</td>
-        </tr>
-        <tr>
           <td>Madenler Mah.</td>
+          <td class="t-dist ok">1.48 km</td>
+          <td>M5 Çekmeköy ~8 dk</td>
           <td class="t-price">37.500 TL</td>
           <td>70 m²</td><td>4/4</td>
           <td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td>
           <td>Kombi</td><td>37.500 TL</td>
         </tr>
         <tr>
+          <td>Esenkent Mah.</td>
+          <td class="t-dist ok">1.73 km</td>
+          <td>Otobüs bağlantısı var</td>
+          <td class="t-price">37.000 TL</td>
+          <td>80 m²</td><td>3/4</td>
+          <td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td>
+          <td>Kombi</td><td>37.000 TL</td>
+        </tr>
+        <tr>
           <td>Cemil Meriç Mh.</td>
+          <td class="t-dist mid">2.70 km</td>
+          <td>Merkezi cadde · Otobüs</td>
           <td class="t-price">37.700 TL</td>
           <td>80 m²</td><td>4/4</td>
           <td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td>
           <td>Kombi</td><td>37.000 TL</td>
+        </tr>
+        <tr>
+          <td>Altınşehir Mh.</td>
+          <td class="t-dist far">2.93 km</td>
+          <td>IFM Metro yakın</td>
+          <td class="t-price">35.000 TL</td>
+          <td>75 m²</td><td>3/3</td>
+          <td class="no">✗</td><td class="no">✗</td><td class="no">✗</td>
+          <td>Kombi</td><td>—</td>
         </tr>
       </tbody>
     </table>
