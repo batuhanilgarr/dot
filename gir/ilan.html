@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiralık Daire İlanları · Ümraniye</title>
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      color: #1a1a2e;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      padding: 28px 24px 22px;
+      text-align: center;
+    }
+    header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -.3px; }
+    header p  { margin-top: 6px; font-size: .85rem; color: #a0aec0; }
+
+    /* ── Price summary bar ── */
+    .summary {
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 14px 24px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      scrollbar-width: none;
+    }
+    .summary::-webkit-scrollbar { display: none; }
+    .summary-label { font-size: .75rem; color: #718096; white-space: nowrap; font-weight: 600; margin-right: 4px; }
+    .price-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      text-decoration: none;
+      color: #fff;
+      transition: opacity .15s;
+    }
+    .price-pill:hover { opacity: .85; }
+    .price-pill.cheapest { background: #38a169; }
+    .price-pill.mid      { background: #3182ce; }
+    .price-pill.high     { background: #e53e3e; }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px)  { .grid { grid-template-columns: 1fr; padding: 16px; gap: 16px; } }
+
+    /* ── Card ── */
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,.1), 0 12px 32px rgba(0,0,0,.1);
+    }
+
+    /* photo */
+    .card-photo {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: #e2e8f0;
+    }
+    .card-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .3s;
+    }
+    .card:hover .card-photo img { transform: scale(1.04); }
+
+    /* badges on photo */
+    .badge-top {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      display: flex;
+      gap: 5px;
+    }
+    .badge {
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .3px;
+      backdrop-filter: blur(6px);
+    }
+    .badge-green  { background: rgba(56,161,105,.92); color: #fff; }
+    .badge-blue   { background: rgba(49,130,206,.92);  color: #fff; }
+    .badge-orange { background: rgba(221,107,32,.92);  color: #fff; }
+    .badge-gray   { background: rgba(113,128,150,.85); color: #fff; }
+
+    /* price corner */
+    .card-price {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(26,32,46,.88);
+      color: #fff;
+      padding: 6px 13px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: -.3px;
+      backdrop-filter: blur(4px);
+    }
+    .card-price span { font-size: .65rem; font-weight: 500; opacity: .8; margin-left: 2px; }
+
+    /* body */
+    .card-body { padding: 14px 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+    .card-title {
+      font-size: .92rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: #1a202c;
+    }
+    .card-location {
+      font-size: .75rem;
+      color: #718096;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-location svg { flex-shrink: 0; }
+
+    /* specs row */
+    .specs {
+      display: flex;
+      gap: 0;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .spec {
+      flex: 1;
+      text-align: center;
+      padding: 7px 4px;
+      border-right: 1px solid #e2e8f0;
+    }
+    .spec:last-child { border-right: none; }
+    .spec-val  { font-size: .85rem; font-weight: 700; color: #2d3748; }
+    .spec-key  { font-size: .62rem; color: #a0aec0; margin-top: 1px; }
+
+    /* features */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .feat {
+      padding: 3px 9px;
+      border-radius: 12px;
+      font-size: .7rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .feat-ok  { background: #f0fff4; color: #276749; border: 1px solid #c6f6d5; }
+    .feat-no  { background: #fff5f5; color: #9b2c2c; border: 1px solid #fed7d7; }
+
+    /* deposit */
+    .card-deposit {
+      font-size: .72rem;
+      color: #718096;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 8px;
+      margin-top: auto;
+    }
+
+    /* actions */
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      padding: 0 16px 14px;
+    }
+    .btn {
+      flex: 1;
+      padding: 9px 6px;
+      border-radius: 8px;
+      font-size: .78rem;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: opacity .15s;
+    }
+    .btn:hover { opacity: .85; }
+    .btn-primary   { background: #3182ce; color: #fff; }
+    .btn-secondary { background: #f7fafc; color: #4a5568; border: 1px solid #e2e8f0; }
+
+    /* ── Comparison table ── */
+    .compare-section {
+      max-width: 1200px;
+      margin: 0 auto 40px;
+      padding: 0 24px;
+    }
+    .compare-section h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 12px;
+    }
+    .compare-wrap { overflow-x: auto; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: .78rem;
+      min-width: 680px;
+    }
+    th {
+      background: #2d3748;
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #2d3748;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f7fafc; }
+    .td-price { font-weight: 800; color: #2b6cb0; }
+    .td-best  { font-weight: 700; color: #276749; }
+    .ok  { color: #38a169; font-weight: 700; }
+    .no  { color: #e53e3e; font-weight: 700; }
+    .rank-1 { background: #fffbea; }
+    .rank-1 td { }
+
+    /* footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: .72rem;
+      color: #a0aec0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🏠 Kiralık Daire İlanları</h1>
+  <p>Ümraniye · 6 ilan · 2+1 Sıfır &amp; Yeni Bina · Güncelleme: 25 Mayıs 2026</p>
+</header>
+
+<!-- quick price overview -->
+<div class="summary">
+  <span class="summary-label">Fiyat Sıralaması:</span>
+  <a class="price-pill cheapest" href="#ilan-2">🏆 33.000 TL — Huzur</a>
+  <a class="price-pill mid"      href="#ilan-5">35.000 TL — Esenşehir</a>
+  <a class="price-pill mid"      href="#ilan-6">35.000 TL — Altınşehir</a>
+  <a class="price-pill high"     href="#ilan-4">37.000 TL — Esenkent</a>
+  <a class="price-pill high"     href="#ilan-1">37.500 TL — Madenler</a>
+  <a class="price-pill high"     href="#ilan-3">37.700 TL — Cemil Meriç</a>
+</div>
+
+<main class="grid">
+
+  <!-- ① Garden Emlak — 33.000 TL (EN UCUZ) -->
+  <div class="card" id="ilan-2">
+    <div class="card-photo">
+      <img src="https://i0.shbdn.com/photos/12/61/26/x5_1308126126b73.jpg"
+           alt="Garden Emlak — Huzur Mah."
+           loading="lazy"
+           onerror="this.style.background='#e2e8f0';this.src=''">
+      <div class="badge-top">
+        <span class="badge badge-green">🏆 EN UYGUN</span>
+        <span class="badge badge-blue">Sıfır Bina</span>
+      </div>
+      <div class="card-price">33.000 TL<span>/ay</span></div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Garden Emlak · Sıfır Binada Kiralık Daire</div>
+      <div class="card-location">
+        <svg width="11" height="13" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5z" fill="#718096"/></svg>
+        Ümraniye / Huzur Mah. · Huzur Metro 7 dk
+      </div>
+      <div class="specs">
+        <div class="spec"><div class="spec-val">85</div><div class="spec-key">Brüt m²</div></div>
+        <div class="spec"><div class="spec-val">75</div><div class="spec-key">Net m²</div></div>
+        <div class="spec"><div class="spec-val">2/5</div><div class="spec-key">Kat</div></div>
+        <div class="spec"><div class="spec-val">2+1</div><div class="spec-key">Oda</div></div>
+      </div>
+      <div class="features">
+        <span class="feat feat-ok">✓ Balkon</span>
+        <span class="feat feat-ok">✓ Asansör</span>
+        <span class="feat feat-ok">✓ Açık Otopark</span>
+        <span class="feat feat-ok">✓ Kombi</span>
+      </div>
+      <div class="card-deposit">Depozito: 30.000 TL &nbsp;·&nbsp; Tapu: Kat Mülkiyetli &nbsp;·&nbsp; Garden Emlak</div>
+    </div>
+    <div class="card-actions">
+      <a class="btn btn-primary" href="https://www.sahibinden.com/ilan/emlak-konut-kiralik-garden-emlaktan-sifir-binada-kiralik-daire-1308126126/detay/" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Sahibinden
+      </a>
+      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/Current+Location/41.02769222150788,29.162712681555874" target="_blank" rel="noopener">
+        🗺 Harita
+      </a>
+    </div>
+  </div>
+
+  <!-- ② Dudullu Esenşehir — 35.000 TL (Yerden Isıtma) -->
+  <div class="card" id="ilan-5">
+    <div class="card-photo">
+      <img src="https://i0.shbdn.com/photos/23/19/01/x5_1311231901f8g.jpg"
+           alt="Dudullu — Esenşehir Mh."
+           loading="lazy"
+           onerror="this.style.background='#e2e8f0';this.src=''">
+      <div class="badge-top">
+        <span class="badge badge-blue">Sıfır Bina</span>
+        <span class="badge badge-orange">Yerden Isıtma</span>
+      </div>
+      <div class="card-price">35.000 TL<span>/ay</span></div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Dudullu · Yeni Binada 2+1 Kiralık Daire</div>
+      <div class="card-location">
+        <svg width="11" height="13" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5z" fill="#718096"/></svg>
+        Ümraniye / Esenşehir Mh. · Dudullu &amp; Bostancı Metro yakın
+      </div>
+      <div class="specs">
+        <div class="spec"><div class="spec-val">85</div><div class="spec-key">Brüt m²</div></div>
+        <div class="spec"><div class="spec-val">70</div><div class="spec-key">Net m²</div></div>
+        <div class="spec"><div class="spec-val">2/5</div><div class="spec-key">Kat</div></div>
+        <div class="spec"><div class="spec-val">2+1</div><div class="spec-key">Oda</div></div>
+      </div>
+      <div class="features">
+        <span class="feat feat-ok">✓ Balkon</span>
+        <span class="feat feat-ok">✓ Asansör</span>
+        <span class="feat feat-no">✗ Otopark</span>
+        <span class="feat feat-ok">✓ Yerden Isıtma</span>
+      </div>
+      <div class="card-deposit">Depozito: 35.000 TL &nbsp;·&nbsp; Tapu: Kat Mülkiyetli &nbsp;·&nbsp; Deko Tek İnşaat Emlak</div>
+    </div>
+    <div class="card-actions">
+      <a class="btn btn-primary" href="https://www.sahibinden.com/ilan/emlak-konut-kiralik-umraniye-dudullu-da-yeni-binada-kiralik-2-plus1-daireler-1311231901/detay/" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Sahibinden
+      </a>
+      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/Current+Location/41.01055810263407,29.167354238588732" target="_blank" rel="noopener">
+        🗺 Harita
+      </a>
+    </div>
+  </div>
+
+  <!-- ③ Albayrak — 35.000 TL (Cadde üzeri) -->
+  <div class="card" id="ilan-6">
+    <div class="card-photo">
+      <img src="https://i0.shbdn.com/photos/55/90/74/x5_1313559074mgo.jpg"
+           alt="Albayrak — Altınşehir Mh."
+           loading="lazy"
+           onerror="this.style.background='#e2e8f0';this.src=''">
+      <div class="badge-top">
+        <span class="badge badge-gray">5 Yıllık</span>
+      </div>
+      <div class="card-price">35.000 TL<span>/ay</span></div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Albayrak · Cadde Üzeri 3. Kat 2+1 Daire</div>
+      <div class="card-location">
+        <svg width="11" height="13" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5z" fill="#718096"/></svg>
+        Ümraniye / Altınşehir Mh. · IFM &amp; Ataşehir 1 km
+      </div>
+      <div class="specs">
+        <div class="spec"><div class="spec-val">85</div><div class="spec-key">Brüt m²</div></div>
+        <div class="spec"><div class="spec-val">75</div><div class="spec-key">Net m²</div></div>
+        <div class="spec"><div class="spec-val">3/3</div><div class="spec-key">Kat</div></div>
+        <div class="spec"><div class="spec-val">2+1</div><div class="spec-key">Oda</div></div>
+      </div>
+      <div class="features">
+        <span class="feat feat-no">✗ Balkon</span>
+        <span class="feat feat-no">✗ Asansör</span>
+        <span class="feat feat-no">✗ Otopark</span>
+        <span class="feat feat-ok">✓ Kombi</span>
+      </div>
+      <div class="card-deposit">Depozito: —&nbsp; &nbsp;·&nbsp; Tapu: Kat Mülkiyetli &nbsp;·&nbsp; Albayrak Emlak</div>
+    </div>
+    <div class="card-actions">
+      <a class="btn btn-primary" href="https://www.sahibinden.com/ilan/emlak-konut-kiralik-albayrak-tan-cadde-uzeri-3.kat-kiralik-2-plus1-daire-1313559074/detay/" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Sahibinden
+      </a>
+      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/Current+Location/41.011450389500986,29.143079188691317" target="_blank" rel="noopener">
+        🗺 Harita
+      </a>
+    </div>
+  </div>
+
+  <!-- ④ Baraj Yolu — 37.000 TL (Enerji A) -->
+  <div class="card" id="ilan-4">
+    <div class="card-photo">
+      <img src="https://i0.shbdn.com/photos/00/03/06/x5_1318000306mvn.jpg"
+           alt="Baraj Yolu — Esenkent Mah."
+           loading="lazy"
+           onerror="this.style.background='#e2e8f0';this.src=''">
+      <div class="badge-top">
+        <span class="badge badge-blue">Sıfır Bina</span>
+        <span class="badge badge-green">ENERJİ A</span>
+      </div>
+      <div class="card-price">37.000 TL<span>/ay</span></div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Baraj Yolu Komşusu · Metroya Yürüme · Sıfır Daire</div>
+      <div class="card-location">
+        <svg width="11" height="13" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5z" fill="#718096"/></svg>
+        Ümraniye / Esenkent Mah. · 3 cephesi açık, güneye bakıyor
+      </div>
+      <div class="specs">
+        <div class="spec"><div class="spec-val">85</div><div class="spec-key">Brüt m²</div></div>
+        <div class="spec"><div class="spec-val">80</div><div class="spec-key">Net m²</div></div>
+        <div class="spec"><div class="spec-val">3/4</div><div class="spec-key">Kat</div></div>
+        <div class="spec"><div class="spec-val">2+1</div><div class="spec-key">Oda</div></div>
+      </div>
+      <div class="features">
+        <span class="feat feat-ok">✓ Balkon</span>
+        <span class="feat feat-ok">✓ Asansör</span>
+        <span class="feat feat-ok">✓ Açık Otopark</span>
+        <span class="feat feat-ok">✓ Kombi</span>
+      </div>
+      <div class="card-deposit">Depozito: 37.000 TL &nbsp;·&nbsp; Tapu: Kat Mülkiyetli &nbsp;·&nbsp; Evvim Gayrimenkul</div>
+    </div>
+    <div class="card-actions">
+      <a class="btn btn-primary" href="https://www.sahibinden.com/ilan/emlak-konut-kiralik-baraj-yoluna-komsu-metroya-yurume-mesafesinde-sifir-daire-1318000306/detay/" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Sahibinden
+      </a>
+      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/Current+Location/41.00550849659343,29.18108961047762" target="_blank" rel="noopener">
+        🗺 Harita
+      </a>
+    </div>
+  </div>
+
+  <!-- ⑤ Madenler — 37.500 TL (en üst kat, metro 8 dk) -->
+  <div class="card" id="ilan-1">
+    <div class="card-photo">
+      <img src="https://i0.shbdn.com/photos/36/66/38/x5_1318366638v3e.jpg"
+           alt="Madenler — Oturuma Hazır 2+1"
+           loading="lazy"
+           onerror="this.style.background='#e2e8f0';this.src=''">
+      <div class="badge-top">
+        <span class="badge badge-blue">Sıfır Bina</span>
+        <span class="badge badge-gray">En Üst Kat</span>
+      </div>
+      <div class="card-price">37.500 TL<span>/ay</span></div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Madenler · Oturuma Hazır Sıfır 2+1 — Şehir Manzaralı</div>
+      <div class="card-location">
+        <svg width="11" height="13" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5z" fill="#718096"/></svg>
+        Ümraniye / Madenler Mah. · Çekmeköy-Üsküdar Metro 8 dk
+      </div>
+      <div class="specs">
+        <div class="spec"><div class="spec-val">88</div><div class="spec-key">Brüt m²</div></div>
+        <div class="spec"><div class="spec-val">70</div><div class="spec-key">Net m²</div></div>
+        <div class="spec"><div class="spec-val">4/4</div><div class="spec-key">Kat</div></div>
+        <div class="spec"><div class="spec-val">2+1</div><div class="spec-key">Oda</div></div>
+      </div>
+      <div class="features">
+        <span class="feat feat-ok">✓ Balkon</span>
+        <span class="feat feat-ok">✓ Asansör</span>
+        <span class="feat feat-ok">✓ Açık Otopark</span>
+        <span class="feat feat-ok">✓ Kombi</span>
+      </div>
+      <div class="card-deposit">Depozito: 37.500 TL &nbsp;·&nbsp; Tapu: Kat İrtifaklı &nbsp;·&nbsp; Doğan Emlak</div>
+    </div>
+    <div class="card-actions">
+      <a class="btn btn-primary" href="https://www.sahibinden.com/ilan/emlak-konut-kiralik-sifir-oturuma-hazir-2-plus1-1318366638/detay/" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Sahibinden
+      </a>
+      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/Current+Location/41.00937692113273,29.18532213119283" target="_blank" rel="noopener">
+        🗺 Harita
+      </a>
+    </div>
+  </div>
+
+  <!-- ⑥ Cemil Meriç — 37.700 TL (en geniş net m²) -->
+  <div class="card" id="ilan-3">
+    <div class="card-photo">
+      <img src="https://i0.shbdn.com/photos/34/72/23/x5_1318347223iyb.jpg"
+           alt="Cemil Meriç Mh. — Sıfır Bina 2+1"
+           loading="lazy"
+           onerror="this.style.background='#e2e8f0';this.src=''">
+      <div class="badge-top">
+        <span class="badge badge-blue">Sıfır Bina</span>
+        <span class="badge badge-green">80 m² Net</span>
+      </div>
+      <div class="card-price">37.700 TL<span>/ay</span></div>
+    </div>
+    <div class="card-body">
+      <div class="card-title">Cemil Meriç · Sıfır Binada 2+1 — Ankastre Mutfak</div>
+      <div class="card-location">
+        <svg width="11" height="13" viewBox="0 0 12 14" fill="none"><path d="M6 0C3.24 0 1 2.24 1 5c0 3.75 5 9 5 9s5-5.25 5-9c0-2.76-2.24-5-5-5z" fill="#718096"/></svg>
+        Ümraniye / Cemil Meriç Mh. · Enerji B Sertifikası
+      </div>
+      <div class="specs">
+        <div class="spec"><div class="spec-val">85</div><div class="spec-key">Brüt m²</div></div>
+        <div class="spec"><div class="spec-val">80</div><div class="spec-key">Net m²</div></div>
+        <div class="spec"><div class="spec-val">4/4</div><div class="spec-key">Kat</div></div>
+        <div class="spec"><div class="spec-val">2+1</div><div class="spec-key">Oda</div></div>
+      </div>
+      <div class="features">
+        <span class="feat feat-ok">✓ Balkon</span>
+        <span class="feat feat-ok">✓ Asansör</span>
+        <span class="feat feat-ok">✓ Açık Otopark</span>
+        <span class="feat feat-ok">✓ Kombi</span>
+      </div>
+      <div class="card-deposit">Depozito: 37.000 TL &nbsp;·&nbsp; Aidat: 200 TL &nbsp;·&nbsp; Atala Emlak</div>
+    </div>
+    <div class="card-actions">
+      <a class="btn btn-primary" href="https://www.sahibinden.com/ilan/emlak-konut-kiralik-cemil-meric-te-sifir-binada-2-plus1-kiralik-daire-1318347223/detay/" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Sahibinden
+      </a>
+      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/Current+Location/41.02743017557202,29.14495253652254" target="_blank" rel="noopener">
+        🗺 Harita
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<!-- Comparison Table -->
+<div class="compare-section">
+  <h2>📊 Yan Yana Karşılaştırma</h2>
+  <div class="compare-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Mahalle</th>
+          <th>Fiyat / ay</th>
+          <th>Net m²</th>
+          <th>Kat</th>
+          <th>Balkon</th>
+          <th>Asansör</th>
+          <th>Otopark</th>
+          <th>Isıtma</th>
+          <th>Depozito</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="rank-1">
+          <td><strong>🏆 Huzur Mah.</strong></td>
+          <td class="td-price td-best">33.000 TL</td>
+          <td>75 m²</td>
+          <td>2/5</td>
+          <td class="ok">✓</td>
+          <td class="ok">✓</td>
+          <td class="ok">✓ Açık</td>
+          <td>Kombi</td>
+          <td>30.000 TL</td>
+        </tr>
+        <tr>
+          <td>Esenşehir Mh.</td>
+          <td class="td-price">35.000 TL</td>
+          <td>70 m²</td>
+          <td>2/5</td>
+          <td class="ok">✓</td>
+          <td class="ok">✓</td>
+          <td class="no">✗</td>
+          <td>Yerden</td>
+          <td>35.000 TL</td>
+        </tr>
+        <tr>
+          <td>Altınşehir Mh.</td>
+          <td class="td-price">35.000 TL</td>
+          <td>75 m²</td>
+          <td>3/3</td>
+          <td class="no">✗</td>
+          <td class="no">✗</td>
+          <td class="no">✗</td>
+          <td>Kombi</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Esenkent Mah.</td>
+          <td class="td-price">37.000 TL</td>
+          <td>80 m²</td>
+          <td>3/4</td>
+          <td class="ok">✓</td>
+          <td class="ok">✓</td>
+          <td class="ok">✓ Açık</td>
+          <td>Kombi</td>
+          <td>37.000 TL</td>
+        </tr>
+        <tr>
+          <td>Madenler Mah.</td>
+          <td class="td-price">37.500 TL</td>
+          <td>70 m²</td>
+          <td>4/4</td>
+          <td class="ok">✓</td>
+          <td class="ok">✓</td>
+          <td class="ok">✓ Açık</td>
+          <td>Kombi</td>
+          <td>37.500 TL</td>
+        </tr>
+        <tr>
+          <td>Cemil Meriç Mh.</td>
+          <td class="td-price">37.700 TL</td>
+          <td><strong>80 m²</strong></td>
+          <td>4/4</td>
+          <td class="ok">✓</td>
+          <td class="ok">✓</td>
+          <td class="ok">✓ Açık</td>
+          <td>Kombi</td>
+          <td>37.000 TL</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  Zeynep &amp; Batuhan · Ev Arama Listesi · 25 Mayıs 2026
+</footer>
+
+</body>
+</html>
