@@ -228,6 +228,21 @@
       display: flex;
       align-items: flex-start;
       gap: 4px;
+      flex-wrap: wrap;
+    }
+    .dist-badge {
+      margin-left: auto;
+      white-space: nowrap;
+      background: #ebf8ff;
+      color: #2b6cb0;
+      font-size: .67rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+    .dist-badge.dist-far {
+      background: #fff5f5;
+      color: #c53030;
     }
 
     /* specs */
@@ -321,6 +336,7 @@
 <header>
   <h1>🏠 Kiralık Daire İlanları</h1>
   <p>Ümraniye · 6 ilan · 2+1 · Sıfır &amp; Yeni Bina · 25 Mayıs 2026</p>
+  <p style="margin-top:6px;font-size:.76rem;color:#90b4ce;">📍 Mesafeler aile evinden kuş uçuşu hesaplandı</p>
 </header>
 
 <div class="summary">
@@ -361,7 +377,7 @@
     </div>
     <div class="card-body">
       <div class="card-title">Garden Emlak · Sıfır Binada Kiralık Daire</div>
-      <div class="card-loc">📍 Ümraniye / Huzur Mah. · Huzur Metro 7 dk</div>
+      <div class="card-loc">📍 Ümraniye / Huzur Mah. · Huzur Metro 7 dk <span class="dist-badge">🏠 ~1.35 km</span></div>
       <div class="specs">
         <div class="spec"><div class="spec-val">85</div><div class="spec-lbl">Brüt m²</div></div>
         <div class="spec"><div class="spec-val">75</div><div class="spec-lbl">Net m²</div></div>
@@ -378,7 +394,7 @@
     </div>
     <div class="card-actions">
       <a class="btn btn-primary" href="https://www.sahibinden.com/ilan/emlak-konut-kiralik-garden-emlaktan-sifir-binada-kiralik-daire-1308126126/detay/" target="_blank" rel="noopener">↗ Sahibinden</a>
-      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/Current+Location/41.02769222150788,29.162712681555874" target="_blank" rel="noopener">🗺 Harita</a>
+      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/41.0205584,29.1757903/41.02769222150788,29.162712681555874" target="_blank" rel="noopener">🗺 Harita</a>
     </div>
   </div>
 
@@ -408,7 +424,7 @@
     </div>
     <div class="card-body">
       <div class="card-title">Dudullu · Yeni Binada 2+1 Daire — Yerden Isıtma</div>
-      <div class="card-loc">📍 Ümraniye / Esenşehir Mh. · Dudullu &amp; Bostancı Metro yakın</div>
+      <div class="card-loc">📍 Ümraniye / Esenşehir Mh. · Dudullu &amp; Bostancı Metro yakın <span class="dist-badge">🏠 ~1.32 km</span></div>
       <div class="specs">
         <div class="spec"><div class="spec-val">85</div><div class="spec-lbl">Brüt m²</div></div>
         <div class="spec"><div class="spec-val">70</div><div class="spec-lbl">Net m²</div></div>
@@ -425,7 +441,7 @@
     </div>
     <div class="card-actions">
       <a class="btn btn-primary" href="https://www.sahibinden.com/ilan/emlak-konut-kiralik-umraniye-dudullu-da-yeni-binada-kiralik-2-plus1-daireler-1311231901/detay/" target="_blank" rel="noopener">↗ Sahibinden</a>
-      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/Current+Location/41.01055810263407,29.167354238588732" target="_blank" rel="noopener">🗺 Harita</a>
+      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/41.0205584,29.1757903/41.01055810263407,29.167354238588732" target="_blank" rel="noopener">🗺 Harita</a>
     </div>
   </div>
 
@@ -454,7 +470,7 @@
     </div>
     <div class="card-body">
       <div class="card-title">Albayrak · Cadde Üzeri 3. Kat 2+1</div>
-      <div class="card-loc">📍 Ümraniye / Altınşehir Mh. · IFM &amp; Ataşehir 1 km</div>
+      <div class="card-loc">📍 Ümraniye / Altınşehir Mh. · IFM &amp; Ataşehir 1 km <span class="dist-badge dist-far">🏠 ~2.93 km</span></div>
       <div class="specs">
         <div class="spec"><div class="spec-val">85</div><div class="spec-lbl">Brüt m²</div></div>
         <div class="spec"><div class="spec-val">75</div><div class="spec-lbl">Net m²</div></div>
@@ -471,7 +487,7 @@
     </div>
     <div class="card-actions">
       <a class="btn btn-primary" href="https://www.sahibinden.com/ilan/emlak-konut-kiralik-albayrak-tan-cadde-uzeri-3.kat-kiralik-2-plus1-daire-1313559074/detay/" target="_blank" rel="noopener">↗ Sahibinden</a>
-      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/Current+Location/41.011450389500986,29.143079188691317" target="_blank" rel="noopener">🗺 Harita</a>
+      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/41.0205584,29.1757903/41.011450389500986,29.143079188691317" target="_blank" rel="noopener">🗺 Harita</a>
     </div>
   </div>
 
@@ -501,7 +517,7 @@
     </div>
     <div class="card-body">
       <div class="card-title">Baraj Yolu Komşusu · Metro Yakını · Güneye Bakan</div>
-      <div class="card-loc">📍 Ümraniye / Esenkent Mah. · 3 cephesi açık, okul-pazar komşu</div>
+      <div class="card-loc">📍 Ümraniye / Esenkent Mah. · 3 cephesi açık, okul-pazar komşu <span class="dist-badge">🏠 ~1.73 km</span></div>
       <div class="specs">
         <div class="spec"><div class="spec-val">85</div><div class="spec-lbl">Brüt m²</div></div>
         <div class="spec"><div class="spec-val">80</div><div class="spec-lbl">Net m²</div></div>
@@ -518,7 +534,7 @@
     </div>
     <div class="card-actions">
       <a class="btn btn-primary" href="https://www.sahibinden.com/ilan/emlak-konut-kiralik-baraj-yoluna-komsu-metroya-yurume-mesafesinde-sifir-daire-1318000306/detay/" target="_blank" rel="noopener">↗ Sahibinden</a>
-      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/Current+Location/41.00550849659343,29.18108961047762" target="_blank" rel="noopener">🗺 Harita</a>
+      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/41.0205584,29.1757903/41.00550849659343,29.18108961047762" target="_blank" rel="noopener">🗺 Harita</a>
     </div>
   </div>
 
@@ -548,7 +564,7 @@
     </div>
     <div class="card-body">
       <div class="card-title">Madenler · Oturuma Hazır Sıfır 2+1 — Şehir Manzaralı</div>
-      <div class="card-loc">📍 Ümraniye / Madenler Mah. · Çekmeköy-Üsküdar Metro 8 dk</div>
+      <div class="card-loc">📍 Ümraniye / Madenler Mah. · Çekmeköy-Üsküdar Metro 8 dk <span class="dist-badge">🏠 ~1.48 km</span></div>
       <div class="specs">
         <div class="spec"><div class="spec-val">88</div><div class="spec-lbl">Brüt m²</div></div>
         <div class="spec"><div class="spec-val">70</div><div class="spec-lbl">Net m²</div></div>
@@ -565,7 +581,7 @@
     </div>
     <div class="card-actions">
       <a class="btn btn-primary" href="https://www.sahibinden.com/ilan/emlak-konut-kiralik-sifir-oturuma-hazir-2-plus1-1318366638/detay/" target="_blank" rel="noopener">↗ Sahibinden</a>
-      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/Current+Location/41.00937692113273,29.18532213119283" target="_blank" rel="noopener">🗺 Harita</a>
+      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/41.0205584,29.1757903/41.00937692113273,29.18532213119283" target="_blank" rel="noopener">🗺 Harita</a>
     </div>
   </div>
 
@@ -595,7 +611,7 @@
     </div>
     <div class="card-body">
       <div class="card-title">Cemil Meriç · Sıfır Binada 2+1 — Ankastre Mutfak</div>
-      <div class="card-loc">📍 Ümraniye / Cemil Meriç Mh. · Enerji B Sertifikalı</div>
+      <div class="card-loc">📍 Ümraniye / Cemil Meriç Mh. · Enerji B Sertifikalı <span class="dist-badge dist-far">🏠 ~2.70 km</span></div>
       <div class="specs">
         <div class="spec"><div class="spec-val">85</div><div class="spec-lbl">Brüt m²</div></div>
         <div class="spec"><div class="spec-val">80</div><div class="spec-lbl">Net m²</div></div>
@@ -612,7 +628,7 @@
     </div>
     <div class="card-actions">
       <a class="btn btn-primary" href="https://www.sahibinden.com/ilan/emlak-konut-kiralik-cemil-meric-te-sifir-binada-2-plus1-kiralik-daire-1318347223/detay/" target="_blank" rel="noopener">↗ Sahibinden</a>
-      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/Current+Location/41.02743017557202,29.14495253652254" target="_blank" rel="noopener">🗺 Harita</a>
+      <a class="btn btn-secondary" href="https://www.google.com/maps/dir/41.0205584,29.1757903/41.02743017557202,29.14495253652254" target="_blank" rel="noopener">🗺 Harita</a>
     </div>
   </div>
 
