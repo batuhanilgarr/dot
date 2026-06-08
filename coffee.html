@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="./assets/images/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="./assets/images/favicon.png" sizes="32x32">
+    <meta name="description" content="Zeynep & Batuhan — Nespresso Kahve Seçimi">
+    <title>Kahve Seçimi — Zeynep &amp; Batuhan</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&display=optional" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(180deg, #f7efe7 0%, #efe3d6 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            color: #5a4a42;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(245, 240, 235, 0.7);
+            z-index: -1;
+        }
+
+        .coffee-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .coffee-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px 0;
+        }
+
+        .coffee-header h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: #7a3d30;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .coffee-header p {
+            font-size: 1.1rem;
+            color: #8b5a4a;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .coffee-tagline {
+            margin-top: 16px;
+            font-style: italic;
+            color: #9b7a6b;
+        }
+
+        .coffee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .coffee-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(180, 140, 130, 0.3);
+            border-radius: 12px;
+            padding: 28px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coffee-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #8b4513 0%, #c8956b 100%);
+        }
+
+        .coffee-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(180, 140, 130, 0.25);
+        }
+
+        .coffee-card.decaf::before {
+            background: linear-gradient(90deg, #a0826d 0%, #c9b5a3 100%);
+        }
+
+        .coffee-card.capsule-set::before {
+            background: linear-gradient(90deg, #d4a574 0%, #e8c4a0 100%);
+        }
+
+        .coffee-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #6b3e34;
+            margin-bottom: 12px;
+            font-family: 'Georgia', serif;
+        }
+
+        .coffee-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #fff;
+            background: #8b4513;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .coffee-badge.decaf {
+            background: #a0826d;
+        }
+
+        .coffee-badge.set {
+            background: #d4a574;
+        }
+
+        .coffee-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #7a5a4a;
+            margin-bottom: 16px;
+        }
+
+        .coffee-profile {
+            background: rgba(139, 69, 19, 0.05);
+            border-left: 3px solid #c8a4b8;
+            padding: 12px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .coffee-profile strong {
+            color: #6b3e34;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .coffee-profile p {
+            margin: 4px 0;
+            color: #8b5a4a;
+        }
+
+        .flavor-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .flavor-tag {
+            font-size: 0.8rem;
+            background: rgba(212, 165, 165, 0.2);
+            color: #7a5a4a;
+            padding: 4px 10px;
+            border-radius: 16px;
+            border: 1px solid rgba(212, 165, 165, 0.4);
+        }
+
+        .category-section {
+            margin-bottom: 60px;
+        }
+
+        .category-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: #7a3d30;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(212, 165, 165, 0.3);
+        }
+
+        .category-intro {
+            font-size: 0.95rem;
+            color: #8b5a4a;
+            margin-bottom: 24px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .back-link a {
+            color: #c8a4b8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-link a:hover {
+            color: #8b4513;
+        }
+
+        .coffee-footer {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.85rem;
+            color: #9b8ea0;
+            border-top: 1px solid rgba(180, 140, 130, 0.2);
+            margin-top: 60px;
+        }
+
+        .coffee-footer a {
+            color: #c8a4b8;
+            text-decoration: none;
+        }
+
+        .coffee-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .coffee-header h1 {
+                font-size: 2rem;
+            }
+
+            .coffee-header {
+                margin-bottom: 30px;
+                padding: 20px 0;
+            }
+
+            .coffee-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin-bottom: 40px;
+            }
+
+            .coffee-card {
+                padding: 20px;
+            }
+
+            .category-title {
+                font-size: 1.4rem;
+                margin-bottom: 16px;
+            }
+
+            .coffee-wrapper {
+                padding: 30px 16px;
+            }
+        }
+
+        .music-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(212, 165, 165, 0.9);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(212, 165, 165, 0.4);
+            z-index: 2000;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .music-toggle.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(212, 165, 165, 0.6);
+        }
+
+        .music-icon {
+            color: white;
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="back-link">
+        <a href="/">← Davetiye Sayfasına Dön</a>
+    </div>
+
+    <div class="coffee-wrapper">
+        <div class="coffee-header">
+            <h1>☕ Nespresso Kahvesi</h1>
+            <p class="coffee-tagline">Zeynep & Batuhan'ın Tercih Ettiği Kapsüller</p>
+            <p>Her kahvenin kendine göre bir çeşitliliği ve tadı var. Buradan Nespresso ürün yelpazemizden seçimi yapabilirsiniz.</p>
+        </div>
+
+        <!-- ORIGINAL ESPRESSO -->
+        <div class="category-section">
+            <h2 class="category-title">Original — Yoğun & Karakterli</h2>
+            <p class="category-intro">Zengin, odunsu ve yoğun tadlara sahip klasik espresso seçenekleri. Sert kahve sevenlerin tercih ettiği seri.</p>
+            <div class="coffee-grid">
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Arpeggio</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Yoğun, tam vücut, sebze ve baharat notaları</p>
+                    </div>
+                    <p class="coffee-description">Tam cisimli ve yoğun espresso. Siyah, odunsu ve sıcak bahar notaları ile çok karakterli bir espresso. Türk kahvesi sevenlerin kesinlikle deneyeceği bir seçim.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Odunsu</span>
+                        <span class="flavor-tag">Yoğun</span>
+                        <span class="flavor-tag">Sebzeli</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Kazaar</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Çok yoğun, siyah ve asker kahvesi gibi</p>
+                    </div>
+                    <p class="coffee-description">Nespresso'nun en yoğun espressolarından biri. Siyah, köklü ve koyu, sert kahve sevenlere hitap eden çok karakterli ürün. Daha yumuşak kahveler ile dengeleme yapma gerekliliği olabilir.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Çok Yoğun</span>
+                        <span class="flavor-tag">Siyah</span>
+                        <span class="flavor-tag">Güçlü</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Ispirazione Roma</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Orta yoğunluk, sos ve çikolata notaları</p>
+                    </div>
+                    <p class="coffee-description">Roma'nın klasik espresso geleneğinden ilham alınmış orta-yoğun ürün. Sıcak sos, çikolata ve hafif karamel notaları ile dengeli bir espresso deneyimi.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Sos</span>
+                        <span class="flavor-tag">Çikolata</span>
+                        <span class="flavor-tag">Karamelli</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Ispirazione Napoli</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Derin, odunsu, çikolata ve kuru meyve</p>
+                    </div>
+                    <p class="coffee-description">Napoli'nin canlı espresso kültüründen esinlenen, derin ve karakterli seçim. Odunsu, çikolata, kuru meyve notaları ile çok layered bir espresso.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Odunsu</span>
+                        <span class="flavor-tag">Çikolata</span>
+                        <span class="flavor-tag">Kuru Meyve</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Ispirazione Venezia</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Koyu kavrulmuş, çikolata ve baharat</p>
+                    </div>
+                    <p class="coffee-description">Venedik'in zengin mirasından ilham alan, derin koyu kavrulmuş espresso. Çikolata, sıcak baharat ve hafif süt notaları ile sofistike bir tat.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Koyu Kavrul</span>
+                        <span class="flavor-tag">Çikolata</span>
+                        <span class="flavor-tag">Baharat</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Ristretto</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Konsantre, şeker ve badem aromalan</p>
+                    </div>
+                    <p class="coffee-description">İtaliyan espresso geleneğinin ruhu — kısa ve çok yoğun. Koyu şeker ve badem notaları ile espressonun safı.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Konsantre</span>
+                        <span class="flavor-tag">Şeker</span>
+                        <span class="flavor-tag">Badem</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Livanto</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Yapılı, dengeli, tatlı ve çikolata</p>
+                    </div>
+                    <p class="coffee-description">Orta yoğunluk, dengeli profil. Tatlı kakaotlu not, yapılı kafein ve yumuşak karamelli bitişi ile her gün tüketilecek gündelik espresso seçeneği.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Dengeli</span>
+                        <span class="flavor-tag">Çikolata</span>
+                        <span class="flavor-tag">Karamelli</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Corto</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif, tatlı, tahıl ve çimleme notaları</p>
+                    </div>
+                    <p class="coffee-description">Hafif çimleme ile yüksek kahvenin bulunduğu ince ve duyarlı espresso. Tatlı, tahıl ve hafif baharatlar ile kibarlığı ön planda.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Hafif</span>
+                        <span class="flavor-tag">Tatlı</span>
+                        <span class="flavor-tag">Tahıl</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Caramello</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Yumuşak, cremoso, karamelli tatlı tad</p>
+                    </div>
+                    <p class="coffee-description">Yakın bitişte hafif tatlı karamelli notaları olan çok yumuşak espresso. Daha hafif kahve sevenler için Livanto'dan daha yumuşak bir seçim. Sütle çok iyi uyumlu.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Yumuşak</span>
+                        <span class="flavor-tag">Karamelli</span>
+                        <span class="flavor-tag">Creamy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LUNGO KAHVELER -->
+        <div class="category-section">
+            <h2 class="category-title">Lungo — Uzun & Yumuşak</h2>
+            <p class="category-intro">Daha fazla su ve daha uzun çıkış süresi ile oluşturulan, hafif ve yumuşak seçenekler. Ayrıntılı tatlar sevenlerin favorileri.</p>
+            <div class="coffee-grid">
+                <div class="coffee-card">
+                    <span class="coffee-badge">Lungo</span>
+                    <h3 class="coffee-name">Vienna Lungo</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Orta yoğun lungo, çikolata ve krem</p>
+                    </div>
+                    <p class="coffee-description">Uzun içim deneyimi ile yoğun profili dengelenmiş seçim. Çikolata, krem ve hafif odunsu notalar.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Orta-Yoğun</span>
+                        <span class="flavor-tag">Çikolata</span>
+                        <span class="flavor-tag">Krem</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Lungo</span>
+                    <h3 class="coffee-name">Tokyo Lungo</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif-orta, tatlı ve deniz kabuğu aromasi</p>
+                    </div>
+                    <p class="coffee-description">Daha hafif bir lungo deneyimi. Tatlı, hafif baharat ve deniz kabuğu gibi mineral notaları ile hassas tat profili.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Hafif-Orta</span>
+                        <span class="flavor-tag">Tatlı</span>
+                        <span class="flavor-tag">Mineral</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Lungo</span>
+                    <h3 class="coffee-name">Shanghai Lungo</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Dengeli, taze, sitrus ve çay notaları</p>
+                    </div>
+                    <p class="coffee-description">Taze ve hafif profil. Sitrus, yeşil çay ve hafif çimleme notaları ile çok dengelenmiş, sabah içmek için ideal lungo.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Taze</span>
+                        <span class="flavor-tag">Sitrus</span>
+                        <span class="flavor-tag">Çay</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Lungo</span>
+                    <h3 class="coffee-name">Buenos Aires Lungo</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Orta yoğun, derin, fındık ve baharat</p>
+                    </div>
+                    <p class="coffee-description">Dünyaca ünlü Buenos Aires kahve kültüründen ilham. Derin, fındık, baharat notaları ile karakterful lungo seçeneği.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Derin</span>
+                        <span class="flavor-tag">Fındık</span>
+                        <span class="flavor-tag">Baharat</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Lungo</span>
+                    <h3 class="coffee-name">Stockholm Lungo</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif, çimleme, tahıl ve çikolata</p>
+                    </div>
+                    <p class="coffee-description">İskandinav minimalizmi yansıtan, özü alınmış lungo. Tahıl, hafif çikolata ve çimleme notaları ile dengeli hafiflik.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Hafif</span>
+                        <span class="flavor-tag">Tahıl</span>
+                        <span class="flavor-tag">Çimleme</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Lungo</span>
+                    <h3 class="coffee-name">Cape Town Lungo</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Yoğun, fındık, karamel ve baharat</p>
+                    </div>
+                    <p class="coffee-description">Güney Afrika'nın zengin toprağından gelen, yoğun lungo. Fındık, karamel ve sıcak baharat notaları ile tropikal hava.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Yoğun</span>
+                        <span class="flavor-tag">Fındık</span>
+                        <span class="flavor-tag">Karamel</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESPRESSO SERILERI -->
+        <div class="category-section">
+            <h2 class="category-title">Şehir Espresso Serileri</h2>
+            <p class="category-intro">Dünya şehirlerinin kahve kültüründen ilham alan, benzersiz profili olan espresso seçenekleri.</p>
+            <div class="coffee-grid">
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Istanbul Espresso</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Yoğun, odunsu, sebze, baharat ve çikolata</p>
+                    </div>
+                    <p class="coffee-description">Arpeggio'nun İstanbul için tasarlanan versiyonu. Odunsu, sebzeli, sıcak baharat ve çikolata notaları ile Türk kahve geleneğinin modern yorumu.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Yoğun</span>
+                        <span class="flavor-tag">Sebzeli</span>
+                        <span class="flavor-tag">Çikolata</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Paris Espresso</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Koyu kavrulmuş, çikolata, sos, sofistike</p>
+                    </div>
+                    <p class="coffee-description">Parisen kahve sanat ve kültürü yansıtıyor. Derin çikolata, sos notaları ve hafif acılık ile çok sofistike profil. Macchiato ve cappucino için ideal.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Koyu Kavrul</span>
+                        <span class="flavor-tag">Çikolata</span>
+                        <span class="flavor-tag">Sos</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Rio De Janeiro Espresso</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Orta-yoğun, tatlı, çikolata ve fındık</p>
+                    </div>
+                    <p class="coffee-description">Brezilyalı kahve geleneğinden ilham. Tatlı, çikolata, fındık notaları ile tropikal ve renkli bir espresso deneyimi.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Orta-Yoğun</span>
+                        <span class="flavor-tag">Tatlı</span>
+                        <span class="flavor-tag">Fındık</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Athens Freddo Intenso</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Soğuk espresso, yoğun, çikolata ve badem</p>
+                    </div>
+                    <p class="coffee-description">Yunan soğuk kahve geleneğine uyumlu. Yoğun, çikolata ve badem notaları ile serinletici ve karakterli soğuk espresso seçeneği.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Soğuk</span>
+                        <span class="flavor-tag">Yoğun</span>
+                        <span class="flavor-tag">Badem</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Lisbon Bica</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif-orta, tatlı, sitrus ve çiçek</p>
+                    </div>
+                    <p class="coffee-description">Portekiz'in kısa espresso geleneğinden. Hafif, tatlı, hafif sitrus ve çiçek notaları ile zarif ve yumuşak bir seçim.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Hafif-Orta</span>
+                        <span class="flavor-tag">Tatlı</span>
+                        <span class="flavor-tag">Çiçek</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FLAVOR KAHVELER -->
+        <div class="category-section">
+            <h2 class="category-title">Flavoured — Aromalı Seçenekler</h2>
+            <p class="category-intro">Nespresso'nun özel aroma işlemleriyle oluşturulan, ek damak tatı arayan kullanıcılar için seçenekler.</p>
+            <div class="coffee-grid">
+                <div class="coffee-card">
+                    <span class="coffee-badge">Flavoured</span>
+                    <h3 class="coffee-name">Nocciola (Fındık)</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif espresso, kızılcık ve fındık aromasi</p>
+                    </div>
+                    <p class="coffee-description">Doğal fındık aroması ile hafif ve yumuşak espresso. Sütle ve cream ile birlikte içilmeye uygun, masaüstü molası kahvesi.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Fındık</span>
+                        <span class="flavor-tag">Aromalı</span>
+                        <span class="flavor-tag">Hafif</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Flavoured</span>
+                    <h3 class="coffee-name">Vaniglia (Vanilya)</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif, vanilya ve tatlı profili</p>
+                    </div>
+                    <p class="coffee-description">Gerçek vanilya aroması ile yumuşak bir espresso. Tatlı ve hafif aile dahilinde, cappuccino ve latte için ideal.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Vanilya</span>
+                        <span class="flavor-tag">Tatlı</span>
+                        <span class="flavor-tag">Aromalı</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Flavoured</span>
+                    <h3 class="coffee-name">Cioccolatino (Çikolata)</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif espresso, çikolata ve kakao aromasi</p>
+                    </div>
+                    <p class="coffee-description">Tatlı bir çikolata molası. Doğal kakao ve çikolata aroması ile hafif espresso, sütle mükemmel uyum. Kahve-çikolata tatması sevenler için.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Çikolata</span>
+                        <span class="flavor-tag">Tatlı</span>
+                        <span class="flavor-tag">Aromalı</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Flavoured</span>
+                    <h3 class="coffee-name">Yuzu Vanilla Over Ice</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Soğuk, yuzu sitrusu, vanilya ve tatlı</p>
+                    </div>
+                    <p class="coffee-description">Asya'dan ilham alan taze ve tatlı seçim. Yuzu sitrus notaları ve vanilya aroması ile serinletici yaz kahvesi. Buz üzerine ekleyin.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Soğuk</span>
+                        <span class="flavor-tag">Yuzu</span>
+                        <span class="flavor-tag">Vanilya</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Flavoured</span>
+                    <h3 class="coffee-name">Coconut Vanilla Over Ice</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Soğuk, hindistan cevizi, vanilya ve tatlı</p>
+                    </div>
+                    <p class="coffee-description">Tropikal serinlik. Hindistan cevizi ve vanilya aroması ile egzotik bir serinleme deneyimi. Soğuk günlerde tat tadında kahvesi.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Soğuk</span>
+                        <span class="flavor-tag">Tropikal</span>
+                        <span class="flavor-tag">Hindistan Cevizi</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DECAFFEINATO -->
+        <div class="category-section">
+            <h2 class="category-title">Decaffeinato — Kafeinsiz Seçenekler</h2>
+            <p class="category-intro">Akşam saatlerinde veya kafein hassasiyeti olanlar için, aroması hiç azalmamış kafeinsiz seçenekler.</p>
+            <div class="coffee-grid">
+                <div class="coffee-card decaf">
+                    <span class="coffee-badge decaf">Decaf</span>
+                    <h3 class="coffee-name">Arpeggio Decaffeinato</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Yoğun, odunsu, sebze — kafeinsiz</p>
+                    </div>
+                    <p class="coffee-description">Orijinal Arpeggio'nun tüm karakterini kafeinsiz olarak taşıyor. Akşam saatlerinde tüketilecek tam vücut espresso.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Yoğun</span>
+                        <span class="flavor-tag">Kafeinsiz</span>
+                        <span class="flavor-tag">Odunsu</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card decaf">
+                    <span class="coffee-badge decaf">Decaf</span>
+                    <h3 class="coffee-name">Ristretto Decaffeinato</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Konsantre, şeker, badem — kafeinsiz</p>
+                    </div>
+                    <p class="coffee-description">Espresso özünün kafeinsiz versiyonu. Konsantre, tatlı ve karakterli profil akşam saatlerinde de tadını çıkarmak için.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Konsantre</span>
+                        <span class="flavor-tag">Kafeinsiz</span>
+                        <span class="flavor-tag">Şeker</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card decaf">
+                    <span class="coffee-badge decaf">Decaf</span>
+                    <h3 class="coffee-name">Volluto Decaffeinato</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif, tatlı, çimleme — kafeinsiz</p>
+                    </div>
+                    <p class="coffee-description">Yumuşak ve hafif orijinal Volluto'nun kafeinsiz karşılığı. Tatlı, çimleme notaları ile güzel bir akşam seçeneği.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Hafif</span>
+                        <span class="flavor-tag">Kafeinsiz</span>
+                        <span class="flavor-tag">Tatlı</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card decaf">
+                    <span class="coffee-badge decaf">Decaf</span>
+                    <h3 class="coffee-name">Vienna Lungo Decaffeinato</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Orta lungo, çikolata — kafeinsiz</p>
+                    </div>
+                    <p class="coffee-description">Vienna Lungo'nun uzun ve yumuşak deneyimi, kafein olmaksızın. Çikolata notaları ve krem profili akşam molası için.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Lungo</span>
+                        <span class="flavor-tag">Kafeinsiz</span>
+                        <span class="flavor-tag">Çikolata</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card decaf">
+                    <span class="coffee-badge decaf">Decaf</span>
+                    <h3 class="coffee-name">Vaniglia Decaffeinato</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif, vanilya, tatlı — kafeinsiz</p>
+                    </div>
+                    <p class="coffee-description">Hafif vanilya aroması ile tatlı ve yumuşak kafeinsiz espresso. Uyku saatlerinden önce tatlı bir kahve molası.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Hafif</span>
+                        <span class="flavor-tag">Kafeinsiz</span>
+                        <span class="flavor-tag">Vanilya</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SINGLE ORIGIN -->
+        <div class="category-section">
+            <h2 class="category-title">Single Origin — Tek Kökenli Kahveler</h2>
+            <p class="category-intro">Belirli bölgelerden gelen, coğrafyası ve kaynağı belli, en saf kahve deneyimi arayan meraklılar için.</p>
+            <div class="coffee-grid">
+                <div class="coffee-card">
+                    <span class="coffee-badge">Single Origin</span>
+                    <h3 class="coffee-name">Colombia</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Orta-yoğun, meyve, çikolata, soft</p>
+                    </div>
+                    <p class="coffee-description">Kolombiya'nın yüksek rakımlı bölgelerinden gelen, yumuşak ve dengeli kahve. Meyve ve çikolata notaları, dengeli asitlik. Genel amaçlı gündelik seçim.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Colombia</span>
+                        <span class="flavor-tag">Meyve</span>
+                        <span class="flavor-tag">Çikolata</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Single Origin</span>
+                    <h3 class="coffee-name">Ethiopia</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif-orta, çiçek, sitrus, tatlı</p>
+                    </div>
+                    <p class="coffee-description">Etiyopya'nın bebek dağları bölgesinden. Çiçek, sitrus, hafif meyve notaları ile tatlı ve zarif kahve. Kahvenin kökenini keşfetmek isteyenler için.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Ethiopia</span>
+                        <span class="flavor-tag">Çiçek</span>
+                        <span class="flavor-tag">Sitrus</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Single Origin</span>
+                    <h3 class="coffee-name">Nicaragua</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Orta yoğun, çikolata, fındık, tutun</p>
+                    </div>
+                    <p class="coffee-description">Nikaragua'nın yanardağ toprakları tarafından bereketlendirilmiş. Çikolata, fındık ve hafif tutun notaları ile karakterli orta-yoğun seçim.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Nicaragua</span>
+                        <span class="flavor-tag">Çikolata</span>
+                        <span class="flavor-tag">Fındık</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Single Origin</span>
+                    <h3 class="coffee-name">India</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Yoğun, bahar, tahıl, ahşap, soft</p>
+                    </div>
+                    <p class="coffee-description">Hindistan'ın Malabar bölgesinden, rüzgarla arındırılmış. Sıcak baharat, tahıl, hafif ahşap notaları ile çok karakterli ve yoğun profil.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">India</span>
+                        <span class="flavor-tag">Baharat</span>
+                        <span class="flavor-tag">Tahıl</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Single Origin</span>
+                    <h3 class="coffee-name">Indonesia</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Yoğun, odunsu, baharat, çikolata, earth</p>
+                    </div>
+                    <p class="coffee-description">Sumatra ve Sulawesi topraklarından çıkan, çok karakterli kahve. Odunsu, topraklı, baharat ve çikolata notaları — bu tasarıda İndonezya tam da burası! Sert kahve sevenlerin ilk tercihi.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Indonesia</span>
+                        <span class="flavor-tag">Odunsu</span>
+                        <span class="flavor-tag">Topraklı</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CAPSULE SETS -->
+        <div class="category-section">
+            <h2 class="category-title">Seçkiler & Paket Setler</h2>
+            <p class="category-intro">Çeşitli kahve çeşitlerini bir paket içinde keşfetmek isteyenler için tasarlanmış, kuratör tarafından seçilmiş koleksiyonlar.</p>
+            <div class="coffee-grid">
+                <div class="coffee-card capsule-set">
+                    <span class="coffee-badge set">Set</span>
+                    <h3 class="coffee-name">Nespresso Tanışma Seçkisi</h3>
+                    <div class="coffee-profile">
+                        <strong>İçerik</strong>
+                        <p>200 kapsül, 20 çeşit mix</p>
+                    </div>
+                    <p class="coffee-description">Nespresso'nun tüm dünyasını tanımak isteyenler için. 20 farklı kahve türünü deneyerek kendi favorilerinizi bulabilirsiniz.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Başlangıç</span>
+                        <span class="flavor-tag">Çeşitli</span>
+                        <span class="flavor-tag">200 Kapsül</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card capsule-set">
+                    <span class="coffee-badge set">Set</span>
+                    <h3 class="coffee-name">Lungo Kahve Seçkisi</h3>
+                    <div class="coffee-profile">
+                        <strong>İçerik</strong>
+                        <p>100 kapsül, lungo serileri</p>
+                    </div>
+                    <p class="coffee-description">Uzun ve yumuşak kahve deneyimini sevenler için özel seçkilenmiş lungo koleksiyonu. Daha rahat bir kahve molası zamanı.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Lungo</span>
+                        <span class="flavor-tag">Yumuşak</span>
+                        <span class="flavor-tag">100 Kapsül</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card capsule-set">
+                    <span class="coffee-badge set">Set</span>
+                    <h3 class="coffee-name">Ispirazione Italiana Seçkisi</h3>
+                    <div class="coffee-profile">
+                        <strong>İçerik</strong>
+                        <p>100 kapsül, İtalyan espresso</p>
+                    </div>
+                    <p class="coffee-description">İtalya'nın dört kışına ilham alan espresso serileri. Roma, Napoli, Venezia ve Ispirazione serilerini 25'er adet kapsül ile keşfedin.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">İtalyan</span>
+                        <span class="flavor-tag">Espresso</span>
+                        <span class="flavor-tag">100 Kapsül</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card capsule-set">
+                    <span class="coffee-badge set">Set</span>
+                    <h3 class="coffee-name">Barista Creations Seçkisi</h3>
+                    <div class="coffee-profile">
+                        <strong>İçerik</strong>
+                        <p>80 kapsül, milk-friendly seçkiler</p>
+                    </div>
+                    <p class="coffee-description">Cappuccino, latte ve macchiato hazırlamak için özel seçilmiş kahveler. Süt içecekler ile mükemmel uyum sağlayan espresso seçileri.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Milk-Friendly</span>
+                        <span class="flavor-tag">Creations</span>
+                        <span class="flavor-tag">80 Kapsül</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card capsule-set">
+                    <span class="coffee-badge set">Set</span>
+                    <h3 class="coffee-name">Nespresso Türkiye Favorileri</h3>
+                    <div class="coffee-profile">
+                        <strong>İçerik</strong>
+                        <p>100 kapsül, Turkish selection</p>
+                    </div>
+                    <p class="coffee-description">Türk kahve sevenlere yönelik, Nespresso'nun Arjantin, İstanbul ve Napoli serileri ile tasarlanan özel seçkilenme.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Türk Favorileri</span>
+                        <span class="flavor-tag">Yoğun</span>
+                        <span class="flavor-tag">100 Kapsül</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card capsule-set">
+                    <span class="coffee-badge set">Set</span>
+                    <h3 class="coffee-name">World Explorations Seçkisi</h3>
+                    <div class="coffee-profile">
+                        <strong>İçerik</strong>
+                        <p>100 kapsül, dünya şehirlerinden</p>
+                    </div>
+                    <p class="coffee-description">Paris, Tokyo, Shanghai, Buenos Aires, Rio ve Cape Town'dan gelen kahveleri bir pakette keşfedin. Dünyadaki kahve kültürünü evinizde yaşayın.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Dünya Turası</span>
+                        <span class="flavor-tag">Seyahat</span>
+                        <span class="flavor-tag">100 Kapsül</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KLASIKLER -->
+        <div class="category-section">
+            <h2 class="category-title">Klasik Favori Kombinasyonlar</h2>
+            <p class="category-intro">Nespresso en popüler ve çok satan seçenekleri:</p>
+            <div class="coffee-grid">
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Volluto</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif-orta, tatlı, çimleme</p>
+                    </div>
+                    <p class="coffee-description">Nespresso'nun bestseller'ı. Dengeli, tatlı, hafif çimleme ile gündelik kahvenin tanımı. Başlayanlar ve kaptan kahveciler için fakat herkese açık.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Hafif-Orta</span>
+                        <span class="flavor-tag">Tatlı</span>
+                        <span class="flavor-tag">Bestseller</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Capriccio</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Orta, koyu kavrulmuş, çikolata, balansli</p>
+                    </div>
+                    <p class="coffee-description">Orta yoğunluk ile sağlam bir seçim. Koyu kavrulmuş, çikolata notaları ve hafif acılık ile dengeli bir espresso. Cappuccino ve latte için ideal.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Orta</span>
+                        <span class="flavor-tag">Koyu Kavrul</span>
+                        <span class="flavor-tag">Balansli</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Original</span>
+                    <h3 class="coffee-name">Cosi</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif, çimleme, tatlı, yumuşak</p>
+                    </div>
+                    <p class="coffee-description">Nespresso'nun en hafif seçeneği. Hafif çimleme, tatlı ve çok yumuşak profil. Daha konsantre kahve isteyenlerin dışı kalan herkes için.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Hafif</span>
+                        <span class="flavor-tag">Yumuşak</span>
+                        <span class="flavor-tag">Çimleme</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Lungo</span>
+                    <h3 class="coffee-name">Scuro</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Koyu lungo, yoğun, çikolata, baharat</p>
+                    </div>
+                    <p class="coffee-description">Lungo serisinde en yoğun seçim. Koyu kavrulmuş, çikolata, sıcak baharat notaları. Lungo sevenlerin yoğun bir espresso tarafını deneyip görmek isteyenleri için ideal.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Lungo</span>
+                        <span class="flavor-tag">Koyu Kavrul</span>
+                        <span class="flavor-tag">Yoğun</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Lungo</span>
+                    <h3 class="coffee-name">Chiaro</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Hafif lungo, taze, tahıl, çimleme</p>
+                    </div>
+                    <p class="coffee-description">Lungo serisinde en hafif seçim. Taze, hafif çimleme, tahıl notaları. Sabah molası ve uzun içim sevenler için mükemmel seçim.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Lungo</span>
+                        <span class="flavor-tag">Hafif</span>
+                        <span class="flavor-tag">Taze</span>
+                    </div>
+                </div>
+
+                <div class="coffee-card">
+                    <span class="coffee-badge">Arpeggio Extra</span>
+                    <h3 class="coffee-name">Arpeggio Extra</h3>
+                    <div class="coffee-profile">
+                        <strong>Profil</strong>
+                        <p>Arpeggio'dan daha yoğun versiyon</p>
+                    </div>
+                    <p class="coffee-description">Orijinal Arpeggio'dan daha yoğun ve karakterli. Odunsu, sebzeli, baharat notaları ile sert kahve sevenlerin mutlu etme sütunu.</p>
+                    <div class="flavor-tags">
+                        <span class="flavor-tag">Yoğun</span>
+                        <span class="flavor-tag">Odunsu</span>
+                        <span class="flavor-tag">Karakterli</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="coffee-footer">
+        <p>
+            <a href="https://www.nespresso.com/tr/tr/order/capsules/original" target="_blank" rel="noopener noreferrer">Nespresso.com'da Sipariş Ver</a>
+            ·
+            <a href="/">Davetiye Sayfasına Dön</a>
+        </p>
+    </div>
+
+</body>
+</html>
