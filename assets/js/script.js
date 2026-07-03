@@ -947,8 +947,20 @@ const NISAN_PHOTOS = [
 (function initStoryPhoto() {
     const img = document.getElementById('storyPhoto');
     if (!img) return;
-    const pick = NISAN_PHOTOS[Math.floor(Math.random() * NISAN_PHOTOS.length)];
-    img.src = `./assets/images/nisan/${pick}`;
+
+    const STORY_PHOTO_KEY = 'story-photo-idx';
+    let index = Math.floor(Math.random() * NISAN_PHOTOS.length);
+
+    // Ayni fotograf iki yenilemede ust uste gelmesin
+    try {
+        const previous = Number(localStorage.getItem(STORY_PHOTO_KEY));
+        if (Number.isInteger(previous) && index === previous && NISAN_PHOTOS.length > 1) {
+            index = (index + 1) % NISAN_PHOTOS.length;
+        }
+        localStorage.setItem(STORY_PHOTO_KEY, String(index));
+    } catch (e) { /* localStorage kapaliysa rastgele sec */ }
+
+    img.src = `./assets/images/nisan/${NISAN_PHOTOS[index]}`;
     img.removeAttribute('srcset');
 })();
 
