@@ -41,7 +41,20 @@
 
     <link rel="canonical" href="https://zeynepbatuhan.com/">
     <title>Zeynep &amp; Batuhan · Nikah 25 Ekim 2026</title>
+    <link rel="preload" as="style" href="./assets/css/styles.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
+
+    <!-- JS calismazsa davetiye yine de okunabilir kalsin -->
+    <noscript>
+        <style>
+            .content { opacity: 1 !important; visibility: visible !important; }
+            .reveal { opacity: 1 !important; transform: none !important; }
+            .video-container { display: none !important; }
+            .music-toggle, .butterflies-container { display: none !important; }
+            .menu { display: block !important; opacity: 1 !important; visibility: visible !important; }
+            .faq-answer { max-height: none !important; opacity: 1 !important; overflow: visible !important; }
+        </style>
+    </noscript>
 
     <!-- Schema.org JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -155,26 +168,26 @@
     }
     </script>
 
-    <!-- WebSite Schema -->
+    <!-- Person Schema — cift iki ayri kisi olarak isaretleniyor -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Zeynep & Batuhan Nikah Davetiyesi",
-      "url": "https://zeynepbatuhan.com/",
-      "description": "Zeynep ve Batuhan'ın nikah davetiye sitesi - 25 Ekim 2026"
-    }
-    </script>
-
-    <!-- Person Schema for Couple -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Zeynep & Batuhan",
-      "description": "Evlenen çift - 25 Ekim 2026",
-      "url": "https://zeynepbatuhan.com/",
-      "image": "https://zeynepbatuhan.com/assets/images/og-invite.jpeg"
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://zeynepbatuhan.com/#zeynep",
+          "name": "Zeynep EROĞLU",
+          "url": "https://zeynepbatuhan.com/",
+          "spouse": { "@id": "https://zeynepbatuhan.com/#batuhan" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://zeynepbatuhan.com/#batuhan",
+          "name": "Batuhan Tuğberk İlgar",
+          "url": "https://zeynepbatuhan.com/",
+          "spouse": { "@id": "https://zeynepbatuhan.com/#zeynep" }
+        }
+      ]
     }
     </script>
 
@@ -271,6 +284,8 @@
     </script>
 </head>
 <body>
+    <a class="skip-link" href="#davetiye">İçeriğe geç</a>
+
     <audio id="backgroundMusic" loop preload="none" data-src="./assets/audio/music.mp3">
     </audio>
 
@@ -336,6 +351,7 @@
             <li role="none"><a href="#davetiye" role="menuitem">Ana Sayfa</a></li>
             <li role="none"><a href="#aileler" role="menuitem">Aileler</a></li>
             <li role="none"><a href="#hikayemiz" role="menuitem">Hikayemiz</a></li>
+            <li role="none"><a href="#galeri" role="menuitem">Kareler</a></li>
             <li role="none"><a href="#geri-sayim" role="menuitem">Geri Sayım</a></li>
             <li role="none"><a href="#program" role="menuitem">Program</a></li>
             <li role="none"><a href="#lokasyon" role="menuitem">Lokasyon</a></li>
@@ -353,7 +369,7 @@
                 <strong>25 Ekim 2026</strong>'daki nikahımıza davet ediyor ve bekliyoruz.
             </p>
         </div>
-        <video id="introVideo" class="intro-video-hidden" muted playsinline preload="none" data-src="./assets/videos/sakurawaxsealintrovideo.mp4">
+        <video id="introVideo" class="intro-video-hidden" muted playsinline preload="none" data-src="./assets/videos/sakura-intro-1080.mp4">
         </video>
     </div>
 
@@ -384,7 +400,7 @@
         <section class="story-section reveal" id="hikayemiz" aria-labelledby="hikaye-baslik">
             <h2 id="hikaye-baslik">Hikayemiz</h2>
             <div class="story-photo-wrap">
-                <img src="./assets/images/hikaye.jpg"
+                <img src="./assets/images/hikaye.jpg" width="1200" height="800"
                      srcset="./assets/images/hikaye-600.jpg 600w, ./assets/images/hikaye.jpg 1200w"
                      sizes="(max-width: 480px) 100vw, 360px"
                      alt="Zeynep ve Batuhan" class="story-photo" id="storyPhoto" loading="lazy" decoding="async">
@@ -404,6 +420,21 @@
                     Sizleri aramızda görmek için sabırsızlanıyoruz.
                 </p>
             </div>
+        </section>
+
+        <section class="gallery-section reveal" id="galeri" aria-labelledby="galeri-baslik">
+            <h2 id="galeri-baslik">Nişanımızdan Kareler</h2>
+            <p class="gallery-intro">10 Mayıs 2026 · Aşk-ı Lavinya</p>
+            <ul class="gallery-strip" id="galleryStrip" role="list">
+                <li><button type="button" class="gallery-item" data-index="0"><img src="./assets/images/nisan/dsc09069.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
+                <li><button type="button" class="gallery-item" data-index="1"><img src="./assets/images/nisan/dsc09105.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
+                <li><button type="button" class="gallery-item" data-index="2"><img src="./assets/images/nisan/dsc09145.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
+                <li><button type="button" class="gallery-item" data-index="3"><img src="./assets/images/nisan/dsc09232.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
+                <li><button type="button" class="gallery-item" data-index="4"><img src="./assets/images/nisan/dsc09291.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
+                <li><button type="button" class="gallery-item" data-index="5"><img src="./assets/images/nisan/dsc09367.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
+                <li><button type="button" class="gallery-item" data-index="6"><img src="./assets/images/nisan/dsc09427.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
+                <li><button type="button" class="gallery-item" data-index="7"><img src="./assets/images/nisan/dsc09531.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
+            </ul>
         </section>
 
         <div class="sakura-divider">
@@ -453,7 +484,7 @@
         </section>
 
         <div class="sakura-divider">
-            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" width="1200" height="171" loading="lazy" decoding="async">
+            <img src="./assets/images/sakura-branch.png" alt="" aria-hidden="true" class="sakura-branch" width="1200" height="171" loading="lazy" decoding="async">
         </div>
 
         <section class="countdown-section" id="geri-sayim" aria-labelledby="geri-sayim-baslik">
@@ -507,7 +538,7 @@
         </section>
 
         <div class="sakura-divider">
-            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" width="1200" height="171" loading="lazy" decoding="async">
+            <img src="./assets/images/sakura-branch.png" alt="" aria-hidden="true" class="sakura-branch" width="1200" height="171" loading="lazy" decoding="async">
         </div>
 
         <section class="schedule-section" id="program" aria-labelledby="akis-baslik">
@@ -566,7 +597,7 @@
         </section>
 
         <div class="sakura-divider">
-            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" width="1200" height="171" loading="lazy" decoding="async">
+            <img src="./assets/images/sakura-branch.png" alt="" aria-hidden="true" class="sakura-branch" width="1200" height="171" loading="lazy" decoding="async">
         </div>
 
         <section class="location-section" id="lokasyon" aria-labelledby="lokasyon-baslik">
@@ -574,7 +605,7 @@
             <div class="venue-grid">
                 <article class="venue-card">
                     <div class="venue-photo-wrap">
-                        <img src="./assets/images/askilavinya.jpg" alt="Aşk-ı Lavinya Davet ve Balo Salonu" class="venue-photo" loading="lazy" decoding="async">
+                        <img src="./assets/images/askilavinya.jpg" width="1080" height="1080" alt="Aşk-ı Lavinya Davet ve Balo Salonu" class="venue-photo" loading="lazy" decoding="async">
                     </div>
                     <div class="venue-body">
                         <p class="venue-eyebrow">Kına Gecesi · 24 Ekim 2026</p>
@@ -602,7 +633,7 @@
                 </article>
                 <article class="venue-card">
                     <div class="venue-photo-wrap">
-                        <img src="./assets/images/beykozevlendirme.jpg" alt="Beykoz Belediyesi Nikah Salonu" class="venue-photo" loading="lazy" decoding="async">
+                        <img src="./assets/images/beykozevlendirme.jpg" width="407" height="271" alt="Beykoz Belediyesi Nikah Salonu" class="venue-photo" loading="lazy" decoding="async">
                     </div>
                     <div class="venue-body">
                         <p class="venue-eyebrow">Nikah · 25 Ekim 2026</p>
@@ -650,7 +681,7 @@
         </section>
 
         <div class="sakura-divider">
-            <img src="./assets/images/sakura-branch.png" alt="Sakura Branch" class="sakura-branch" width="1200" height="171" loading="lazy" decoding="async">
+            <img src="./assets/images/sakura-branch.png" alt="" aria-hidden="true" class="sakura-branch" width="1200" height="171" loading="lazy" decoding="async">
         </div>
 
         <section class="rsvp-section" id="rsvp" aria-labelledby="katilim-baslik">
@@ -783,6 +814,14 @@
 
             </div>
         </section>
+    </div>
+
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Fotoğraf önizleme" hidden>
+        <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Kapat">✕</button>
+        <button class="lightbox-nav prev" id="lightboxPrev" type="button" aria-label="Önceki fotoğraf">‹</button>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="">
+        <button class="lightbox-nav next" id="lightboxNext" type="button" aria-label="Sonraki fotoğraf">›</button>
+        <p class="lightbox-count" id="lightboxCount" aria-live="polite"></p>
     </div>
 
     <script src="./assets/js/script.js"></script>

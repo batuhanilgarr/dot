@@ -373,6 +373,12 @@
 
   let cur = 0;
 
+  /* Grid'de optimize (900px, ~100 KB) surumler gosteriliyor; buyutme ve indirme
+     full-res dosyadan yapiliyor. Onceden grid de full-res cekiyordu (~350 MB). */
+  function thumbSrc(name) {
+    return '../assets/images/nisan/' + name.toLowerCase();
+  }
+
   /* ── Icon helpers ── */
   function mkSvg(d, sz) {
     const s = document.createElementNS('http://www.w3.org/2000/svg','svg');
@@ -410,8 +416,11 @@
     const img = document.createElement('img');
     img.alt = name; img.loading = 'lazy'; img.decoding = 'async';
     img.onload  = function() { item.classList.remove('sk'); };
-    img.onerror = function() { item.classList.remove('sk'); };
-    img.src = name;
+    img.onerror = function() {
+      item.classList.remove('sk');
+      if (img.src.indexOf('assets/images/nisan/') !== -1) img.src = name;
+    };
+    img.src = thumbSrc(name);
 
     const ov  = document.createElement('div');
     ov.className = 'item-ov';
@@ -493,7 +502,11 @@
 
   function openLb(i) {
     cur = i;
-    lbImg.src = IMGS[i]; lbImg.alt = IMGS[i];
+    // Once hafif surumu goster, full-res arka planda inince degistir.
+    lbImg.src = thumbSrc(IMGS[i]); lbImg.alt = IMGS[i];
+    const full = new Image();
+    full.onload = function() { if (cur === i) lbImg.src = IMGS[i]; };
+    full.src = IMGS[i];
     syncLb();
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';

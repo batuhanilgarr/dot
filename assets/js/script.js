@@ -63,6 +63,9 @@ function ensureVideoSource() {
     source.src = videoSrc;
     source.type = 'video/mp4';
     introVideo.appendChild(source);
+    // preload="none" ile load() sadece metadata cekiyordu; intro metni okunurken
+    // videonun tamami insin ki gosterim aninda takilmasin.
+    introVideo.preload = 'auto';
     introVideo.load();
 }
 
@@ -149,12 +152,15 @@ function beginIntroVideoAfterText() {
         introWelcome?.classList.add('fade-out');
     }, { once: true });
 
+    // canplaythrough: video kesintisiz oynayacak kadar veri gelmeden baslatma.
+    introVideo.addEventListener('canplaythrough', startPlayback, { once: true });
     introVideo.addEventListener('canplay', startPlayback, { once: true });
     introVideo.addEventListener('error', finishIntro, { once: true });
 
+    // Video gec kalirsa misafiri bekletme, davetiyeye gec.
     window.setTimeout(() => {
         if (!beganPlayback) finishIntro();
-    }, INTRO_TEXT_MIN_MS + 8000);
+    }, INTRO_TEXT_MIN_MS + 2500);
 }
 
 function finishIntro() {
@@ -327,6 +333,78 @@ document.querySelectorAll('.ctab').forEach((tab) => {
     });
 });
 
+/* ============ NISAN GALERISI LIGHTBOX ============ */
+
+const galleryStrip = document.getElementById('galleryStrip');
+const lightbox = document.getElementById('lightbox');
+
+if (galleryStrip && lightbox) {
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCount = document.getElementById('lightboxCount');
+    const galleryImages = Array.from(galleryStrip.querySelectorAll('.gallery-item img'));
+    let lightboxIndex = 0;
+    let lastFocused = null;
+
+    function showLightbox(index) {
+        lightboxIndex = (index + galleryImages.length) % galleryImages.length;
+        const source = galleryImages[lightboxIndex];
+        lightboxImg.src = source.src;
+        lightboxImg.alt = source.alt;
+        lightboxCount.textContent = `${lightboxIndex + 1} / ${galleryImages.length}`;
+    }
+
+    function openLightbox(index) {
+        lastFocused = document.activeElement;
+        showLightbox(index);
+        lightbox.hidden = false;
+        document.body.style.overflow = 'hidden';
+        document.getElementById('lightboxClose')?.focus();
+    }
+
+    function closeLightbox() {
+        lightbox.hidden = true;
+        lightboxImg.src = '';
+        document.body.style.overflow = '';
+        lastFocused?.focus();
+    }
+
+    galleryStrip.querySelectorAll('.gallery-item').forEach((item, index) => {
+        item.addEventListener('click', () => openLightbox(index));
+    });
+
+    document.getElementById('lightboxClose')?.addEventListener('click', closeLightbox);
+    document.getElementById('lightboxPrev')?.addEventListener('click', () => showLightbox(lightboxIndex - 1));
+    document.getElementById('lightboxNext')?.addEventListener('click', () => showLightbox(lightboxIndex + 1));
+
+    // Fotografin disina tiklayinca kapansin.
+    lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (lightbox.hidden) return;
+        if (event.key === 'Escape') closeLightbox();
+        if (event.key === 'ArrowLeft') showLightbox(lightboxIndex - 1);
+        if (event.key === 'ArrowRight') showLightbox(lightboxIndex + 1);
+    });
+
+    // Mobilde kaydirarak gezinme.
+    let touchStartX = 0;
+    lightbox.addEventListener('touchstart', (event) => {
+        touchStartX = event.changedTouches[0].clientX;
+    }, { passive: true });
+    lightbox.addEventListener('touchend', (event) => {
+        const delta = event.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(delta) > 50) showLightbox(lightboxIndex + (delta < 0 ? 1 : -1));
+    }, { passive: true });
+}
+
+// Kina gunu gectiyse geri sayim varsayilan olarak nikah sekmesinde acilsin.
+(function selectDefaultCountdownTab() {
+    if (Date.now() < new Date('2026-10-24T17:00:00+03:00').getTime()) return;
+    document.getElementById('ctab-btn-nikah')?.click();
+})();
+
 const shareBtn = document.getElementById('shareBtn');
 if (shareBtn) {
     shareBtn.addEventListener('click', async () => {
@@ -348,7 +426,16 @@ if (shareBtn) {
 }
 
 const faqButtons = document.querySelectorAll('.faq-question');
-faqButtons.forEach((button) => {
+faqButtons.forEach((button, index) => {
+    // Ekran okuyucular icin butonu kendi cevap paneline bagla.
+    const answer = button.closest('.faq-item')?.querySelector('.faq-answer');
+    if (answer) {
+        const answerId = `faq-answer-${index + 1}`;
+        answer.id = answerId;
+        answer.setAttribute('role', 'region');
+        button.setAttribute('aria-controls', answerId);
+    }
+
     button.addEventListener('click', () => {
         const item = button.closest('.faq-item');
         if (!item) return;

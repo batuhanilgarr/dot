@@ -1,39 +1,38 @@
 // Service Worker for Zeynep & Batuhan Wedding Invitation
 // Enables offline functionality
 
-const CACHE_NAME = 'zeynep-batuhan-v17';
+const CACHE_NAME = 'zeynep-batuhan-v18';
+// Sadece hafif ve gercekten kullanilan dosyalar. Muzik (3.4 MB) ve intro
+// videosu (14 MB) bilerek disarida: ikisi de sayfada lazy yukleniyor,
+// precache etmek mobil kullaniciya bosuna ~18 MB indirtiyordu.
 const urlsToCache = [
   '/',
   '/index.html',
   '/assets/css/styles.css',
   '/assets/js/script.js',
-  '/assets/audio/music.mp3',
   '/assets/images/favicon.ico',
   '/assets/images/favicon.png',
   '/assets/images/apple-touch-icon.png',
-  '/assets/images/background.jpg',
-  '/assets/images/davetiye.jpeg',
-  '/assets/images/gloria-event.jpg',
   '/assets/images/sakura-branch.png',
   '/assets/images/og-invite.jpeg',
   '/assets/images/hikaye.jpg',
   '/assets/images/hikaye-600.jpg',
   '/assets/images/askilavinya.jpg',
   '/assets/images/beykozevlendirme.jpg',
-  '/assets/videos/sakurawaxsealintrovideo.mp4',
   '/kina.ics',
   '/nikah.ics'
 ];
 
 // Install event - cache assets
+// Tek tek ekliyoruz: cache.addAll atomiktir, listedeki bir dosya 404 verirse
+// hicbiri yazilmaz ve cache tamamen bos kalir.
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Cache opened');
-        return cache.addAll(urlsToCache);
-      })
-      .catch(err => console.log('Cache failed:', err))
+    caches.open(CACHE_NAME).then(cache => Promise.all(
+      urlsToCache.map(url => cache.add(url).catch(err => {
+        console.warn('Cache atlandi:', url, err);
+      }))
+    ))
   );
   self.skipWaiting();
 });
@@ -50,6 +49,9 @@ self.addEventListener('fetch', event => {
     event.respondWith(fetch(event.request));
     return;
   }
+
+  // Ses/video icin tarayici Range istegi yapar; SW araya girerse seek bozulur.
+  if (event.request.headers.has('range')) return;
 
   const isCoreAsset =
     requestUrl.pathname === '/' ||
