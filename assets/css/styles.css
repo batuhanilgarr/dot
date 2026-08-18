@@ -2370,3 +2370,49 @@ input:focus-visible,
     font-size: 12px;
     letter-spacing: 2px;
 }
+
+/* ============ STORY KARTI ============ */
+
+.story-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    width: fit-content;
+    margin: 26px auto 0;
+    padding: 13px 30px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--glass-strong);
+    color: var(--rose-deep);
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.story-btn:hover {
+    background: var(--rose-deep);
+    color: #fff;
+}
+
+.story-btn:active {
+    transform: scale(0.97);
+}
+
+.story-btn[disabled] {
+    opacity: 0.55;
+    cursor: default;
+}
+
+.story-btn-status {
+    min-height: 18px;
+    margin-top: 12px;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.6px;
+    color: var(--muted);
+}

@@ -1112,3 +1112,251 @@ async function initPushNotifications() {
 }
 
 initPushNotifications();
+
+/* ============ PAYLASILABILIR GERI SAYIM KARTI ============ */
+/* Aktif geri sayim sekmesine gore 1080x1920 story gorseli uretir.
+   Paylasim destegi varsa dogrudan paylasir, yoksa indirir. */
+
+const storyCardBtn = document.getElementById('storyCardBtn');
+
+if (storyCardBtn) {
+    const storyCardStatus = document.getElementById('storyCardStatus');
+    const STORY_W = 1080;
+    const STORY_H = 1920;
+
+    const STORY_EVENTS = {
+        kina: {
+            eyebrow: 'KINA GECEMİZE',
+            dateMs: KINA_DATE_MS,
+            dateLine: '24 EKİM 2026',
+            venue: 'Aşk-ı Lavinya · 12:00',
+            file: 'kina-geri-sayim.png'
+        },
+        nikah: {
+            eyebrow: 'NİKAHIMIZA',
+            dateMs: WEDDING_DATE_MS,
+            dateLine: '25 EKİM 2026',
+            venue: 'Beykoz Belediyesi · 14:00',
+            file: 'nikah-geri-sayim.png'
+        }
+    };
+
+    function activeStoryEvent() {
+        const activeTab = document.querySelector('.ctab.active');
+        return activeTab?.dataset.target === 'ctab-nikah'
+            ? STORY_EVENTS.nikah
+            : STORY_EVENTS.kina;
+    }
+
+    function daysLeft(targetMs) {
+        return Math.max(0, Math.ceil((targetMs - Date.now()) / 86400000));
+    }
+
+    // ctx.letterSpacing her tarayicida yok; yoksa harfleri tek tek yerlestir.
+    function drawTracked(ctx, text, centerX, y, spacing) {
+        if ('letterSpacing' in ctx) {
+            ctx.letterSpacing = `${spacing}px`;
+            ctx.fillText(text, centerX, y);
+            ctx.letterSpacing = '0px';
+            return;
+        }
+        const chars = Array.from(text);
+        const total = chars.reduce((sum, ch) => sum + ctx.measureText(ch).width + spacing, 0) - spacing;
+        let x = centerX - total / 2;
+        const prevAlign = ctx.textAlign;
+        ctx.textAlign = 'left';
+        chars.forEach((ch) => {
+            ctx.fillText(ch, x, y);
+            x += ctx.measureText(ch).width + spacing;
+        });
+        ctx.textAlign = prevAlign;
+    }
+
+    function loadBranch() {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = () => resolve(null);
+            img.src = './assets/images/sakura-branch.png';
+        });
+    }
+
+    async function ensureStoryFonts() {
+        if (!document.fonts?.load) return;
+        try {
+            await Promise.all([
+                document.fonts.load("500 320px 'Cormorant Garamond'"),
+                document.fonts.load("500 92px 'Cormorant Garamond'"),
+                document.fonts.load("600 34px 'Lato'"),
+                document.fonts.load("600 120px 'Dancing Script'")
+            ]);
+        } catch (err) { /* fallback fontlarla devam */ }
+    }
+
+    async function buildStoryCard(event, days) {
+        await ensureStoryFonts();
+        const branch = await loadBranch();
+
+        const canvas = document.createElement('canvas');
+        canvas.width = STORY_W;
+        canvas.height = STORY_H;
+        const ctx = canvas.getContext('2d');
+
+        // Porselen zemin + petal isimalari
+        ctx.fillStyle = '#fbf8f4';
+        ctx.fillRect(0, 0, STORY_W, STORY_H);
+
+        const topGlow = ctx.createRadialGradient(540, 60, 0, 540, 60, 900);
+        topGlow.addColorStop(0, 'rgba(238, 179, 195, 0.42)');
+        topGlow.addColorStop(1, 'rgba(238, 179, 195, 0)');
+        ctx.fillStyle = topGlow;
+        ctx.fillRect(0, 0, STORY_W, STORY_H);
+
+        const bottomGlow = ctx.createRadialGradient(540, 1880, 0, 540, 1880, 820);
+        bottomGlow.addColorStop(0, 'rgba(207, 174, 127, 0.30)');
+        bottomGlow.addColorStop(1, 'rgba(207, 174, 127, 0)');
+        ctx.fillStyle = bottomGlow;
+        ctx.fillRect(0, 0, STORY_W, STORY_H);
+
+        // Ince cerceve
+        ctx.strokeStyle = 'rgba(201, 113, 139, 0.32)';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(52, 52, STORY_W - 104, STORY_H - 104);
+
+        // Sakura dallari
+        if (branch) {
+            const bw = 860;
+            const bh = branch.height * (bw / branch.width);
+            ctx.globalAlpha = 0.85;
+            ctx.drawImage(branch, (STORY_W - bw) / 2, 170, bw, bh);
+            ctx.save();
+            ctx.translate(STORY_W / 2, STORY_H - 200);
+            ctx.rotate(Math.PI);
+            ctx.drawImage(branch, -bw / 2, 0, bw, bh);
+            ctx.restore();
+            ctx.globalAlpha = 1;
+        }
+
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'alphabetic';
+
+        // Eyebrow
+        ctx.fillStyle = '#b08d55';
+        ctx.font = "600 34px 'Lato', system-ui, sans-serif";
+        drawTracked(ctx, event.eyebrow, STORY_W / 2, 560, 13);
+
+        // Gun sayisi
+        ctx.fillStyle = '#43323c';
+        if (days === 0) {
+            ctx.font = "500 210px 'Cormorant Garamond', Georgia, serif";
+            ctx.fillText('BUGÜN', STORY_W / 2, 810);
+        } else if (days === 1) {
+            ctx.font = "500 210px 'Cormorant Garamond', Georgia, serif";
+            ctx.fillText('YARIN', STORY_W / 2, 810);
+        } else {
+            ctx.font = "500 330px 'Cormorant Garamond', Georgia, serif";
+            ctx.fillText(String(days), STORY_W / 2, 830);
+            ctx.fillStyle = '#8d7a82';
+            ctx.font = "600 40px 'Lato', system-ui, sans-serif";
+            drawTracked(ctx, 'GÜN KALDI', STORY_W / 2, 985, 12);
+        }
+
+        // Ayirici
+        ctx.strokeStyle = 'rgba(201, 113, 139, 0.5)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(STORY_W / 2 - 90, 1060);
+        ctx.lineTo(STORY_W / 2 + 90, 1060);
+        ctx.stroke();
+
+        // Isimler
+        ctx.fillStyle = '#43323c';
+        ctx.font = "500 96px 'Cormorant Garamond', Georgia, serif";
+        const zW = ctx.measureText('Zeynep').width;
+        const bW = ctx.measureText('Batuhan').width;
+        ctx.font = "400 84px 'Dancing Script', cursive";
+        const ampW = ctx.measureText('&').width;
+        const gap = 30;
+        const totalW = zW + ampW + bW + gap * 2;
+        let cursor = (STORY_W - totalW) / 2;
+
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#43323c';
+        ctx.font = "500 96px 'Cormorant Garamond', Georgia, serif";
+        ctx.fillText('Zeynep', cursor, 1195);
+        cursor += zW + gap;
+        ctx.fillStyle = '#c9718b';
+        ctx.font = "400 84px 'Dancing Script', cursive";
+        ctx.fillText('&', cursor, 1195);
+        cursor += ampW + gap;
+        ctx.fillStyle = '#43323c';
+        ctx.font = "500 96px 'Cormorant Garamond', Georgia, serif";
+        ctx.fillText('Batuhan', cursor, 1195);
+        ctx.textAlign = 'center';
+
+        // Tarih ve mekan
+        ctx.fillStyle = '#5c4652';
+        ctx.font = "600 36px 'Lato', system-ui, sans-serif";
+        drawTracked(ctx, event.dateLine, STORY_W / 2, 1300, 10);
+
+        ctx.fillStyle = '#8d7a82';
+        ctx.font = "400 32px 'Lato', system-ui, sans-serif";
+        ctx.fillText(event.venue, STORY_W / 2, 1360);
+
+        // Alt imza
+        ctx.fillStyle = '#b08d55';
+        ctx.font = "600 28px 'Lato', system-ui, sans-serif";
+        drawTracked(ctx, 'zeynepbatuhan.com', STORY_W / 2, 1560, 8);
+
+        return new Promise((resolve) => {
+            canvas.toBlob((blob) => resolve(blob), 'image/png');
+        });
+    }
+
+    function setStoryStatus(message) {
+        if (storyCardStatus) storyCardStatus.textContent = message;
+    }
+
+    storyCardBtn.addEventListener('click', async () => {
+        const event = activeStoryEvent();
+        const days = daysLeft(event.dateMs);
+
+        storyCardBtn.disabled = true;
+        setStoryStatus('Kartınız hazırlanıyor...');
+
+        try {
+            const blob = await buildStoryCard(event, days);
+            if (!blob) throw new Error('blob olusturulamadi');
+
+            const file = new File([blob], event.file, { type: 'image/png' });
+
+            if (navigator.canShare?.({ files: [file] })) {
+                await navigator.share({
+                    files: [file],
+                    title: 'Zeynep & Batuhan',
+                    text: 'Zeynep & Batuhan · 25 Ekim 2026'
+                });
+                setStoryStatus('');
+                return;
+            }
+
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = event.file;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+            setStoryStatus('Kart indirildi — story\'nizde paylaşabilirsiniz 🌸');
+        } catch (err) {
+            if (err?.name === 'AbortError') {
+                setStoryStatus('');
+            } else {
+                setStoryStatus('Kart oluşturulamadı, lütfen tekrar deneyin.');
+            }
+        } finally {
+            storyCardBtn.disabled = false;
+        }
+    });
+}
