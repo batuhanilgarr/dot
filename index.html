@@ -29,8 +29,8 @@
     <meta property="og:image:secure_url" content="https://zeynepbatuhan.com/assets/images/og-invite.jpeg">
     <meta property="og:image:alt" content="Zeynep ve Batuhan">
     <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="1024">
-    <meta property="og:image:height" content="1536">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -257,10 +257,12 @@
     }
     </script>
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts (non-blocking: load async, swap in when ready) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lato:wght@300;400;600;700&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lato:wght@300;400;600;700&family=Dancing+Script:wght@400;600&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lato:wght@300;400;600;700&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Lato:wght@300;400;600;700&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet"></noscript>
 
     <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://www.googletagmanager.com">
@@ -373,7 +375,7 @@
         </video>
     </div>
 
-    <div class="content" id="content">
+    <main class="content" id="content">
         <section class="hero-section" id="davetiye" aria-label="Davetiye ana başlık">
             <div class="sakura-tree left"></div>
             <div class="sakura-tree right"></div>
@@ -426,14 +428,14 @@
             <h2 id="galeri-baslik">Nişanımızdan Kareler</h2>
             <p class="gallery-intro">10 Mayıs 2026 · Aşk-ı Lavinya</p>
             <ul class="gallery-strip" id="galleryStrip" role="list">
-                <li><button type="button" class="gallery-item" data-index="0"><img src="./assets/images/nisan/dsc09069.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
-                <li><button type="button" class="gallery-item" data-index="1"><img src="./assets/images/nisan/dsc09105.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
-                <li><button type="button" class="gallery-item" data-index="2"><img src="./assets/images/nisan/dsc09145.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
-                <li><button type="button" class="gallery-item" data-index="3"><img src="./assets/images/nisan/dsc09232.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
-                <li><button type="button" class="gallery-item" data-index="4"><img src="./assets/images/nisan/dsc09291.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
-                <li><button type="button" class="gallery-item" data-index="5"><img src="./assets/images/nisan/dsc09367.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
-                <li><button type="button" class="gallery-item" data-index="6"><img src="./assets/images/nisan/dsc09427.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
-                <li><button type="button" class="gallery-item" data-index="7"><img src="./assets/images/nisan/dsc09531.jpg" width="900" height="600" alt="Nişan töreninden bir kare" loading="lazy" decoding="async"></button></li>
+                <li><button type="button" class="gallery-item" data-index="0"><picture><source type="image/webp" srcset="./assets/images/nisan/dsc09069.webp"><img src="./assets/images/nisan/dsc09069.jpg" width="900" height="600" alt="Gelinlik ve buketiyle Zeynep, nişan masasının önünde" loading="lazy" decoding="async"></picture></button></li>
+                <li><button type="button" class="gallery-item" data-index="1"><picture><source type="image/webp" srcset="./assets/images/nisan/dsc09105.webp"><img src="./assets/images/nisan/dsc09105.jpg" width="900" height="600" alt="Zeynep ve Batuhan salon içinde kol kola gülümserken" loading="lazy" decoding="async"></picture></button></li>
+                <li><button type="button" class="gallery-item" data-index="2"><picture><source type="image/webp" srcset="./assets/images/nisan/dsc09145.webp"><img src="./assets/images/nisan/dsc09145.jpg" width="900" height="600" alt="Zeynep ve Batuhan merdiven başında poz verirken" loading="lazy" decoding="async"></picture></button></li>
+                <li><button type="button" class="gallery-item" data-index="3"><picture><source type="image/webp" srcset="./assets/images/nisan/dsc09232.webp"><img src="./assets/images/nisan/dsc09232.jpg" width="900" height="600" alt="Zeynep'in yüzük parmağında alyansın yakın çekimi" loading="lazy" decoding="async"></picture></button></li>
+                <li><button type="button" class="gallery-item" data-index="4"><picture><source type="image/webp" srcset="./assets/images/nisan/dsc09291.webp"><img src="./assets/images/nisan/dsc09291.jpg" width="900" height="600" alt="Zeynep duvara yaslanmış, gülümserken portre" loading="lazy" decoding="async"></picture></button></li>
+                <li><button type="button" class="gallery-item" data-index="5"><picture><source type="image/webp" srcset="./assets/images/nisan/dsc09367.webp"><img src="./assets/images/nisan/dsc09367.jpg" width="900" height="600" alt="Zeynep ve Batuhan çiçekli fotoğraf çerçevesinde oturuyor" loading="lazy" decoding="async"></picture></button></li>
+                <li><button type="button" class="gallery-item" data-index="6"><picture><source type="image/webp" srcset="./assets/images/nisan/dsc09427.webp"><img src="./assets/images/nisan/dsc09427.jpg" width="900" height="600" alt="Nişan masasında Zeynep & Batuhan yazılı hoş geldiniz kartı" loading="lazy" decoding="async"></picture></button></li>
+                <li><button type="button" class="gallery-item" data-index="7"><picture><source type="image/webp" srcset="./assets/images/nisan/dsc09531.webp"><img src="./assets/images/nisan/dsc09531.jpg" width="900" height="600" alt="Zeynep ve Batuhan 'Better Together' yazısı önünde kahve ikram ederken" loading="lazy" decoding="async"></picture></button></li>
             </ul>
         </section>
 
@@ -819,7 +821,7 @@
 
             </div>
         </section>
-    </div>
+    </main>
 
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Fotoğraf önizleme" hidden>
         <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Kapat">✕</button>
@@ -829,7 +831,7 @@
         <p class="lightbox-count" id="lightboxCount" aria-live="polite"></p>
     </div>
 
-    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/script.js" defer></script>
 
     <footer class="site-footer">
         <p class="footer-names">Zeynep <span>&amp;</span> Batuhan</p>

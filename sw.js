@@ -1,7 +1,7 @@
 // Service Worker for Zeynep & Batuhan Wedding Invitation
 // Enables offline functionality
 
-const CACHE_NAME = 'zeynep-batuhan-v19';
+const CACHE_NAME = 'zeynep-batuhan-v20';
 // Sadece hafif ve gercekten kullanilan dosyalar. Muzik (3.4 MB) ve intro
 // videosu (14 MB) bilerek disarida: ikisi de sayfada lazy yukleniyor,
 // precache etmek mobil kullaniciya bosuna ~18 MB indirtiyordu.
@@ -12,6 +12,7 @@ const urlsToCache = [
   '/assets/js/script.js',
   '/assets/images/favicon.ico',
   '/assets/images/favicon.png',
+  '/assets/images/icon-192.png',
   '/assets/images/apple-touch-icon.png',
   '/assets/images/sakura-branch.png',
   '/assets/images/og-invite.jpeg',

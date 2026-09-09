@@ -983,6 +983,23 @@ function initVenueDistances() {
         { id: 'dist-nikah', lat: 41.0619082, lng: 29.1107091 },
     ];
 
+    const targets = venues
+        .map(({ id }) => document.getElementById(id))
+        .filter(Boolean);
+    if (!targets.length) return;
+
+    let requested = false;
+    const observer = new IntersectionObserver((entries) => {
+        if (requested || !entries.some((entry) => entry.isIntersecting)) return;
+        requested = true;
+        observer.disconnect();
+        requestVenueDistances(venues);
+    }, { threshold: 0.35 });
+
+    targets.forEach((el) => observer.observe(el));
+}
+
+function requestVenueDistances(venues) {
     navigator.geolocation.getCurrentPosition(
         (pos) => {
             const { latitude: srcLat, longitude: srcLng } = pos.coords;
@@ -1047,7 +1064,11 @@ const NISAN_PHOTOS = [
         localStorage.setItem(STORY_PHOTO_KEY, String(index));
     } catch (e) { /* localStorage kapaliysa rastgele sec */ }
 
-    img.src = `./assets/images/nisan/${NISAN_PHOTOS[index]}`;
+    const base = NISAN_PHOTOS[index].replace(/\.jpg$/, '');
+    img.addEventListener('error', () => {
+        img.src = `./assets/images/nisan/${base}.jpg`;
+    }, { once: true });
+    img.src = `./assets/images/nisan/${base}.webp`;
     img.removeAttribute('srcset');
 })();
 
