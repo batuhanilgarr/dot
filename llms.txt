@@ -1,0 +1,21 @@
+# Zeynep & Batuhan Nikah Davetiyesi
+
+> Zeynep ve Batuhan'ın 25 Ekim 2026 tarihli nikah töreni için dijital davetiye sitesi. Nişan, kına ve nikah tören bilgilerinin yanı sıra, dijital davetiye hazırlamak isteyenler için Türkçe rehber ve örnek metin içerikleri sunar.
+
+## Davetiye
+
+- [Ana Sayfa](https://zeynepbatuhan.com/): Nikah töreni tarih, saat, mekan bilgisi; RSVP (katılım bildirimi), program ve SSS.
+
+## Davetiye Yazım Rehberleri
+
+- [Davetiyeye Ne Yazılır?](https://zeynepbatuhan.com/davetiyeye-ne-yazilir.html): Nişan davetiyesi metni yazarken izlenecek adımlar, hitap ve kapanış cümlesi örnekleri.
+- [Nişan Davetiyesi Örnekleri](https://zeynepbatuhan.com/nisan-davetiyesi-ornekleri.html): Resmi, samimi, kısa ve şiirsel üsluplarda hazır nişan davetiye metinleri.
+- [Kına Davetiyesi Mesaj Örnekleri](https://zeynepbatuhan.com/kina-davetiyesi-mesaj-ornekleri.html): Kına gecesi için hazır davet mesajı örnekleri ve yazım ipuçları.
+- [Düğün Davetiyesi Sözleri ve Mesaj Örnekleri](https://zeynepbatuhan.com/dugun-davetiyesi-sozleri-ve-mesaj-ornekleri.html): Düğün töreni için hazır davetiye sözleri ve mesaj örnekleri.
+- [WhatsApp'tan Davetiye Nasıl Gönderilir?](https://zeynepbatuhan.com/whatsapptan-davetiye-nasil-gonderilir.html): Dijital davetiyeyi WhatsApp üzerinden doğru ve nazik şekilde paylaşma rehberi.
+- [Dijital Davetiye Fiyatları](https://zeynepbatuhan.com/dijital-davetiye-fiyatlari.html): Dijital davetiye bütçesini belirleyen faktörler.
+
+## Notlar
+
+- Site dili Türkçe'dir (tr-TR).
+- `/gir` yolu çiftin özel alanıdır, dizine eklenmemeli ve alıntılanmamalıdır.
