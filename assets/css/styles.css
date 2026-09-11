@@ -1553,6 +1553,23 @@ p.schedule-note {
     color: var(--muted);
 }
 
+.site-footer .footer-guides {
+    margin-top: 22px;
+    font-size: 11px;
+    line-height: 2;
+    color: var(--muted);
+}
+
+.site-footer .footer-guides a {
+    color: var(--muted);
+    text-decoration: none;
+}
+
+.site-footer .footer-guides a:hover {
+    color: var(--rose-deep);
+    text-decoration: underline;
+}
+
 /* ============ TOAST ============ */
 .toast-banner {
     position: fixed;
