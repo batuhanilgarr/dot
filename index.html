@@ -460,6 +460,17 @@
             </div>
         </section>
 
+        <section class="invite-photo-section reveal" id="davetiyemiz" aria-labelledby="davetiyemiz-baslik">
+            <h2 id="davetiyemiz-baslik">Davetiyemiz</h2>
+            <p class="invite-photo-caption-top">Elinizde tutabileceğiniz haliyle, davetiyemizden bir kare.</p>
+            <button type="button" class="invite-photo-wrap" id="invitePhotoBtn" aria-label="Davetiyeyi büyüt">
+                <picture>
+                    <source type="image/webp" srcset="./assets/images/davetiye-basili.webp">
+                    <img src="./assets/images/davetiye-basili.jpeg" width="1030" height="1526" alt="Zeynep ve Batuhan'ın basılı kına ve nikah davetiyesi" loading="lazy" decoding="async" class="invite-photo">
+                </picture>
+            </button>
+        </section>
+
         <section class="upcoming-section reveal" id="nikah-tarihi" aria-labelledby="nikah-baslik">
             <div class="upcoming-grid">
                 <article class="upcoming-card">
@@ -829,6 +840,11 @@
         <img class="lightbox-img" id="lightboxImg" src="" alt="">
         <button class="lightbox-nav next" id="lightboxNext" type="button" aria-label="Sonraki fotoğraf">›</button>
         <p class="lightbox-count" id="lightboxCount" aria-live="polite"></p>
+    </div>
+
+    <div class="lightbox" id="photoLightbox" role="dialog" aria-modal="true" aria-label="Davetiye önizleme" hidden>
+        <button class="lightbox-close" id="photoLightboxClose" type="button" aria-label="Kapat">✕</button>
+        <img class="lightbox-img" id="photoLightboxImg" src="" alt="">
     </div>
 
     <script src="./assets/js/script.js" defer></script>

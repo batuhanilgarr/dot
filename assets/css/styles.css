@@ -622,6 +622,43 @@ section h2 + * {
     margin-bottom: 0;
 }
 
+/* ============ DAVETİYEMİZ (basılı fotoğraf) ============ */
+.invite-photo-section {
+    text-align: center;
+}
+
+.invite-photo-caption-top {
+    color: var(--muted);
+    font-size: 14px;
+    margin: -8px auto 28px;
+    max-width: 420px;
+}
+
+.invite-photo-wrap {
+    display: block;
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: var(--card-shadow);
+    background: var(--glass);
+    cursor: zoom-in;
+    transition: transform 0.25s ease;
+}
+
+.invite-photo-wrap:hover {
+    transform: translateY(-3px);
+}
+
+.invite-photo {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 /* ============ AİLELER ============ */
 .aileler-section {
     padding: 56px 20px 48px;

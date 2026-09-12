@@ -75,12 +75,44 @@
             </p>
 
             <figure class="seo-figure">
-                <picture>
-                    <source type="image/webp" srcset="./assets/images/davetiye-basili.webp">
-                    <img src="./assets/images/davetiye-basili.jpeg" width="1030" height="1526" alt="Basılı kına ve nikah davetiyesi örneği — çiçek motifli, isim ve tören bilgileri" loading="lazy" decoding="async">
-                </picture>
-                <figcaption>Gerçek bir davetiyeden örnek: kına ve nikah bilgileri tek kartta.</figcaption>
+                <button type="button" id="seoFigureBtn" aria-label="Görseli büyüt" style="all:unset; cursor:zoom-in; display:inline-block;">
+                    <picture>
+                        <source type="image/webp" srcset="./assets/images/davetiye-basili.webp">
+                        <img src="./assets/images/davetiye-basili.jpeg" width="1030" height="1526" alt="Basılı kına ve nikah davetiyesi örneği — çiçek motifli, isim ve tören bilgileri" loading="lazy" decoding="async">
+                    </picture>
+                </button>
+                <figcaption>Gerçek bir davetiyeden örnek: kına ve nikah bilgileri tek kartta. (Büyütmek için tıklayın)</figcaption>
             </figure>
+
+            <div class="lightbox" id="seoLightbox" role="dialog" aria-modal="true" aria-label="Görsel önizleme" hidden>
+                <button class="lightbox-close" id="seoLightboxClose" type="button" aria-label="Kapat">✕</button>
+                <img class="lightbox-img" id="seoLightboxImg" src="" alt="">
+            </div>
+            <script>
+                (function () {
+                    var btn = document.getElementById('seoFigureBtn');
+                    var lb = document.getElementById('seoLightbox');
+                    var lbImg = document.getElementById('seoLightboxImg');
+                    var closeBtn = document.getElementById('seoLightboxClose');
+                    if (!btn || !lb) return;
+                    function open() {
+                        var img = btn.querySelector('img');
+                        lbImg.src = img.currentSrc || img.src;
+                        lbImg.alt = img.alt;
+                        lb.hidden = false;
+                        document.body.style.overflow = 'hidden';
+                    }
+                    function close() {
+                        lb.hidden = true;
+                        lbImg.src = '';
+                        document.body.style.overflow = '';
+                    }
+                    btn.addEventListener('click', open);
+                    closeBtn.addEventListener('click', close);
+                    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+                    document.addEventListener('keydown', function (e) { if (!lb.hidden && e.key === 'Escape') close(); });
+                })();
+            </script>
 
             <h2>Tören Türüne Göre Davetiye Örnekleri</h2>
             <div class="seo-link-grid">

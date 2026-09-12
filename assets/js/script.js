@@ -399,6 +399,45 @@ if (galleryStrip && lightbox) {
     }, { passive: true });
 }
 
+/* ============ DAVETİYE FOTOĞRAFI LIGHTBOX ============ */
+
+const invitePhotoBtn = document.getElementById('invitePhotoBtn');
+const photoLightbox = document.getElementById('photoLightbox');
+
+if (invitePhotoBtn && photoLightbox) {
+    const photoLightboxImg = document.getElementById('photoLightboxImg');
+    let lastFocusedPhoto = null;
+
+    function openPhotoLightbox() {
+        const source = invitePhotoBtn.querySelector('img');
+        lastFocusedPhoto = document.activeElement;
+        photoLightboxImg.src = source.currentSrc || source.src;
+        photoLightboxImg.alt = source.alt;
+        photoLightbox.hidden = false;
+        document.body.style.overflow = 'hidden';
+        document.getElementById('photoLightboxClose')?.focus();
+    }
+
+    function closePhotoLightbox() {
+        photoLightbox.hidden = true;
+        photoLightboxImg.src = '';
+        document.body.style.overflow = '';
+        lastFocusedPhoto?.focus();
+    }
+
+    invitePhotoBtn.addEventListener('click', openPhotoLightbox);
+    document.getElementById('photoLightboxClose')?.addEventListener('click', closePhotoLightbox);
+
+    photoLightbox.addEventListener('click', (event) => {
+        if (event.target === photoLightbox) closePhotoLightbox();
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (photoLightbox.hidden) return;
+        if (event.key === 'Escape') closePhotoLightbox();
+    });
+}
+
 // Kina gunu gectiyse geri sayim varsayilan olarak nikah sekmesinde acilsin.
 (function selectDefaultCountdownTab() {
     if (Date.now() < new Date('2026-10-24T17:00:00+03:00').getTime()) return;
