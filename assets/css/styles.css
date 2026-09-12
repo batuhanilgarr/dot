@@ -2644,6 +2644,26 @@ input:focus-visible,
     line-height: 1.7;
 }
 
+.seo-figure {
+    margin: 20px 0 28px;
+    text-align: center;
+}
+
+.seo-figure img {
+    max-width: 320px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--line);
+}
+
+.seo-figure figcaption {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+}
+
 .seo-footer-links {
     margin-top: 40px;
     padding-top: 20px;
