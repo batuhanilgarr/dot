@@ -43,6 +43,7 @@ Canlı: <https://zeynepbatuhan.com>
 - **Geri Sayım** — Kına (24 Ekim) ve Nikah (25 Ekim) için ayrı sekmeli sayaç
 - **Program** — Kına (12:00–17:00) ve Nikah (13:30 geliş, 14:00 tören) akışı
 - **Lokasyon** — İki mekan kartı; araç mesafesi/süresi (OSRM), Yol Tarifi + Haritada Gör
+- **Etkinlik Günü Hızlı Bilgi Kartı** — 24 Ekim'de kına, 25 Ekim'de nikah saatini, adresini, yol tarifini ve WhatsApp iletişimini üstte gösterir; çiçekli teşekkür ekranında da erişilebilir
 - **Hava Durumu** — Open-Meteo API; 24 ve 25 Ekim için iki ayrı kart (16 gün sınırı içinde)
 - **RSVP** — Cloudflare Workers sayaç; cihaz başına tekrar engeli (`localStorage`)
 - **Takvime Ekle** — `kina.ics` ve `nikah.ics` indirme butonları

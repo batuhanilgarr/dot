@@ -182,7 +182,9 @@ function getDisplayedRsvpCount(rawCount) {
 }
 
 window.addEventListener('load', () => {
-    if (!isMobile) {
+    const isEventDay = document.documentElement.classList.contains('event-day-kina') ||
+        document.documentElement.classList.contains('event-day-nikah');
+    if (!isMobile && !isEventDay) {
         ensureVideoSource();
         beginIntroVideoAfterText();
     } else {
@@ -190,7 +192,7 @@ window.addEventListener('load', () => {
         content?.classList.add('visible');
         menu?.classList.add('visible');
         document.body.style.overflow = 'auto';
-        showMobileIntroSplash();
+        if (!isEventDay) showMobileIntroSplash();
         showToastBanner();
     }
     setTimeout(loadDeferredAnalytics, 2500);
@@ -605,6 +607,20 @@ window.addEventListener('resize', () => {
 const WEDDING_DATE_MS = new Date('2026-10-25T14:00:00+03:00').getTime();
 const EVENT_END_MS = new Date('2026-10-25T22:00:00+03:00').getTime();
 const KINA_DATE_MS = new Date('2026-10-24T12:00:00+03:00').getTime();
+
+function updateEventDayCard() {
+    const now = Date.now();
+    const root = document.documentElement;
+    root.classList.toggle('event-day-kina',
+        now >= new Date('2026-10-24T00:00:00+03:00').getTime() &&
+        now < new Date('2026-10-25T00:00:00+03:00').getTime());
+    root.classList.toggle('event-day-nikah',
+        now >= new Date('2026-10-25T00:00:00+03:00').getTime() &&
+        now < new Date('2026-10-26T00:00:00+03:00').getTime());
+}
+
+updateEventDayCard();
+setInterval(updateEventDayCard, 60000);
 
 /* ============================================== */
 /* BLOOM MODE — 10 Mayis 2026 Pazar 13:00 sonrasi  */
