@@ -2331,6 +2331,10 @@ input:focus-visible,
     transition: background 0.3s ease, color 0.3s ease;
 }
 
+.gallery-cta {
+    margin-top: 18px;
+}
+
 .gallery-all:hover {
     background: var(--rose-deep);
     color: #fff;
