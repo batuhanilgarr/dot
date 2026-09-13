@@ -1,7 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /gir
-Disallow: /gir/
 
 # Sitemap location
 Sitemap: https://zeynepbatuhan.com/sitemap.xml

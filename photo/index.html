@@ -4,7 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0b0b0b">
-  <title>♡</title>
+  <title>Zeynep ve Batuhan Nişan Fotoğrafları | 2026 Galeri</title>
+  <meta name="description" content="Zeynep ve Batuhan'ın 2026 nişan töreninden fotoğraflar. Nişan günümüzün unutulmaz anlarını galerimizde keşfedin.">
+  <link rel="canonical" href="https://zeynepbatuhan.com/photo/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="tr_TR">
+  <meta property="og:title" content="Zeynep ve Batuhan Nişan Fotoğrafları">
+  <meta property="og:description" content="2026 nişan törenimizden fotoğraflar ve unutulmaz anlar.">
+  <meta property="og:url" content="https://zeynepbatuhan.com/photo/">
+  <meta property="og:image" content="https://zeynepbatuhan.com/assets/images/og-invite.jpeg">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet">
@@ -77,8 +86,15 @@
 
     /* ─── Canvas ─── */
     .canvas {
-      padding-top: 56px;
+      padding-top: 16px;
     }
+    .gallery-intro {
+      padding: 76px 24px 12px;
+      color: var(--ink);
+    }
+    .gallery-intro h1 { font: 300 clamp(26px, 4vw, 42px)/1.2 'Cormorant Garamond', Georgia, serif; }
+    .gallery-intro p { margin-top: 8px; font-size: 14px; color: var(--dim); }
+    .gallery-intro a { color: var(--ink); }
 
     /* ─── Masonry (CSS columns) ─── */
     .masonry {
@@ -325,6 +341,11 @@
 </head>
 <body>
 
+<section class="gallery-intro">
+  <h1>Zeynep ve Batuhan'ın Nişan Fotoğrafları</h1>
+  <p>2026 nişan günümüzden seçtiğimiz fotoğraflar. <a href="/">Davetiyemize dön</a>.</p>
+</section>
+
 <header>
   <span class="hdr-left">♡</span>
   <div class="hdr-right">
@@ -333,9 +354,9 @@
   </div>
 </header>
 
-<div class="canvas">
+<main class="canvas">
   <div class="masonry" id="masonry"></div>
-</div>
+</main>
 
 <div id="lb" role="dialog" aria-modal="true" aria-label="Önizleme">
   <button class="lb-close" id="lb-close" aria-label="Kapat">✕</button>
@@ -414,7 +435,7 @@
     item.className = 'item sk';
 
     const img = document.createElement('img');
-    img.alt = name; img.loading = 'lazy'; img.decoding = 'async';
+    img.alt = 'Zeynep ve Batuhan nişan töreni fotoğrafı ' + (i + 1); img.loading = 'lazy'; img.decoding = 'async';
     img.onload  = function() { item.classList.remove('sk'); };
     img.onerror = function() {
       item.classList.remove('sk');
