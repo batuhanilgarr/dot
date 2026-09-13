@@ -861,7 +861,7 @@ if (rsvpConfirmButton && rsvpGuestCount) {
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        const registerSw = () => navigator.serviceWorker.register('./sw.js').catch(() => {});
+        const registerSw = () => navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).catch(() => {});
         if ('requestIdleCallback' in window) {
             window.requestIdleCallback(registerSw);
         } else {

@@ -1,25 +1,13 @@
 // Service Worker for Zeynep & Batuhan Wedding Invitation
 // Enables offline functionality
 
-const CACHE_NAME = 'zeynep-batuhan-v25';
-// Sadece hafif ve gercekten kullanilan dosyalar. Muzik (3.4 MB) ve intro
-// videosu (14 MB) bilerek disarida: ikisi de sayfada lazy yukleniyor,
-// precache etmek mobil kullaniciya bosuna ~18 MB indirtiyordu.
+const CACHE_NAME = 'zeynep-batuhan-v26';
+// Cevrimdisi sayfa kabugu. Medya ve gorseller tarayicinin ag akisina birakilir.
 const urlsToCache = [
   '/',
   '/index.html',
   '/assets/css/styles.css',
   '/assets/js/script.js',
-  '/assets/images/favicon.ico',
-  '/assets/images/favicon.png',
-  '/assets/images/icon-192.png',
-  '/assets/images/apple-touch-icon.png',
-  '/assets/images/sakura-branch.png',
-  '/assets/images/og-invite.jpeg',
-  '/assets/images/hikaye.jpg',
-  '/assets/images/hikaye-600.jpg',
-  '/assets/images/askilavinya.jpg',
-  '/assets/images/beykozevlendirme.jpg',
   '/kina.ics',
   '/nikah.ics'
 ];
@@ -42,6 +30,13 @@ self.addEventListener('install', event => {
 self.addEventListener('fetch', event => {
   const requestUrl = new URL(event.request.url);
   const isSameOrigin = requestUrl.origin === self.location.origin;
+  if (!isSameOrigin || event.request.method !== 'GET') return;
+
+  // Resimler tarayicinin normal ag akisindan yuklensin. Cache API hatalari
+  // gorsel istegini bozup "ServiceWorker istegin arasina girdi" hatasi verebilir.
+  if (requestUrl.pathname.startsWith('/assets/images/') ||
+      requestUrl.pathname.startsWith('/photo/')) return;
+
   const isPrivateArea = requestUrl.pathname === '/gir' ||
     requestUrl.pathname.startsWith('/gir/');
 
@@ -66,16 +61,25 @@ self.addEventListener('fetch', event => {
       fetch(event.request)
         .then(networkResponse => {
           const responseClone = networkResponse.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
+          event.waitUntil(
+            caches.open(CACHE_NAME)
+              .then(cache => cache.put(event.request, responseClone))
+              .catch(err => console.warn('Cache yazilamadi:', err))
+          );
           return networkResponse;
         })
-        .catch(() => caches.match(event.request))
+        .catch(async () => {
+          try { return await caches.match(event.request) || Response.error(); }
+          catch (_) { return Response.error(); }
+        })
     );
     return;
   }
 
   event.respondWith(
-    caches.match(event.request).then(response => response || fetch(event.request))
+    caches.match(event.request)
+      .catch(() => null)
+      .then(response => response || fetch(event.request))
   );
 });
 
