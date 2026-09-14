@@ -107,7 +107,7 @@ document.addEventListener('click', onFirstInteraction, { passive: true });
 document.addEventListener('touchstart', onFirstInteraction, { passive: true });
 document.addEventListener('keydown', onFirstInteraction);
 
-const INTRO_TEXT_MIN_MS = 5000;
+const INTRO_TEXT_MIN_MS = 2000;
 
 function showMobileIntroSplash() {
     if (!introWelcome) return;
