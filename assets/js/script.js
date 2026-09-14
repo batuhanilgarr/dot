@@ -1123,6 +1123,9 @@ const NISAN_PHOTOS = [
     img.addEventListener('error', () => {
         img.src = `./assets/images/nisan/${base}.jpg`;
     }, { once: true });
+    // <picture><source> hala hikaye.webp'e isaret ediyor olabilir; img.src'nin
+    // gecerli olmasi icin kaynagi kaldirmamiz gerekiyor.
+    img.closest('picture')?.querySelector('source')?.remove();
     img.src = `./assets/images/nisan/${base}.webp`;
     img.removeAttribute('srcset');
 })();
