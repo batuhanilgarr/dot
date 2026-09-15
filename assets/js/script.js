@@ -1193,12 +1193,12 @@ async function initPushNotifications() {
 initPushNotifications();
 
 /* ============ PAYLASILABILIR GERI SAYIM KARTI ============ */
-/* Aktif geri sayim sekmesine gore 1080x1920 story gorseli uretir.
+/* Kina ve nikah icin ayri 1080x1920 story gorselleri uretir.
    Paylasim destegi varsa dogrudan paylasir, yoksa indirir. */
 
-const storyCardBtn = document.getElementById('storyCardBtn');
+const storyCardButtons = document.querySelectorAll('[data-story-event]');
 
-if (storyCardBtn) {
+if (storyCardButtons.length) {
     const storyCardStatus = document.getElementById('storyCardStatus');
     const STORY_W = 1080;
     const STORY_H = 1920;
@@ -1209,23 +1209,18 @@ if (storyCardBtn) {
             dateMs: KINA_DATE_MS,
             dateLine: '24 EKİM 2026',
             venue: 'Aşk-ı Lavinya · 12:00',
-            file: 'kina-geri-sayim.png'
+            file: 'zeynep-batuhan-kina-story.png',
+            shareText: 'Zeynep & Batuhan · Kına Gecesi · 24 Ekim 2026, 12:00'
         },
         nikah: {
             eyebrow: 'NİKAHIMIZA',
             dateMs: WEDDING_DATE_MS,
             dateLine: '25 EKİM 2026',
             venue: 'Beykoz Belediyesi · 14:00',
-            file: 'nikah-geri-sayim.png'
+            file: 'zeynep-batuhan-nikah-story.png',
+            shareText: 'Zeynep & Batuhan · Nikah · 25 Ekim 2026, 14:00'
         }
     };
-
-    function activeStoryEvent() {
-        const activeTab = document.querySelector('.ctab.active');
-        return activeTab?.dataset.target === 'ctab-nikah'
-            ? STORY_EVENTS.nikah
-            : STORY_EVENTS.kina;
-    }
 
     function daysLeft(targetMs) {
         return Math.max(0, Math.ceil((targetMs - Date.now()) / 86400000));
@@ -1396,11 +1391,12 @@ if (storyCardBtn) {
         if (storyCardStatus) storyCardStatus.textContent = message;
     }
 
-    storyCardBtn.addEventListener('click', async () => {
-        const event = activeStoryEvent();
+    storyCardButtons.forEach((button) => button.addEventListener('click', async () => {
+        const event = STORY_EVENTS[button.dataset.storyEvent];
+        if (!event) return;
         const days = daysLeft(event.dateMs);
 
-        storyCardBtn.disabled = true;
+        storyCardButtons.forEach((item) => { item.disabled = true; });
         setStoryStatus('Kartınız hazırlanıyor...');
 
         try {
@@ -1413,7 +1409,7 @@ if (storyCardBtn) {
                 await navigator.share({
                     files: [file],
                     title: 'Zeynep & Batuhan',
-                    text: 'Zeynep & Batuhan · 25 Ekim 2026'
+                    text: event.shareText
                 });
                 setStoryStatus('');
                 return;
@@ -1435,7 +1431,7 @@ if (storyCardBtn) {
                 setStoryStatus('Kart oluşturulamadı, lütfen tekrar deneyin.');
             }
         } finally {
-            storyCardBtn.disabled = false;
+            storyCardButtons.forEach((item) => { item.disabled = false; });
         }
-    });
+    }));
 }

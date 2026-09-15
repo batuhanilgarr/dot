@@ -2533,13 +2533,21 @@ input:focus-visible,
 
 /* ============ STORY KARTI ============ */
 
+.story-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 26px;
+}
+
 .story-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 9px;
     width: fit-content;
-    margin: 26px auto 0;
+    margin: 0;
     padding: 13px 30px;
     border: 1px solid var(--line);
     border-radius: 999px;
@@ -2552,6 +2560,11 @@ input:focus-visible,
     text-transform: uppercase;
     cursor: pointer;
     transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+@media (max-width: 560px) {
+    .story-actions { padding: 0 20px; }
+    .story-btn { width: 100%; }
 }
 
 .story-btn:hover {

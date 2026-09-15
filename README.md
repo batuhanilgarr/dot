@@ -47,6 +47,7 @@ Canlı: <https://zeynepbatuhan.com>
 - **Hava Durumu** — Open-Meteo API; 24 ve 25 Ekim için iki ayrı kart (16 gün sınırı içinde)
 - **RSVP** — Cloudflare Workers sayaç; cihaz başına tekrar engeli (`localStorage`)
 - **Takvime Ekle** — `kina.ics` ve `nikah.ics` indirme butonları
+- **Instagram Story Kartları** — Kına ve nikah için ayrı 1080×1920 PNG kart üretimi; desteklenen cihazlarda doğrudan paylaşım, diğerlerinde indirme
 - **Paylaş** — Web Share API + WhatsApp fallback
 - **SSS** — 3 grup accordion (Etkinlik, Ulaşım, Pratik) + Moovit toplu taşıma linkleri
 
