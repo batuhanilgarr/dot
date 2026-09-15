@@ -2620,6 +2620,22 @@ input:focus-visible,
     margin-bottom: 8px;
 }
 
+.seo-byline {
+    margin: -6px 0 18px !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    color: var(--muted) !important;
+}
+
+.seo-source {
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+    font-size: 13px !important;
+}
+
+.seo-source a { color: var(--rose-deep); }
+
 .seo-page h2 {
     font-family: var(--font-display);
     font-size: clamp(22px, 3.2vw, 27px);
