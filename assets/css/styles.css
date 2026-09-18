@@ -2690,6 +2690,38 @@ input:focus-visible,
     margin-bottom: 6px;
 }
 
+.seo-table-wrap {
+    margin: 18px 0 28px;
+    overflow-x: auto;
+    border: 1px solid var(--line-soft);
+    border-radius: 14px;
+    background: var(--glass);
+}
+
+.seo-table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.seo-table th,
+.seo-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line-soft);
+    text-align: left;
+    vertical-align: top;
+}
+
+.seo-table th {
+    color: var(--ink);
+    background: rgba(238, 179, 195, 0.14);
+    font-weight: 700;
+}
+
+.seo-table tbody tr:last-child td { border-bottom: 0; }
+
 .seo-link-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
