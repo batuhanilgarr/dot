@@ -49,6 +49,28 @@ function loadDeferredAnalytics() {
     window.gtag('config', measurementId);
 }
 
+function trackSiteEvent(eventName, parameters = {}) {
+    loadDeferredAnalytics();
+    window.gtag?.('event', eventName, parameters);
+}
+
+document.addEventListener('click', (event) => {
+    const link = event.target.closest('a[href]');
+    if (!link) return;
+    const url = new URL(link.href, window.location.href);
+    if (url.origin !== window.location.origin) {
+        trackSiteEvent('outbound_click', {
+            link_domain: url.hostname,
+            link_url: url.href
+        });
+    } else if (url.pathname.endsWith('.ics')) {
+        trackSiteEvent('file_download', {
+            file_name: url.pathname.split('/').pop(),
+            link_url: url.href
+        });
+    }
+});
+
 function ensureAudioSource() {
     if (!backgroundMusic || backgroundMusic.getAttribute('src')) return;
     const audioSrc = backgroundMusic.dataset.src;
@@ -858,6 +880,10 @@ async function submitRsvp() {
         }
 
         localStorage.setItem(RSVP_LOCAL_KEY, String(selectedGuestCount));
+        trackSiteEvent('generate_lead', {
+            lead_type: 'rsvp',
+            guest_count: selectedGuestCount
+        });
         rsvpActionStatus.textContent = `Katılım bildiriminiz alındı (${selectedGuestCount} kişi). Çok teşekkürler!`;
         showRsvpSuccessActions();
         await updateRsvpCount();
