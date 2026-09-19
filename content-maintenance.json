@@ -31,6 +31,26 @@
       "topic": "Davetiye gönderim zamanlaması",
       "lastReviewed": "2026-09-19",
       "sources": []
+    },
+    {
+      "path": "istanbul-nisan-malzemeleri-nereden-alinir.html",
+      "topic": "İstanbul nişan malzemeleri alışveriş rehberi",
+      "lastReviewed": "2026-09-19",
+      "reviewIntervalDays": 90,
+      "sources": [
+        "https://istanbulseninhaber.ibb.istanbul/haber-detay/eminonunde-ne-nereden-alinir",
+        "https://www.fatih.bel.tr/tr/main/pages/tarihte-fatih/41"
+      ]
+    },
+    {
+      "path": "istanbul-kina-malzemeleri-nereden-alinir.html",
+      "topic": "İstanbul kına malzemeleri alışveriş rehberi",
+      "lastReviewed": "2026-09-19",
+      "reviewIntervalDays": 90,
+      "sources": [
+        "https://istanbulseninhaber.ibb.istanbul/haber-detay/eminonunde-ne-nereden-alinir",
+        "https://dugun.com/kina-ve-bekarliga-veda-aksesuar/istanbul"
+      ]
     }
   ]
 }
