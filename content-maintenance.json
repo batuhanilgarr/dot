@@ -11,6 +11,16 @@
       ]
     },
     {
+      "path": "evlilik-saglik-raporu-nereden-alinir-2026.html",
+      "topic": "Evlilik öncesi sağlık raporu ve taramalar",
+      "lastReviewed": "2026-09-19",
+      "reviewIntervalDays": 90,
+      "sources": [
+        "https://istanbulism.saglik.gov.tr/TR%2C56068/evlilik-raporlari.html",
+        "https://hsgm.saglik.gov.tr/depo/Yayinlarimiz/Rehberler/AILE_HEKIMLIGI_REHBERI_2025.pdf"
+      ]
+    },
+    {
       "path": "dijital-davetiye-fiyatlari.html",
       "topic": "Dijital davetiye fiyatları",
       "lastReviewed": "2026-09-19",
