@@ -7,6 +7,7 @@
 - [Ana Sayfa](https://zeynepbatuhan.com/): Nikah töreni tarih, saat, mekan bilgisi; RSVP (katılım bildirimi), program ve SSS.
 - [Fotoğraf Galerisi](https://zeynepbatuhan.com/photo/): Zeynep ve Batuhan'ın nişan töreninden fotoğraf galerisi.
 - [Rehberler](https://zeynepbatuhan.com/rehberler.html): Tüm davetiye yazım rehberleri ve tören bilgilerinin listelendiği indeks sayfası.
+- [Hakkımızda ve Yayın İlkeleri](https://zeynepbatuhan.com/hakkimizda.html): Yazarlar, kaynak seçimi, güncelleme, düzeltme ve reklam ilkeleri.
 
 ## Konu Merkezleri
 
