@@ -1,0 +1,17 @@
+name: İçerik güncellik kontrolü
+
+on:
+  schedule:
+    - cron: "17 7 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Zaman duyarlı içerikleri kontrol et
+        run: python3 scripts/check-content-freshness.py

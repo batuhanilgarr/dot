@@ -440,7 +440,11 @@
   /* Grid'de optimize (900px, ~100 KB) surumler gosteriliyor; buyutme ve indirme
      full-res dosyadan yapiliyor. Onceden grid de full-res cekiyordu (~350 MB). */
   function thumbSrc(name) {
-    return '../assets/images/nisan/' + name.toLowerCase();
+    return '../assets/images/nisan/' + name.toLowerCase().replace(/\.jpg$/, '.webp');
+  }
+
+  function avifSrc(name) {
+    return '../assets/images/nisan/' + name.toLowerCase().replace(/\.jpg$/, '.avif');
   }
 
   /* ── Icon helpers ── */
@@ -477,6 +481,10 @@
     const item = document.createElement('div');
     item.className = 'item sk';
 
+    const picture = document.createElement('picture');
+    const avif = document.createElement('source');
+    avif.type = 'image/avif';
+    avif.srcset = avifSrc(name);
     const img = document.createElement('img');
     img.alt = 'Zeynep ve Batuhan nişan töreni fotoğrafı ' + (i + 1); img.loading = 'lazy'; img.decoding = 'async';
     img.onload  = function() { item.classList.remove('sk'); };
@@ -499,7 +507,9 @@
     });
 
     ov.appendChild(btn);
-    item.appendChild(img);
+    picture.appendChild(avif);
+    picture.appendChild(img);
+    item.appendChild(picture);
     item.appendChild(ov);
     item.addEventListener('click', function() { openLb(i); });
     masonry.appendChild(item);

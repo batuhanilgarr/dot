@@ -1451,6 +1451,42 @@ p.schedule-note {
     min-height: 18px;
 }
 
+.rsvp-success-actions {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line-soft);
+    color: var(--ink-soft);
+    font-size: 13px;
+}
+
+.rsvp-success-actions[hidden] { display: none; }
+
+.rsvp-success-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 12px;
+}
+
+.rsvp-success-links a,
+.seo-download-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px 16px;
+    border: 1px solid var(--rose);
+    border-radius: 999px;
+    color: var(--rose-deep);
+    background: rgba(255, 255, 255, 0.55);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.seo-download { margin: 28px 0; }
+.seo-related-grid { margin-bottom: 28px; }
+
 .rsvp-info {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

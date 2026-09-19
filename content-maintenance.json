@@ -1,0 +1,26 @@
+{
+  "reviewIntervalDays": 120,
+  "pages": [
+    {
+      "path": "nikah-icin-gerekli-belgeler-2026.html",
+      "topic": "Nikah başvuru belgeleri",
+      "lastReviewed": "2026-09-19",
+      "sources": [
+        "https://sitesi.beykoz.bel.tr/nikah-islemleri",
+        "https://nvi.gov.tr/kurumlar/nvi.gov.tr/mevzuat/nufusmevzuat/talimat/evlendirmeyonetmeligiuygulamasi2017.pdf"
+      ]
+    },
+    {
+      "path": "dijital-davetiye-fiyatlari.html",
+      "topic": "Dijital davetiye fiyatları",
+      "lastReviewed": "2026-09-19",
+      "sources": []
+    },
+    {
+      "path": "dugun-davetiyesi-ne-zaman-dagitilir.html",
+      "topic": "Davetiye gönderim zamanlaması",
+      "lastReviewed": "2026-09-19",
+      "sources": []
+    }
+  ]
+}
