@@ -51,6 +51,26 @@
         "https://istanbulseninhaber.ibb.istanbul/haber-detay/eminonunde-ne-nereden-alinir",
         "https://dugun.com/kina-ve-bekarliga-veda-aksesuar/istanbul"
       ]
+    },
+    {
+      "path": "ankara-nisan-malzemeleri-nereden-alinir.html",
+      "topic": "Ankara nişan malzemeleri alışveriş rehberi",
+      "lastReviewed": "2026-09-20",
+      "reviewIntervalDays": 90,
+      "sources": [
+        "https://www.ankaramasasi.com.tr/haber/2208118/ankara-ulus-hali-ve-cikrikcilar-yokusu-rehberi-ceyiz-kumas-ve-taze-gida-nereden-nasil-alinir",
+        "https://cd.mfa.gov.tr/Files/guide.pdf"
+      ]
+    },
+    {
+      "path": "ankara-kina-malzemeleri-nereden-alinir.html",
+      "topic": "Ankara kına malzemeleri alışveriş rehberi",
+      "lastReviewed": "2026-09-20",
+      "reviewIntervalDays": 90,
+      "sources": [
+        "https://www.ankaramasasi.com.tr/haber/2208118/ankara-ulus-hali-ve-cikrikcilar-yokusu-rehberi-ceyiz-kumas-ve-taze-gida-nereden-nasil-alinir",
+        "https://dugun.com/kina-ve-bekarliga-veda-aksesuar/ankara"
+      ]
     }
   ]
 }

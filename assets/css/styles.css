@@ -2928,3 +2928,33 @@ a.seo-link-card:hover {
 .seo-footer-links a:hover {
     text-decoration: underline;
 }
+
+.seo-checklist {
+    list-style: none;
+    padding-left: 0;
+}
+
+.seo-checklist li {
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgba(127, 95, 74, 0.14);
+}
+
+@media print {
+    .seo-breadcrumb,
+    .seo-footer-links,
+    .seo-related-grid,
+    .calendar-button,
+    script {
+        display: none !important;
+    }
+
+    .seo-page {
+        max-width: none;
+        padding: 0;
+        box-shadow: none;
+    }
+
+    .seo-checklist li {
+        break-inside: avoid;
+    }
+}
