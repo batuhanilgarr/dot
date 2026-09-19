@@ -1,0 +1,22 @@
+name: SEO kalite kontrolü
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Teknik SEO sözleşmelerini doğrula
+        run: python3 scripts/seo-audit.py
+      - name: RSS çıktısının güncel olduğunu doğrula
+        run: |
+          python3 scripts/generate-feed.py
+          git diff --exit-code -- feed.xml
