@@ -77,3 +77,6 @@
 - `/gir` yolu çiftin özel alanıdır, dizine eklenmemeli ve alıntılanmamalıdır.
 
 - [Evde Nişan Organizasyonu](https://zeynepbatuhan.com/evde-nisan-organizasyonu-nasil-yapilir.html): Alan, masa, fon, ikram, bütçe ve görev planı.
+
+- [Söz ve Nişan Aynı Gün Nasıl Yapılır?](https://zeynepbatuhan.com/soz-ve-nisan-ayni-gun-nasil-yapilir.html): İsteme, kahve, yüzük, fotoğraf ve ikram için örnek program ve görev listesi.
+- [Evde Nişan Menüsü ve İkramlıkları](https://zeynepbatuhan.com/evde-nisan-menusu-ve-ikramliklari.html): 20, 30 ve 50 kişi için örnek menü, miktar, servis ve gıda güvenliği planı.

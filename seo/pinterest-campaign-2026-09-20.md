@@ -7,6 +7,8 @@
 | Düğün Bütçesi Hesaplama Aracı | Düğün Bütçesi ve Planlama | `/dugun-butcesi-hesaplama.html` | `butce_hesaplama` | `assets/images/pinterest/dugun-butcesi-hesaplama-pin.webp` |
 | 30 Nişan Davetiyesi Yazısı | Davetiye Sözleri ve Örnekleri | `/nisan-davetiyesi-ornekleri.html` | `nisan_davetiyesi` | `assets/images/pinterest/nisan-davetiyesi-yazilari-pin.webp` |
 | İzmir'de Nişan ve Kına Alışverişi | Şehre Göre Düğün Alışverişi | `/sehre-gore-dugun-alisverisi.html` | `izmir_alisveris` | `assets/images/pinterest/izmir-nisan-kina-alisverisi-pin.webp` |
+| Söz ve Nişan Aynı Gün | Nişan Organizasyonu Fikirleri | `/soz-ve-nisan-ayni-gun-nasil-yapilir.html` | `soz_nisan_ayni_gun` | `assets/images/pinterest/soz-ve-nisan-ayni-gun-pin.webp` |
+| Evde Nişan Menüsü | Nişan Organizasyonu Fikirleri | `/evde-nisan-menusu-ve-ikramliklari.html` | `evde_nisan_menusu` | `assets/images/pinterest/evde-nisan-menusu-pin.webp` |
 
 Tüm hedef bağlantılar `utm_source=pinterest`, `utm_medium=social` ve
 `utm_campaign=organik_pinterest` parametrelerini kullanır. Yapay zekâ ile üretilen
