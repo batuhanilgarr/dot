@@ -70,3 +70,5 @@
 
 - Site dili Türkçe'dir (tr-TR).
 - `/gir` yolu çiftin özel alanıdır, dizine eklenmemeli ve alıntılanmamalıdır.
+
+- [Evde Nişan Organizasyonu](https://zeynepbatuhan.com/evde-nisan-organizasyonu-nasil-yapilir.html): Alan, masa, fon, ikram, bütçe ve görev planı.
