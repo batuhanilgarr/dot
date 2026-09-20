@@ -1,13 +1,13 @@
 // Service Worker for Zeynep & Batuhan Wedding Invitation
 // Enables offline functionality
 
-const CACHE_NAME = 'zeynep-batuhan-v32';
+const CACHE_NAME = 'zeynep-batuhan-v33';
 // Cevrimdisi sayfa kabugu. Medya ve gorseller tarayicinin ag akisina birakilir.
 const urlsToCache = [
   '/',
   '/index.html',
-  '/assets/css/styles.css',
-  '/assets/js/script.js',
+  '/assets/css/styles.min.css',
+  '/assets/js/script.min.js',
   '/kina.ics',
   '/nikah.ics'
 ];
@@ -52,8 +52,8 @@ self.addEventListener('fetch', event => {
   const isCoreAsset =
     requestUrl.pathname === '/' ||
     requestUrl.pathname.endsWith('/index.html') ||
-    requestUrl.pathname.endsWith('/assets/js/script.js') ||
-    requestUrl.pathname.endsWith('/assets/css/styles.css');
+    requestUrl.pathname.endsWith('/assets/js/script.min.js') ||
+    requestUrl.pathname.endsWith('/assets/css/styles.min.css');
 
   if (isSameOrigin && isCoreAsset) {
     // Keep HTML/CSS/JS fresh to avoid serving stale broken bundles.
