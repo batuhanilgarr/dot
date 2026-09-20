@@ -61,7 +61,15 @@ def main() -> int:
     except Exception as exc: errors.append(f"feed: invalid XML: {exc}")
 
     sitemap=ET.parse(ROOT/"sitemap.xml")
-    urls=[n.text for n in sitemap.findall(".//s:url/s:loc",ns)]
+    sitemap_entries=sitemap.findall(".//s:url",ns)
+    urls=[n.find("s:loc",ns).text for n in sitemap_entries]
+    for entry in sitemap_entries:
+        loc=entry.find("s:loc",ns).text
+        lastmods=entry.findall("s:lastmod",ns)
+        if len(lastmods) != 1:
+            errors.append(f"sitemap: {loc} must contain exactly one lastmod")
+        elif not re.fullmatch(r"\d{4}-\d{2}-\d{2}", lastmods[0].text or ""):
+            errors.append(f"sitemap: {loc} has invalid lastmod {lastmods[0].text!r}")
     expected_urls={ORIGIN+canonical_path(p) for p in pages}|{ORIGIN+"/photo/"}
     if set(urls) != expected_urls:
         for x in sorted(expected_urls-set(urls)): errors.append(f"sitemap: missing {x}")
