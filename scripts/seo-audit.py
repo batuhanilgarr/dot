@@ -51,7 +51,7 @@ def main() -> int:
             if u.netloc and u.netloc != "zeynepbatuhan.com": continue
             target=(u.path.rstrip("/").split("/")[-1] or "index.html")
             if target in public_names: incoming[target]+=1
-            elif target.endswith(".html") and target not in EXCLUDED and not (ROOT/target).exists(): errors.append(f"{path.name}: broken internal link {href}")
+            elif target.endswith(".html") and target not in EXCLUDED and not (ROOT/u.path.lstrip("/")).exists(): errors.append(f"{path.name}: broken internal link {href}")
 
     ns={"s":"http://www.sitemaps.org/schemas/sitemap/0.9"}
     try:
