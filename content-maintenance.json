@@ -22,9 +22,14 @@
     },
     {
       "path": "dijital-davetiye-fiyatlari.html",
-      "topic": "Dijital davetiye fiyatları",
-      "lastReviewed": "2026-09-19",
-      "sources": []
+      "topic": "Dijital Davetiye Fiyatları 2026: Paket Karşılaştırması",
+      "lastReviewed": "2026-09-23",
+      "sources": [
+        "https://onlinedavet.com.tr/fiyatlar",
+        "https://edijitaldavetiye.com/fiyatlandirma",
+        "https://dijitaldavetiyeweb.com/fiyatlar"
+      ],
+      "reviewIntervalDays": 30
     },
     {
       "path": "dugun-davetiyesi-ne-zaman-dagitilir.html",
@@ -88,6 +93,35 @@
       "sources": [
         "https://gcris.pau.edu.tr/bitstream/11499/26301/1/Ay%C5%9Fin%20Ocako%C4%9Flu%20%C3%96zel.pdf",
         "https://islamansiklopedisi.org.tr/batu-han"
+      ]
+    },
+    {
+      "path": "kina-gecesi-sarkilari.html",
+      "topic": "Kına Gecesi Şarkıları: Giriş, Kına Yakma ve Eğlence Listesi",
+      "lastReviewed": "2026-09-23",
+      "reviewIntervalDays": 120,
+      "sources": [
+        "https://music.apple.com/us/song/589573762",
+        "https://music.apple.com/us/song/1609869066",
+        "https://music.apple.com/us/artist/buray/608509915",
+        "https://music.apple.com/us/song/1827051075",
+        "https://music.apple.com/us/song/1580406915",
+        "https://music.apple.com/us/song/1856388589",
+        "https://music.apple.com/us/playlist/pl.c0d0685d648048988b6b516d379d4d1b",
+        "https://music.apple.com/tr/song/661236619?l=tr",
+        "https://music.apple.com/us/song/499332705",
+        "https://music.apple.com/us/song/1834673545",
+        "https://music.apple.com/us/song/1593999659",
+        "https://music.apple.com/us/artist/g%C3%BCl%C5%9Fen/258015310"
+      ]
+    },
+    {
+      "path": "davetiye-nasil-tasarlanir.html",
+      "topic": "Davetiye Nasıl Tasarlanır? Görselli Örnek ve Şablon",
+      "lastReviewed": "2026-09-23",
+      "reviewIntervalDays": 120,
+      "sources": [
+        "https://www.adobe.com/express/create/invitation"
       ]
     }
   ]
