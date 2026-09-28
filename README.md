@@ -24,7 +24,7 @@ Canlı: <https://zeynepbatuhan.com>
 └── assets/
     ├── css/styles.css               # Tüm stiller
     ├── js/script.js                 # Tüm davranış
-    ├── audio/music.mp3              # I Put A Spell On You — Annie Lennox
+    ├── audio/chopin-nocturne-20.mp3              # Chopin — Nocturne No. 20 · Urban Forest
     ├── images/
     │   ├── nisan/                   # 49 nişan fotoğrafı (900px, ~90KB/adet)
     │   ├── hikaye.jpg / hikaye-600.jpg  # Hikayemiz fotoğrafı (srcset)

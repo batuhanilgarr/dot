@@ -104,6 +104,7 @@ function updateMusicButton() {
 async function tryPlayMusic() {
     if (!backgroundMusic) return;
     ensureAudioSource();
+    backgroundMusic.volume = 0.3;
 
     try {
         await backgroundMusic.play();
