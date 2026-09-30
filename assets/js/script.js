@@ -27,31 +27,13 @@ const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
 let isMusicPlaying = false;
 let hasUserInteracted = false;
-let analyticsLoaded = false;
 
 function loadDeferredAnalytics() {
-    if (analyticsLoaded) return;
-
-    const measurementId = document
-        .querySelector('meta[name="ga-measurement-id"]')
-        ?.getAttribute('content');
-    if (!measurementId) return;
-
-    analyticsLoaded = true;
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-    document.head.appendChild(script);
-
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function gtag() { window.dataLayer.push(arguments); };
-    window.gtag('js', new Date());
-    window.gtag('config', measurementId);
+    window.sitePrivacy?.loadAnalytics();
 }
 
 function trackSiteEvent(eventName, parameters = {}) {
-    loadDeferredAnalytics();
-    window.gtag?.('event', eventName, parameters);
+    window.sitePrivacy?.track(eventName, parameters);
 }
 
 document.addEventListener('click', (event) => {

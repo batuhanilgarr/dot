@@ -1,30 +1,12 @@
 (function () {
     'use strict';
 
-    const measurementId = document.querySelector('meta[name="ga-measurement-id"]')?.content;
-    if (!measurementId || window.__siteAnalyticsLoaded) return;
-
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
-
-    let loaded = false;
     const loadAnalytics = () => {
-        if (loaded || window.__siteAnalyticsLoaded) return;
-        loaded = true;
-        window.__siteAnalyticsLoaded = true;
-
-        window.gtag('js', new Date());
-        window.gtag('config', measurementId, { anonymize_ip: true });
-
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
-        document.head.appendChild(script);
+        window.sitePrivacy?.loadAnalytics();
     };
 
     const track = (eventName, parameters) => {
-        loadAnalytics();
-        window.gtag('event', eventName, parameters);
+        window.sitePrivacy?.track(eventName, parameters);
     };
 
     document.addEventListener('click', (event) => {
