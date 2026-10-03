@@ -107,8 +107,8 @@ body {
     color: var(--ink);
 }
 
-html.event-day-kina #kinaQuickCard,
-html.event-day-nikah #nikahQuickCard {
+html.event-day-kina #eventQuickCard,
+html.event-day-nikah #eventQuickCard {
     display: block;
 }
 
@@ -182,6 +182,22 @@ html.event-day-nikah .video-container {
 .event-day-card-actions a:first-child {
     background: var(--rose-deep);
     color: #fff;
+}
+
+.event-day-venue + .event-day-venue {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+}
+
+.event-day-venue .event-day-card-place { font-size: 20px; }
+
+.event-day-wa {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--rose-deep);
 }
 
 @media (max-width: 600px) {
