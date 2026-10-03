@@ -89,11 +89,11 @@
         dialog.className = 'privacy-dialog';
         dialog.setAttribute('aria-labelledby', 'privacy-title');
         dialog.innerHTML = '<h2 id="privacy-title">Çerez tercihleri</h2>' +
-            '<p>Siteyi kullanmak için gerekli depolama araçları çalışır. Google Analytics ile sayfa kullanımı ve etkileşimleri ölçmemize izin vermek ister misiniz? Reddettiğinizde siteyi kullanmaya devam edebilirsiniz.</p>' +
-            '<p><a href="/cerez-politikasi.html">Çerezler ve saklama süreleri</a> · <a href="/gizlilik.html">Gizlilik ve kişisel veriler</a></p>' +
-            '<div class="privacy-actions"><button type="button" data-choice="no" autofocus>İstatistikleri reddet</button>' +
-            '<button type="button" data-choice="yes">İstatistiklere izin ver</button></div>' +
-            '<button type="button" data-close class="privacy-close">Seçmeden kapat</button>';
+            '<p>Google Analytics ile siteyi nasıl kullandığınızı ölçmemize izin verir misiniz? Reddederseniz site yine sorunsuz çalışır. ' +
+            '<a href="/cerez-politikasi.html">Çerezler</a> · <a href="/gizlilik.html">Gizlilik</a></p>' +
+            '<div class="privacy-actions"><button type="button" data-choice="no">Reddet</button>' +
+            '<button type="button" data-choice="yes">İzin ver</button>' +
+            '<button type="button" data-close class="privacy-close">Kapat</button></div>';
         document.body.appendChild(dialog);
         dialog.querySelector('[data-choice="no"]').addEventListener('click', () => save(false));
         dialog.querySelector('[data-choice="yes"]').addEventListener('click', () => save(true));
