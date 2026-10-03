@@ -897,6 +897,14 @@ if (rsvpConfirmButton && rsvpGuestCount) {
 }
 
 if ('serviceWorker' in navigator) {
+    // Yeni service worker eski sayfayı devralırsa bir kez yenile; kullanıcı gizli sekmeye mecbur kalmasın
+    const hadController = !!navigator.serviceWorker.controller;
+    let reloadedForSw = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!hadController || reloadedForSw) return;
+        reloadedForSw = true;
+        window.location.reload();
+    });
     window.addEventListener('load', () => {
         const registerSw = () => navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).catch(() => {});
         if ('requestIdleCallback' in window) {

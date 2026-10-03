@@ -1,7 +1,7 @@
 // Service Worker for Zeynep & Batuhan Wedding Invitation
 // Enables offline functionality
 
-const CACHE_NAME = 'zeynep-batuhan-v47';
+const CACHE_NAME = 'zeynep-batuhan-v48';
 // Cevrimdisi sayfa kabugu. Medya ve gorseller tarayicinin ag akisina birakilir.
 const urlsToCache = [
   '/',
@@ -58,7 +58,8 @@ self.addEventListener('fetch', event => {
   if (isSameOrigin && isCoreAsset) {
     // Keep HTML/CSS/JS fresh to avoid serving stale broken bundles.
     event.respondWith(
-      fetch(event.request)
+      // no-cache: tarayici HTTP onbellegi (GitHub Pages ~10 dk) yerine her seferinde sunucuya sorar
+      fetch(event.request.url, { cache: 'no-cache', credentials: 'same-origin' })
         .then(networkResponse => {
           const responseClone = networkResponse.clone();
           event.waitUntil(
