@@ -77,7 +77,8 @@
     function open() {
         if (!dialog) return;
         previousFocus = document.activeElement;
-        if (!dialog.open) dialog.showModal();
+        // Modal değil: altta sabit bir şerit olarak açılır, sayfa içeriğini kapatmaz.
+        if (!dialog.open) dialog.show();
     }
     window.sitePrivacy = { allowed, loadAnalytics, track, open };
     window.addEventListener('storage', (event) => {
@@ -101,6 +102,7 @@
             dialog.close();
         });
         dialog.addEventListener('close', () => previousFocus?.focus());
+        dialog.addEventListener('keydown', (event) => { if (event.key === 'Escape') dialog.close(); });
         document.querySelectorAll('[data-cookie-settings]').forEach((button) => button.addEventListener('click', open));
         updateStatus();
         if (allowed()) loadAnalytics();

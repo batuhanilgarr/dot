@@ -1,5 +1,8 @@
 .privacy-dialog{box-sizing:border-box;margin:auto;width:min(560px,calc(100% - 28px));max-height:85dvh;overflow:auto;border:1px solid #dbc9ca;border-radius:16px;padding:24px;color:#382d30;background:#fffaf8;font:16px/1.6 system-ui,sans-serif;z-index:2147483647}
-.privacy-dialog::backdrop{background:rgba(30,20,25,.48)}
+.privacy-dialog[open]{position:fixed;inset:auto 0 12px 0;margin:0 auto;max-height:60dvh;padding:16px 18px;font-size:14px;line-height:1.5;box-shadow:0 12px 40px rgba(30,20,25,.28)}
+.privacy-dialog[open] h2{font-size:17px;margin:0 0 6px}.privacy-dialog[open] p{margin:6px 0}
+.privacy-dialog[open] .privacy-actions{gap:8px}.privacy-dialog[open] .privacy-actions button{min-width:140px;padding:10px;font-size:14px}
+.privacy-dialog[open] .privacy-close{padding:6px 0 0;font-size:13px}
 .privacy-dialog h2{font-size:23px;margin:0 0 12px}.privacy-dialog p{margin:12px 0}.privacy-dialog a,.privacy-footer a{color:#74424d;text-decoration:underline}
 .privacy-actions{display:flex;gap:12px;flex-wrap:wrap}.privacy-actions button{flex:1;min-width:180px;padding:12px;border:1px solid #74424d;border-radius:8px;background:#fff;color:#562f38;font:inherit;cursor:pointer}
 .privacy-close,.privacy-footer button{background:transparent;color:#562f38;border:0;text-decoration:underline;font:inherit;padding:10px;cursor:pointer}
