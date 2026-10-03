@@ -185,15 +185,28 @@ html.event-day-nikah .video-container {
 }
 
 .event-day-names {
-    margin-bottom: 18px;
+    display: none;
+    margin: 0;
     font-family: var(--font-display);
-    font-size: 40px;
+    font-size: 34px;
     line-height: 1.1;
     text-align: center;
     color: var(--ink);
 }
 
 .event-day-names span { color: var(--rose); font-style: italic; }
+
+html.event-day-kina .event-day-names,
+html.event-day-nikah .event-day-names {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: calc(20px + env(safe-area-inset-top)) 16px 18px;
+    background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--line);
+}
 
 /* Etkinlik günlerinde kart tüm siteyi tam ekran olarak değiştirir */
 html.event-day-kina,
