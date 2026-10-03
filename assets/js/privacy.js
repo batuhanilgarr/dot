@@ -88,6 +88,8 @@
         dialog = document.createElement('dialog');
         dialog.className = 'privacy-dialog';
         dialog.setAttribute('aria-labelledby', 'privacy-title');
+        dialog.tabIndex = -1;
+        dialog.setAttribute('autofocus', '');
         dialog.innerHTML = '<h2 id="privacy-title">Çerez tercihleri</h2>' +
             '<p>Google Analytics ile siteyi nasıl kullandığınızı ölçmemize izin verir misiniz? Reddederseniz site yine sorunsuz çalışır. ' +
             '<a href="/cerez-politikasi.html">Çerezler</a> · <a href="/gizlilik.html">Gizlilik</a></p>' +
