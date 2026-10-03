@@ -184,6 +184,52 @@ html.event-day-nikah .video-container {
     color: #fff;
 }
 
+/* Etkinlik günlerinde kart tüm siteyi tam ekran olarak değiştirir */
+html.event-day-kina,
+html.event-day-nikah { overflow: hidden; }
+
+html.event-day-kina #eventQuickCard,
+html.event-day-nikah #eventQuickCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    transform: none;
+    width: 100%;
+    max-height: none;
+    height: 100dvh;
+    border: 0;
+    border-radius: 0;
+    z-index: 10000;
+    background: var(--bg);
+    padding: 24px 16px;
+}
+
+html.event-day-kina #eventQuickCard summary,
+html.event-day-nikah #eventQuickCard summary {
+    justify-content: center;
+    pointer-events: none;
+    font-size: 15px;
+    padding: 0 0 18px;
+}
+
+html.event-day-kina #eventQuickCard summary span,
+html.event-day-nikah #eventQuickCard summary span { display: none; }
+
+html.event-day-kina #eventQuickCard .event-day-card-body,
+html.event-day-nikah #eventQuickCard .event-day-card-body {
+    width: min(480px, 100%);
+    margin: 0 auto;
+    padding: 0;
+}
+
+html.event-day-kina #eventQuickCard .event-day-card-actions a,
+html.event-day-nikah #eventQuickCard .event-day-card-actions a {
+    min-height: 48px;
+    font-size: 13px;
+}
+
 .event-day-venue + .event-day-venue {
     margin-top: 16px;
     padding-top: 16px;
