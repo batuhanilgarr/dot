@@ -616,7 +616,7 @@ window.addEventListener('resize', () => {
     });
 }, { passive: true });
 
-const NIKAH_START_MS = new Date('2026-10-25T13:45:00+03:00').getTime();
+const NIKAH_START_MS = new Date('2026-10-25T14:00:00+03:00').getTime();
 // Nikah saatinden sonra konum ekranı kapanır ve bloom (teşekkür) ekranı açılır.
 const BLOOM_START_MS = new Date('2026-10-25T14:00:00+03:00').getTime();
 const EVENT_END_MS = new Date('2026-10-25T22:00:00+03:00').getTime();
@@ -1294,9 +1294,9 @@ if (storyCardButtons.length) {
             eyebrow: 'NİKAHIMIZA',
             dateMs: NIKAH_START_MS,
             dateLine: '25 EKİM 2026',
-            venue: 'Beykoz Spor Ormanı · 13:45',
+            venue: 'Beykoz Spor Ormanı · 14:00',
             file: 'zeynep-batuhan-nikah-story.png',
-            shareText: 'Zeynep & Batuhan · Nikah · 25 Ekim 2026, 13:45'
+            shareText: 'Zeynep & Batuhan · Nikah · 25 Ekim 2026, 14:00'
         }
     };
 
