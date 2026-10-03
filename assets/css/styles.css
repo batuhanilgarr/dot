@@ -89,100 +89,32 @@ body {
     box-shadow: var(--card-shadow);
 }
 
-/* ============ MÜZİK BUTONU ============ */
+/* ============ ETKİNLİK GÜNÜ KONUM EKRANI ============ */
+/* 23 Ekim 00:00 → 25 Ekim 14:00: kart tüm siteyi tam ekran olarak değiştirir */
 .event-day-card {
     display: none;
-    position: fixed;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9998;
-    width: min(440px, calc(100vw - 96px));
-    max-height: calc(100dvh - 36px);
-    overflow-y: auto;
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    background: rgba(255, 250, 248, 0.97);
-    box-shadow: 0 18px 48px rgba(67, 50, 60, 0.2);
     color: var(--ink);
 }
 
-html.event-day-kina #eventQuickCard,
-html.event-day-nikah #eventQuickCard {
-    display: block;
-}
+html.event-day { overflow: hidden; }
 
-html.event-day-kina .video-container,
-html.event-day-nikah .video-container {
-    display: none !important;
-}
+html.event-day .video-container { display: none !important; }
 
-.event-day-card summary {
+html.event-day .event-day-card {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 13px 18px;
-    cursor: pointer;
-    list-style: none;
-    color: var(--rose-deep);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.event-day-card summary::-webkit-details-marker { display: none; }
-.event-day-card summary span { transition: transform 0.2s ease; }
-.event-day-card:not([open]) summary span { transform: rotate(-90deg); }
-
-.event-day-card-body {
-    padding: 0 18px 18px;
-    text-align: center;
-}
-
-.event-day-card-time {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--ink);
-}
-
-.event-day-card-place {
-    margin-top: 8px;
-    font-family: var(--font-display);
-    font-size: 23px;
-    line-height: 1.1;
-}
-
-.event-day-card-address {
-    margin-top: 5px;
-    font-size: 12px;
-    color: var(--muted);
-}
-
-.event-day-card-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 14px;
-}
-
-.event-day-card-actions a {
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    min-height: 42px;
-    padding: 8px;
-    border-radius: 999px;
-    border: 1px solid var(--rose-deep);
-    color: var(--rose-deep);
-    font-size: 12px;
-    font-weight: 700;
-    text-decoration: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    height: 100dvh;
+    padding: 96px 16px 24px;
+    overflow-y: auto;
+    background: var(--bg);
 }
 
-.event-day-card-actions a:first-child {
-    background: var(--rose-deep);
-    color: #fff;
-}
+/* Kısa ekranda içerik taşarsa üst kısım kaydırılabilir kalsın */
+html.event-day .event-day-card-body { margin: auto; }
 
 .event-day-names {
     display: none;
@@ -196,86 +128,94 @@ html.event-day-nikah .video-container {
 
 .event-day-names span { color: var(--rose); font-style: italic; }
 
-html.event-day-kina .event-day-names,
-html.event-day-nikah .event-day-names {
+html.event-day .event-day-names {
     display: block;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
+    z-index: 1;
     padding: calc(20px + env(safe-area-inset-top)) 16px 18px;
     background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
     border-bottom: 1px solid var(--line);
 }
 
-/* Etkinlik günlerinde kart tüm siteyi tam ekran olarak değiştirir */
-html.event-day-kina,
-html.event-day-nikah { overflow: hidden; }
-
-html.event-day-kina #eventQuickCard,
-html.event-day-nikah #eventQuickCard {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: fixed;
-    inset: 0;
-    transform: none;
-    width: 100%;
-    max-height: none;
-    height: 100dvh;
-    border: 0;
-    border-radius: 0;
-    z-index: 10000;
-    background: var(--bg);
-    padding: 24px 16px;
-}
-
-html.event-day-kina #eventQuickCard summary,
-html.event-day-nikah #eventQuickCard summary {
-    justify-content: center;
-    pointer-events: none;
+.event-day-title {
+    margin: 0 0 18px;
+    color: var(--rose-deep);
+    font-family: var(--font-body, inherit);
     font-size: 15px;
-    padding: 0 0 18px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
 }
 
-html.event-day-kina #eventQuickCard summary span,
-html.event-day-nikah #eventQuickCard summary span { display: none; }
-
-html.event-day-kina #eventQuickCard .event-day-card-body,
-html.event-day-nikah #eventQuickCard .event-day-card-body {
+.event-day-card-body {
     width: min(480px, 100%);
-    margin: 0 auto;
-    padding: 0;
+    text-align: center;
 }
 
-html.event-day-kina #eventQuickCard .event-day-card-actions a,
-html.event-day-nikah #eventQuickCard .event-day-card-actions a {
-    min-height: 48px;
+.event-day-card-time {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.event-day-card-place {
+    margin-top: 8px;
+    font-family: var(--font-display);
+    font-size: 20px;
+    line-height: 1.1;
+}
+
+.event-day-card-address {
+    margin-top: 5px;
     font-size: 13px;
+    color: var(--ink-soft);
 }
 
-.event-day-venue + .event-day-venue {
-    margin-top: 16px;
-    padding-top: 16px;
-    border-top: 1px solid var(--line);
+.event-day-card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
 }
 
-.event-day-venue .event-day-card-place { font-size: 20px; }
+.event-day-card-actions a {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 8px;
+    border-radius: 999px;
+    border: 1px solid var(--rose-deep);
+    color: var(--rose-deep);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.event-day-card-actions a:first-child {
+    background: var(--rose-deep);
+    color: #fff;
+}
+
+.event-day-venue {
+    padding: 18px 16px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(67, 50, 60, 0.08);
+}
+
+.event-day-venue + .event-day-venue { margin-top: 14px; }
 
 .event-day-wa {
     display: inline-block;
-    margin-top: 14px;
-    font-size: 12px;
+    margin-top: 18px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--rose-deep);
-}
-
-@media (max-width: 600px) {
-    .event-day-card {
-        top: 66px;
-        width: calc(100vw - 24px);
-        max-height: calc(100dvh - 78px);
-    }
 }
 
 .music-toggle {
@@ -556,7 +496,7 @@ html.event-day-nikah #eventQuickCard .event-day-card-actions a {
 .reveal {
     opacity: 0;
     transform: translateY(18px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+    transition: opacity 0.4s ease, transform 0.4s ease;
     will-change: transform, opacity;
 }
 
@@ -695,6 +635,10 @@ section h2 + * {
     margin: 26px auto;
     background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
+
+.wedding-time:not(.wedding-time--kina)::after { display: none; }
+
+.wedding-time--kina { margin-top: 6px; }
 
 .hero-tagline {
     font-family: var(--font-display);
@@ -1011,6 +955,14 @@ section h2 + * {
 /* ============ GERİ SAYIM ============ */
 .countdown-section {
     padding: 56px 30px;
+}
+
+@media (max-width: 600px) {
+    .countdown-section {
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 44px 16px;
+    }
 }
 
 .ctabs {

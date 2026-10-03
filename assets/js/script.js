@@ -192,8 +192,7 @@ function showRsvpSuccessActions() {
 }
 
 window.addEventListener('load', () => {
-    const isEventDay = document.documentElement.classList.contains('event-day-kina') ||
-        document.documentElement.classList.contains('event-day-nikah');
+    const isEventDay = document.documentElement.classList.contains('event-day');
     if (!isMobile && !isEventDay) {
         ensureVideoSource();
         beginIntroVideoAfterText();
@@ -250,14 +249,15 @@ function initScrollReveal() {
 
     const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach((entry) => {
-            if (entry.isIntersecting) {
+            // Hızlı kaydırmada ekranın üstünde kalan öğeler de görünür olsun
+            if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
                 entry.target.classList.add('in-view');
                 obs.unobserve(entry.target);
             }
         });
     }, {
-        threshold: 0.12,
-        rootMargin: '0px 0px -8% 0px'
+        threshold: 0.01,
+        rootMargin: '0px 0px -4% 0px'
     });
 
     revealTargets.forEach((element) => {
@@ -616,30 +616,44 @@ window.addEventListener('resize', () => {
     });
 }, { passive: true });
 
-const WEDDING_DATE_MS = new Date('2026-10-25T14:00:00+03:00').getTime();
+const NIKAH_START_MS = new Date('2026-10-25T13:45:00+03:00').getTime();
+// Nikah saatinden sonra konum ekranı kapanır ve bloom (teşekkür) ekranı açılır.
+const BLOOM_START_MS = new Date('2026-10-25T14:00:00+03:00').getTime();
 const EVENT_END_MS = new Date('2026-10-25T22:00:00+03:00').getTime();
 const KINA_DATE_MS = new Date('2026-10-24T12:00:00+03:00').getTime();
+const EVENT_WINDOW_START_MS = new Date('2026-10-23T00:00:00+03:00').getTime();
+
+const eventCard = document.getElementById('eventQuickCard');
+
+// Konum ekranı açıkken arkadaki içerik klavye ve ekran okuyucudan gizlenir.
+function setEventTakeover(active) {
+    if (!eventCard) return;
+    Array.from(document.body.children).forEach((el) => {
+        if (el === eventCard || el.matches('script, link, style, dialog')) return;
+        el.inert = active;
+    });
+}
 
 function updateEventDayCard() {
     const now = Date.now();
+    const preview = new URLSearchParams(window.location.search).get('konum') === '1';
+    const active = preview || (now >= EVENT_WINDOW_START_MS && now < BLOOM_START_MS);
     const root = document.documentElement;
-    if (/[?&]konum=1/.test(window.location.search)) {
-        root.classList.add('event-day-kina');
-        return;
+    const wasActive = root.classList.contains('event-day');
+    root.classList.toggle('event-day', active);
+    setEventTakeover(active);
+    // Pencere kapandıysa (sayfa açıkken 14:00 geçtiyse) bloom'a geç.
+    if (wasActive && !active && now >= BLOOM_START_MS) {
+        root.classList.add('bloom-init');
+        activateBloomMode();
     }
-    root.classList.toggle('event-day-kina',
-        now >= new Date('2026-10-23T00:00:00+03:00').getTime() &&
-        now < new Date('2026-10-25T00:00:00+03:00').getTime());
-    root.classList.toggle('event-day-nikah',
-        now >= new Date('2026-10-25T00:00:00+03:00').getTime() &&
-        now < new Date('2026-10-26T00:00:00+03:00').getTime());
 }
 
 updateEventDayCard();
 setInterval(updateEventDayCard, 60000);
 
 /* ============================================== */
-/* BLOOM MODE — 10 Mayis 2026 Pazar 13:00 sonrasi  */
+/* BLOOM MODE — 25 Ekim 2026 Pazar 14:00 sonrasi   */
 /* Sayfa cicek bahcesine donusur                   */
 /* ============================================== */
 
@@ -743,11 +757,12 @@ document.addEventListener('visibilitychange', () => {
 
 function updateCountdown() {
     const now = new Date().getTime();
-    const distance = WEDDING_DATE_MS - now;
+    const distance = NIKAH_START_MS - now;
     const countdownSection = document.getElementById('geri-sayim');
     const countdownEl = document.getElementById('countdown');
 
     if (distance < 0) {
+        if (now < BLOOM_START_MS) return;
         activateBloomMode();
         if (countdownEl && !countdownEl.querySelector('.event-day-msg')) {
             const afterEnd = now >= EVENT_END_MS;
@@ -921,7 +936,7 @@ function showToastBanner() {
     const toast = document.getElementById('toastBanner');
     if (!toast) return;
 
-    const weddingDate = new Date('2026-10-25T14:00:00+03:00').getTime();
+    const weddingDate = NIKAH_START_MS;
     const now = new Date().getTime();
     const distance = weddingDate - now;
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -983,13 +998,43 @@ async function loadWeather() {
         if (card)   card.classList.add('loaded');
     }
 
-    const FORECAST_HORIZON_MS = 16 * 24 * 60 * 60 * 1000;
+    const FORECAST_HORIZON_MS = 15 * 24 * 60 * 60 * 1000;
     const kinaMs = KINA_DATE_MS;
     const now = Date.now();
 
+    // Tahmin ufku (~16 gün) dışındayken, önceki yıllarda aynı tarihlerde ölçülen gerçek değerleri göster.
     if (kinaMs - now > FORECAST_HORIZON_MS) {
-        applyPlaceholder('weatherIconKina', 'weatherDescKina', 'weatherCardKina', 'Kınaya yakın güncellenir');
-        applyPlaceholder('weatherIcon',     'weatherDesc',     'weatherCard',     'Nikaha yakın güncellenir');
+        try {
+            const res = await fetch(
+                'https://archive-api.open-meteo.com/v1/archive?latitude=40.9989&longitude=29.1500&start_date=2021-10-24&end_date=2025-10-25&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe%2FIstanbul'
+            );
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const d = (await res.json()).daily;
+            const stats = { '10-24': [], '10-25': [] };
+            d.time.forEach((day, i) => {
+                const key = day.slice(5);
+                if (stats[key] && d.temperature_2m_max[i] != null) {
+                    stats[key].push([d.temperature_2m_min[i], d.temperature_2m_max[i], d.precipitation_sum[i]]);
+                }
+            });
+            const show = (key, descId, tempId, cardId, iconId) => {
+                const rows = stats[key];
+                if (!rows.length) throw new Error('veri yok');
+                const avg = (idx) => rows.reduce((t, r) => t + r[idx], 0) / rows.length;
+                const rainy = rows.filter((r) => r[2] >= 1).length;
+                document.getElementById(iconId).textContent = rainy * 2 >= rows.length ? '🌦️' : '🌤️';
+                document.getElementById(descId).textContent =
+                    `Son ${rows.length} yılda yağışlı gün: ${rainy}/${rows.length}`;
+                document.getElementById(tempId).textContent =
+                    `Ort. ${Math.round(avg(0))}° — ${Math.round(avg(1))}°C · tahmin 15 gün kala güncellenir`;
+                document.getElementById(cardId).classList.add('loaded');
+            };
+            show('10-24', 'weatherDescKina', 'weatherTempKina', 'weatherCardKina', 'weatherIconKina');
+            show('10-25', 'weatherDesc', 'weatherTemp', 'weatherCard', 'weatherIcon');
+        } catch (err) {
+            applyPlaceholder('weatherIconKina', 'weatherDescKina', 'weatherCardKina', 'Tahmin yaklaşırken güncellenir');
+            applyPlaceholder('weatherIcon',     'weatherDesc',     'weatherCard',     'Tahmin yaklaşırken güncellenir');
+        }
         return;
     }
 
@@ -1110,12 +1155,14 @@ function requestVenueDistances(venues) {
     );
 }
 
-if (Date.now() >= WEDDING_DATE_MS) {
+const konumPreview = new URLSearchParams(window.location.search).get('konum') === '1';
+
+if (Date.now() >= BLOOM_START_MS && !konumPreview) {
     activateBloomMode();
 }
 
-const bloomQueryFlag = new URLSearchParams(window.location.search).get('bloom') === '1';
-const bloomHashFlag = window.location.hash === '#bloom';
+const bloomQueryFlag = new URLSearchParams(window.location.search).get('bloom') === '1' && !konumPreview;
+const bloomHashFlag = window.location.hash === '#bloom' && !konumPreview;
 if (bloomQueryFlag || bloomHashFlag) {
     activateBloomMode();
 }
@@ -1245,11 +1292,11 @@ if (storyCardButtons.length) {
         },
         nikah: {
             eyebrow: 'NİKAHIMIZA',
-            dateMs: WEDDING_DATE_MS,
+            dateMs: NIKAH_START_MS,
             dateLine: '25 EKİM 2026',
-            venue: 'Beykoz Belediyesi · 14:00',
+            venue: 'Beykoz Spor Ormanı · 13:45',
             file: 'zeynep-batuhan-nikah-story.png',
-            shareText: 'Zeynep & Batuhan · Nikah · 25 Ekim 2026, 14:00'
+            shareText: 'Zeynep & Batuhan · Nikah · 25 Ekim 2026, 13:45'
         }
     };
 

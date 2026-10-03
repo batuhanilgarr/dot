@@ -1,6 +1,7 @@
 (function () {
     'use strict';
     const KEY = 'zb-consent-v1';
+    const DISMISS_KEY = 'zb-consent-dismissed';
     const AGE = 180 * 24 * 60 * 60 * 1000;
     const measurementId = document.querySelector('meta[name="ga-measurement-id"]')?.content;
     let choice = null;
@@ -95,13 +96,21 @@
         document.body.appendChild(dialog);
         dialog.querySelector('[data-choice="no"]').addEventListener('click', () => save(false));
         dialog.querySelector('[data-choice="yes"]').addEventListener('click', () => save(true));
-        dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
+        dialog.querySelector('[data-close]').addEventListener('click', () => {
+            try { sessionStorage.setItem(DISMISS_KEY, '1'); } catch (_) { /* Only this view. */ }
+            dialog.close();
+        });
         dialog.addEventListener('close', () => previousFocus?.focus());
         document.querySelectorAll('[data-cookie-settings]').forEach((button) => button.addEventListener('click', open));
         updateStatus();
         if (allowed()) loadAnalytics();
         // Policy and contact information must remain readable without making a choice.
-        if (!choice && !/\/(gizlilik|cerez-politikasi|iletisim)\.html$/.test(location.pathname)) open();
+        // Etkinlik günü konum ekranı açıkken ve bu oturumda kapatıldıysa pencere kendiliğinden açılmaz.
+        let dismissed = false;
+        try { dismissed = sessionStorage.getItem(DISMISS_KEY) === '1'; } catch (_) { /* ignore */ }
+        const eventScreen = document.documentElement.classList.contains('event-day');
+        if (!choice && !dismissed && !eventScreen &&
+            !/\/(gizlilik|cerez-politikasi|iletisim)\.html$/.test(location.pathname)) open();
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
     else init();
