@@ -281,6 +281,9 @@
                        now < new Date('2026-10-26T00:00:00+03:00').getTime()) {
                 document.documentElement.classList.add('event-day-nikah');
             }
+            if (/[?&]konum=1/.test(window.location.search)) {
+                document.documentElement.classList.add('event-day-kina');
+            }
             var weddingMs = new Date('2026-10-25T14:00:00+03:00').getTime();
             var url = window.location.search + window.location.hash;
             var wantBloom =
@@ -908,7 +911,7 @@
         <img class="lightbox-img" id="photoLightboxImg" src="" alt="">
     </div>
 
-    <script src="./assets/js/script.min.js?v=20261001" defer></script>
+    <script src="./assets/js/script.min.js?v=20261003" defer></script>
 
     <footer class="site-footer">
         <p class="footer-names">Zeynep <span>&amp;</span> Batuhan</p>

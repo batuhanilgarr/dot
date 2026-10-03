@@ -621,6 +621,10 @@ const KINA_DATE_MS = new Date('2026-10-24T12:00:00+03:00').getTime();
 function updateEventDayCard() {
     const now = Date.now();
     const root = document.documentElement;
+    if (/[?&]konum=1/.test(window.location.search)) {
+        root.classList.add('event-day-kina');
+        return;
+    }
     root.classList.toggle('event-day-kina',
         now >= new Date('2026-10-24T00:00:00+03:00').getTime() &&
         now < new Date('2026-10-25T00:00:00+03:00').getTime());
