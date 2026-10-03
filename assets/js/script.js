@@ -351,6 +351,7 @@ const galleryStrip = document.getElementById('galleryStrip');
 const lightbox = document.getElementById('lightbox');
 
 if (galleryStrip && lightbox) {
+    const LIGHTBOX_BLANK = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxCount = document.getElementById('lightboxCount');
     const galleryImages = Array.from(galleryStrip.querySelectorAll('.gallery-item img'));
@@ -375,7 +376,7 @@ if (galleryStrip && lightbox) {
 
     function closeLightbox() {
         lightbox.hidden = true;
-        lightboxImg.src = '';
+        lightboxImg.src = LIGHTBOX_BLANK;
         document.body.style.overflow = '';
         lastFocused?.focus();
     }
@@ -417,6 +418,7 @@ const invitePhotoBtn = document.getElementById('invitePhotoBtn');
 const photoLightbox = document.getElementById('photoLightbox');
 
 if (invitePhotoBtn && photoLightbox) {
+    const LIGHTBOX_BLANK = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
     const photoLightboxImg = document.getElementById('photoLightboxImg');
     let lastFocusedPhoto = null;
 
@@ -432,7 +434,7 @@ if (invitePhotoBtn && photoLightbox) {
 
     function closePhotoLightbox() {
         photoLightbox.hidden = true;
-        photoLightboxImg.src = '';
+        photoLightboxImg.src = LIGHTBOX_BLANK;
         document.body.style.overflow = '';
         lastFocusedPhoto?.focus();
     }
