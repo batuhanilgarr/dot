@@ -626,7 +626,7 @@ function updateEventDayCard() {
         return;
     }
     root.classList.toggle('event-day-kina',
-        now >= new Date('2026-10-24T00:00:00+03:00').getTime() &&
+        now >= new Date('2026-10-23T00:00:00+03:00').getTime() &&
         now < new Date('2026-10-25T00:00:00+03:00').getTime());
     root.classList.toggle('event-day-nikah',
         now >= new Date('2026-10-25T00:00:00+03:00').getTime() &&
