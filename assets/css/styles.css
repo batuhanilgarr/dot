@@ -184,6 +184,17 @@ html.event-day-nikah .video-container {
     color: #fff;
 }
 
+.event-day-names {
+    margin-bottom: 18px;
+    font-family: var(--font-display);
+    font-size: 40px;
+    line-height: 1.1;
+    text-align: center;
+    color: var(--ink);
+}
+
+.event-day-names span { color: var(--rose); font-style: italic; }
+
 /* Etkinlik günlerinde kart tüm siteyi tam ekran olarak değiştirir */
 html.event-day-kina,
 html.event-day-nikah { overflow: hidden; }
