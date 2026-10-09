@@ -646,6 +646,11 @@ function loadGuestPhotos() {
     document.body.appendChild(tag);
 }
 
+// Open-Meteo tahmini UTC bugününden en fazla 15 gün ilerisini verir; aralık dışındaki tarih istenmez (400 döner).
+function isForecastAvailable(date) {
+    return date <= new Date(Date.now() + 15 * 86400000).toISOString().slice(0, 10);
+}
+
 /* ——— Konum kartı: kalan süre ve hava durumu ——— */
 const EVENT_VENUES = {
     kina:  { startMs: KINA_DATE_MS,  endMs: KINA_DATE_MS + 5 * 3600000,  date: '2026-10-24', lat: 41.0165514, lon: 29.1561369 },
@@ -685,7 +690,7 @@ async function loadEventWeather() {
     eventWeatherRequested = true;
     await Promise.all(Object.entries(EVENT_VENUES).map(async ([key, venue]) => {
         const el = document.querySelector(`[data-weather="${key}"]`);
-        if (!el || Date.now() > venue.endMs) return;
+        if (!el || Date.now() > venue.endMs || !isForecastAvailable(venue.date)) return;
         try {
             const url = 'https://api.open-meteo.com/v1/forecast' +
                 `?latitude=${venue.lat}&longitude=${venue.lon}` +
@@ -1117,29 +1122,33 @@ async function loadWeather() {
         return;
     }
 
-    try {
+    // Tahmin servisi yalnızca ~16 gün ilerisini verir; her gün ayrı istenir ki biri aralık dışındaysa diğeri etkilenmesin.
+    async function fetchDay(date) {
+        if (!isForecastAvailable(date)) throw new Error('tahmin aralığı dışında');
         const res = await fetch(
-            'https://api.open-meteo.com/v1/forecast?latitude=40.9989&longitude=29.1500&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FIstanbul&start_date=2026-10-24&end_date=2026-10-25'
+            'https://api.open-meteo.com/v1/forecast?latitude=40.9989&longitude=29.1500&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=Europe%2FIstanbul' +
+            `&start_date=${date}&end_date=${date}`
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-
-        // index 0 = 24 Ekim (kına), index 1 = 25 Ekim (nikah)
-        applyWeather(
-            'weatherIconKina', 'weatherDescKina', 'weatherTempKina', 'weatherCardKina',
-            data.daily.weathercode[0],
-            Math.round(data.daily.temperature_2m_min[0]),
-            Math.round(data.daily.temperature_2m_max[0])
-        );
-        applyWeather(
-            'weatherIcon', 'weatherDesc', 'weatherTemp', 'weatherCard',
-            data.daily.weathercode[1],
-            Math.round(data.daily.temperature_2m_min[1]),
-            Math.round(data.daily.temperature_2m_max[1])
-        );
-    } catch (err) {
-        console.log('Hava durumu alınamadı:', err);
+        const d = (await res.json()).daily;
+        if (!d || d.weathercode?.[0] == null) throw new Error('veri yok');
+        return { code: d.weathercode[0], min: Math.round(d.temperature_2m_min[0]), max: Math.round(d.temperature_2m_max[0]) };
     }
+
+    const days = await Promise.allSettled([fetchDay('2026-10-24'), fetchDay('2026-10-25')]);
+    const targets = [
+        ['weatherIconKina', 'weatherDescKina', 'weatherTempKina', 'weatherCardKina'],
+        ['weatherIcon', 'weatherDesc', 'weatherTemp', 'weatherCard']
+    ];
+    days.forEach((result, i) => {
+        const [iconId, descId, tempId, cardId] = targets[i];
+        if (result.status === 'fulfilled') {
+            const { code, min, max } = result.value;
+            applyWeather(iconId, descId, tempId, cardId, code, min, max);
+        } else {
+            applyPlaceholder(iconId, descId, cardId, 'Tahmin yaklaşırken güncellenir');
+        }
+    });
 }
 
 function launchSakuraConfetti() {
