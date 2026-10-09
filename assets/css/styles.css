@@ -3135,3 +3135,14 @@ html.photo-mode .event-photos {
 .photo-lightbox .lb-close { top: calc(10px + env(safe-area-inset-top)); right: 10px; }
 .photo-lightbox .lb-prev { left: 8px; top: 50%; }
 .photo-lightbox .lb-next { right: 8px; top: 50%; }
+
+.photo-admin {
+    display: block;
+    width: fit-content;
+    margin: 28px auto 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    opacity: 0.7;
+}
