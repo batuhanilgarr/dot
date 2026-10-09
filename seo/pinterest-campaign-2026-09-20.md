@@ -59,3 +59,5 @@ Tarayıcıdaki hızlı kaydetme penceresiyle 9 pin yayınlandı (UTM: `utm_sourc
 | Evde nişan menüsü (yeni görsel) | Nişan Organizasyonu Fikirleri | `evde_nisan_menusu_2` |
 
 Profil durumu (9 Ekim, yayından önce): 0 takipçi, 3,2 bin aylık görüntüleme, web sitesi doğrulanmış. En iyi sayfa: Evde Nişan Menüsü (≈1,8 bin gösterim, 107 kaydetme). Davetiye pinleri ≈750 gösterim.
+
+Aynı gün "Şehre Göre Düğün Alışverişi" panosuna 3 pin eklendi (başlıklı): İstanbul nişan (`istanbul_nisan_2`), Ankara kına (`ankara_kina`), İzmir kına (`izmir_kina`). Pin görselleri: `assets/images/pinterest/{istanbul-nisan,ankara-kina,izmir-kina}-alisverisi-pin.jpg`.
