@@ -41,3 +41,21 @@ bildirimi kapandığı için doğrudan pin kimliği bu oturum kaydına eklenemed
 Her pazar Pinterest Analytics ve GA4 üzerinden gösterim, kaydetme, giden tıklama,
 etkileşim oranı ve organik Pinterest oturumları kaydedilir. En çok giden tıklama
 üreten konu ve görsel yaklaşımı sonraki haftanın içeriklerine uygulanır.
+
+## 9 Ekim 2026 yayınları
+
+Tarayıcıdaki hızlı kaydetme penceresiyle 9 pin yayınlandı (UTM: `utm_source=pinterest&utm_medium=social&utm_campaign=organik_pinterest`).
+
+| Pin | Pano | utm_content |
+| --- | --- | --- |
+| Kız isteme töreni | Nişan Organizasyonu Fikirleri | `kiz_isteme_toreni` |
+| Kız isteme konuşması | Nişan Organizasyonu Fikirleri | `kiz_isteme_konusmasi` |
+| Çeyiz listesi | Düğün Bütçesi ve Planlama | `ceyiz_listesi` |
+| Düğüne ne takılır | Düğün Bütçesi ve Planlama | `dugune_ne_takilir` |
+| Davetiyeye ne yazılır | Davetiye Sözleri ve Örnekleri | `davetiye_ornekleri` |
+| Kına gecesi şarkıları | Kına Gecesi Fikirleri (yeni pano) | `kina_gecesi_sarkilari` |
+| Kına hediyelikleri | Kına Gecesi Fikirleri | `kina_hediyelikleri` |
+| Kına davetiyesi mesajları | Kına Gecesi Fikirleri | `kina_davetiyesi` |
+| Evde nişan menüsü (yeni görsel) | Nişan Organizasyonu Fikirleri | `evde_nisan_menusu_2` |
+
+Profil durumu (9 Ekim, yayından önce): 0 takipçi, 3,2 bin aylık görüntüleme, web sitesi doğrulanmış. En iyi sayfa: Evde Nişan Menüsü (≈1,8 bin gösterim, 107 kaydetme). Davetiye pinleri ≈750 gösterim.
