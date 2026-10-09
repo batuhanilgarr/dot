@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="theme-color" content="#f4eee8">
+  <title>Fotoğraf Yönetimi · Z&amp;B</title>
+  <link rel="icon" href="../assets/images/favicon.ico" sizes="any">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100dvh; background: #f4eee8; font-family: 'Segoe UI', system-ui, sans-serif; color: #5a3e36; padding: 1.25rem 1rem 4rem; }
+    main { width: 100%; max-width: 960px; margin: 0 auto; }
+    h1 { font-size: 1.3rem; margin: 0.5rem 0 1rem; }
+    .card { background: #fff; border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 24px rgba(139,94,82,0.10); }
+    .login { max-width: 420px; margin: 3rem auto 0; }
+    label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; }
+    input[type="password"] { width: 100%; min-height: 48px; padding: 0.7rem 0.9rem; border: 1px solid #e3d3c8; border-radius: 12px; font: inherit; font-size: 16px; color: inherit; background: #fbf8f4; }
+    button { min-height: 44px; padding: 0.6rem 1.1rem; border: 0; border-radius: 999px; background: #b8607d; color: #fff; font: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer; }
+    button.ghost { background: transparent; border: 1px solid #b8607d; color: #b8607d; }
+    button.danger { background: #a33a3a; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .login button { width: 100%; margin-top: 0.9rem; }
+    .msg { margin-top: 0.8rem; min-height: 1.2em; font-size: 0.85rem; }
+    .msg.err { color: #a33a3a; }
+    .bar { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; margin-bottom: 1rem; }
+    .bar .grow { flex: 1; font-size: 0.9rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.7rem; }
+    .tile { position: relative; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(139,94,82,0.12); }
+    .tile.sel { outline: 3px solid #b8607d; }
+    .tile a { display: block; aspect-ratio: 1; background: #eadfd6; }
+    .tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tile .meta { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; padding: 0.45rem 0.55rem; font-size: 0.72rem; }
+    .tile .pick { position: absolute; top: 8px; left: 8px; width: 26px; height: 26px; accent-color: #b8607d; }
+    .tile .del { min-height: 32px; padding: 0.2rem 0.7rem; font-size: 0.75rem; background: #a33a3a; }
+    .empty { text-align: center; padding: 2rem 0; color: #8d7a82; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card login" id="loginBox">
+      <h1>🔒 Fotoğraf Yönetimi</h1>
+      <form id="loginForm">
+        <label for="pw">Parola</label>
+        <input type="password" id="pw" autocomplete="current-password" required>
+        <button type="submit" id="loginBtn">Giriş</button>
+        <p class="msg" id="loginMsg" role="status"></p>
+      </form>
+    </section>
+
+    <section id="panel" hidden>
+      <h1>📷 Misafir Fotoğrafları</h1>
+      <div class="bar">
+        <span class="grow" id="count"></span>
+        <button type="button" class="ghost" id="selectAll">Tümünü seç</button>
+        <button type="button" class="danger" id="deleteSel" disabled>Seçilenleri sil</button>
+        <button type="button" class="ghost" id="reload">Yenile</button>
+        <button type="button" class="ghost" id="logout">Çıkış</button>
+      </div>
+      <p class="msg" id="panelMsg" role="status"></p>
+      <div class="grid" id="grid"></div>
+      <p class="empty" id="empty" hidden>Henüz fotoğraf yok.</p>
+      <p style="text-align:center;margin-top:1rem"><button type="button" class="ghost" id="more" hidden>Daha fazla</button></p>
+    </section>
+  </main>
+
+  <script>
+  (function () {
+    'use strict';
+    var DEFAULT_API = 'https://zeynepbatuhan-photos-api.batuhannilgarr.workers.dev';
+    var host = location.hostname;
+    var override = (host === 'localhost' || host === '127.0.0.1') ? new URLSearchParams(location.search).get('api') : null;
+    var API = (override || DEFAULT_API).replace(/\/$/, '');
+    var KEY = 'zb-photo-admin';
+    var $ = function (id) { return document.getElementById(id); };
+    var secret = '';
+    var cursor = null;
+    var total = 0;
+    var selected = new Set();
+
+    function msg(el, text, isErr) { el.textContent = text || ''; el.classList.toggle('err', !!isErr); }
+    function headers() { return { 'X-Admin-Secret': secret }; }
+
+    async function verify(pw) {
+      var res = await fetch(API + '/admin/verify', { method: 'POST', headers: { 'X-Admin-Secret': pw } });
+      if (res.status === 429) throw new Error('Çok fazla hatalı deneme. Biraz bekleyin.');
+      if (!res.ok) throw new Error('Parola hatalı.');
+    }
+
+    function fmt(ts) { return new Date(ts).toLocaleString('tr-TR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }); }
+
+    function updateBar() {
+      $('count').textContent = total + ' fotoğraf' + (selected.size ? ' · ' + selected.size + ' seçili' : '');
+      $('deleteSel').disabled = selected.size === 0;
+      $('empty').hidden = total > 0;
+    }
+
+    function addTile(item) {
+      var tile = document.createElement('div');
+      tile.className = 'tile';
+      tile.dataset.id = item.id;
+      var a = document.createElement('a');
+      a.href = API + '/photo/' + encodeURIComponent(item.id);
+      a.target = '_blank'; a.rel = 'noopener';
+      var img = document.createElement('img');
+      img.loading = 'lazy'; img.alt = 'Misafir fotoğrafı';
+      img.src = API + '/thumb/' + encodeURIComponent(item.id);
+      a.appendChild(img);
+      var pick = document.createElement('input');
+      pick.type = 'checkbox'; pick.className = 'pick'; pick.setAttribute('aria-label', 'Seç');
+      pick.addEventListener('change', function () {
+        if (pick.checked) selected.add(item.id); else selected.delete(item.id);
+        tile.classList.toggle('sel', pick.checked);
+        updateBar();
+      });
+      var meta = document.createElement('div');
+      meta.className = 'meta';
+      var when = document.createElement('span'); when.textContent = fmt(item.ts);
+      var del = document.createElement('button');
+      del.type = 'button'; del.className = 'del'; del.textContent = 'Sil';
+      del.addEventListener('click', function () {
+        if (confirm('Bu fotoğraf kalıcı olarak silinsin mi?')) removeOne(item.id);
+      });
+      meta.append(when, del);
+      tile.append(a, pick, meta);
+      $('grid').appendChild(tile);
+      total += 1;
+    }
+
+    async function removeOne(id) {
+      msg($('panelMsg'), 'Siliniyor…');
+      var res = await fetch(API + '/photo/' + encodeURIComponent(id), { method: 'DELETE', headers: headers() });
+      if (res.status === 401 || res.status === 429) { signOut('Oturum geçersiz. Tekrar giriş yapın.'); return false; }
+      if (!res.ok) { msg($('panelMsg'), 'Silinemedi.', true); return false; }
+      var tile = $('grid').querySelector('[data-id="' + id + '"]');
+      if (tile) tile.remove();
+      selected.delete(id); total = Math.max(0, total - 1);
+      updateBar(); msg($('panelMsg'), 'Silindi.');
+      return true;
+    }
+
+    async function load(reset) {
+      if (reset) { $('grid').textContent = ''; total = 0; selected.clear(); cursor = null; }
+      var url = API + '/photos?limit=60' + (cursor ? '&cursor=' + encodeURIComponent(cursor) : '');
+      var res = await fetch(url, { cache: 'no-store' });
+      if (!res.ok) { msg($('panelMsg'), 'Liste alınamadı.', true); return; }
+      var data = await res.json();
+      data.items.forEach(addTile);
+      cursor = data.cursor; $('more').hidden = !cursor;
+      updateBar();
+    }
+
+    function signOut(text) {
+      secret = ''; try { sessionStorage.removeItem(KEY); } catch (_) {}
+      $('panel').hidden = true; $('loginBox').hidden = false; $('pw').value = '';
+      msg($('loginMsg'), text || '', !!text);
+    }
+
+    async function enter(pw) {
+      await verify(pw);
+      secret = pw; try { sessionStorage.setItem(KEY, pw); } catch (_) {}
+      $('loginBox').hidden = true; $('panel').hidden = false;
+      msg($('loginMsg'), ''); msg($('panelMsg'), '');
+      await load(true);
+    }
+
+    $('loginForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      $('loginBtn').disabled = true; msg($('loginMsg'), 'Kontrol ediliyor…');
+      try { await enter($('pw').value); }
+      catch (err) { msg($('loginMsg'), err.message || 'Giriş yapılamadı.', true); }
+      finally { $('loginBtn').disabled = false; }
+    });
+    $('logout').addEventListener('click', function () { signOut(''); });
+    $('reload').addEventListener('click', function () { load(true); });
+    $('more').addEventListener('click', function () { load(false); });
+    $('selectAll').addEventListener('click', function () {
+      var boxes = $('grid').querySelectorAll('.pick');
+      var all = Array.prototype.every.call(boxes, function (b) { return b.checked; });
+      boxes.forEach(function (b) { if (b.checked === all) b.click(); });
+    });
+    $('deleteSel').addEventListener('click', async function () {
+      var ids = Array.from(selected);
+      if (!ids.length || !confirm(ids.length + ' fotoğraf kalıcı olarak silinsin mi?')) return;
+      $('deleteSel').disabled = true;
+      var done = 0;
+      for (var i = 0; i < ids.length; i++) { if (await removeOne(ids[i])) done += 1; else break; }
+      msg($('panelMsg'), done + ' fotoğraf silindi.');
+    });
+
+    var saved = '';
+    try { saved = sessionStorage.getItem(KEY) || ''; } catch (_) {}
+    if (saved) enter(saved).catch(function () { signOut(''); });
+  }());
+  </script>
+</body>
+</html>

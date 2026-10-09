@@ -641,7 +641,7 @@ function loadGuestPhotos() {
     if (guestPhotosRequested) return;
     guestPhotosRequested = true;
     const tag = document.createElement('script');
-    tag.src = './assets/js/photos.min.js?v=20261009';
+    tag.src = './assets/js/photos.min.js?v=20261010';
     tag.defer = true;
     document.body.appendChild(tag);
 }

@@ -400,15 +400,9 @@
             <h2 class="event-day-title" id="eventPhotosTitle">Fotoğraflarınızı Paylaşın</h2>
             <p class="event-photos-lead">Bu güzel günde çektiğiniz fotoğrafları bizimle paylaşın 💕</p>
             <form class="photo-form" id="photoForm" novalidate>
-                <label class="photo-field">Adınız <span>(isteğe bağlı)</span>
-                    <input type="text" name="name" id="photoName" maxlength="40" autocomplete="name" placeholder="Örn. Ayşe">
-                </label>
-                <label class="photo-consent">
-                    <input type="checkbox" id="photoConsent">
-                    <span>Yüklediğim fotoğrafların bu sayfada herkese açık gösterilmesini kabul ediyorum. <a href="/gizlilik.html" target="_blank" rel="noopener">Gizlilik</a></span>
-                </label>
                 <button type="button" class="photo-pick" id="photoPick">📷 Fotoğraf seç</button>
                 <input type="file" id="photoInput" class="photo-input" accept="image/*" multiple tabindex="-1" aria-hidden="true">
+                <p class="photo-note">Fotoğraf seçerek paylaştığınız fotoğrafların bu sayfada herkese açık gösterilmesini kabul etmiş olursunuz. <a href="/gizlilik.html" target="_blank" rel="noopener">Gizlilik</a></p>
                 <p class="photo-status" id="photoStatus" role="status" aria-live="polite"></p>
                 <ul class="photo-queue" id="photoQueue"></ul>
             </form>
@@ -929,7 +923,7 @@
         <img class="lightbox-img" id="photoLightboxImg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="1030" height="1526" loading="lazy" decoding="async" alt="">
     </div>
 
-    <script src="./assets/js/script.min.js?v=20261010" defer></script>
+    <script src="./assets/js/script.min.js?v=20261011" defer></script>
 
     <footer class="site-footer">
         <p class="footer-names">Zeynep <span>&amp;</span> Batuhan</p>

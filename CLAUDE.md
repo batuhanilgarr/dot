@@ -47,7 +47,7 @@ http://localhost:8000/?bloom=1
 
 **RSVP API** — `RSVP_API_URL` points to a Cloudflare Workers counter. Duplicate submissions are blocked per-device via `localStorage` key `rsvp-confirmed-v1`. Guest count is submitted as individual POST requests (one per guest).
 
-**Service Worker** (`sw.js`, cache name `zeynep-batuhan-v57`) — Caches static assets. Core assets (HTML, CSS, JS) use network-first with `cache: 'no-cache'` revalidation so GitHub Pages' HTTP cache can't serve stale files; `script.js` reloads the page once when a new worker takes over. The `/gir/` path is always fetched from network and never cached. Bump `CACHE_NAME` version when deploying asset changes that must invalidate old caches.
+**Service Worker** (`sw.js`, cache name `zeynep-batuhan-v58`) — Caches static assets. Core assets (HTML, CSS, JS) use network-first with `cache: 'no-cache'` revalidation so GitHub Pages' HTTP cache can't serve stale files; `script.js` reloads the page once when a new worker takes over. The `/gir/` path is always fetched from network and never cached. Bump `CACHE_NAME` version when deploying asset changes that must invalidate old caches.
 
 ### SEO pages
 

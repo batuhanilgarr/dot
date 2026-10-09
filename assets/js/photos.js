@@ -17,8 +17,6 @@
     const more = $('photoMore');
     const pick = $('photoPick');
     const input = $('photoInput');
-    const consent = $('photoConsent');
-    const nameInput = $('photoName');
     const status = $('photoStatus');
     const queue = $('photoQueue');
 
@@ -26,8 +24,6 @@
     const items = [];
     let nextCursor = null;
     let uploadState = 'open';
-
-    try { nameInput.value = sessionStorage.getItem('zb-guest-name') || ''; } catch (_) { /* ignore */ }
 
     function say(text, isError) {
         status.textContent = text || '';
@@ -187,12 +183,11 @@
         return new Promise((resolve, reject) => canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error('encode')), 'image/jpeg', quality));
     }
 
-    async function uploadOne(file, name) {
+    async function uploadOne(file) {
         const [full, thumb] = await Promise.all([toJpeg(file, 1600, 0.82), toJpeg(file, 480, 0.72)]);
         const body = new FormData();
         body.append('file', full, 'photo.jpg');
         body.append('thumb', thumb, 'thumb.jpg');
-        body.append('name', name);
         const response = await fetch(`${API}/upload`, { method: 'POST', body });
         if (!response.ok) {
             const err = await response.json().catch(() => ({}));
@@ -217,9 +212,6 @@
         const batch = files.slice(0, MAX_FILES);
         if (files.length > MAX_FILES) say(`Tek seferde en fazla ${MAX_FILES} fotoğraf yüklenir; ilk ${MAX_FILES} tanesi gönderiliyor.`);
         else say('');
-        const name = nameInput.value.trim().slice(0, 40);
-        try { sessionStorage.setItem('zb-guest-name', name); } catch (_) { /* ignore */ }
-
         queue.textContent = '';
         const rows = batch.map((file) => {
             const li = document.createElement('li');
@@ -240,7 +232,7 @@
                 const row = rows[cursor++];
                 row.state.textContent = 'Yükleniyor…';
                 try {
-                    const result = await uploadOne(row.file, name);
+                    const result = await uploadOne(row.file);
                     row.li.classList.add('is-ok');
                     row.state.textContent = '✓ Yüklendi';
                     done += 1;
@@ -261,15 +253,9 @@
 
     pick.addEventListener('click', () => {
         if (uploadState !== 'open') return;
-        if (!consent.checked) {
-            say('Devam etmek için önce paylaşım onayını işaretleyin.', true);
-            consent.focus();
-            return;
-        }
         input.click();
     });
     input.addEventListener('change', () => { if (input.files && input.files.length) handleFiles(input.files); });
-    consent.addEventListener('change', () => { if (consent.checked) say(''); });
     form.addEventListener('submit', (event) => event.preventDefault());
 
     loadFirst();

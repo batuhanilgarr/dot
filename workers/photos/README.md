@@ -23,14 +23,17 @@ Deploy sonrası adres `https://zeynepbatuhan-photos-api.batuhannilgarr.workers.d
 - `Origin` yalnızca `ALLOWED_ORIGINS` listesinden kabul edilir.
 
 ## Moderasyon
-Listeyi görmek: `curl "https://<worker>/photos?limit=60"`
-Bir fotoğrafı silmek:
+Yönetim paneli: `https://zeynepbatuhan.com/gir/fotograflar.html` (parola `ADMIN_SECRET`; arama motorlarına kapalıdır).
+Listeler, tek tek ya da toplu siler. Parolayı değiştirmek için `npx wrangler secret put ADMIN_SECRET`.
+
+Komut satırıyla silmek:
 
 ```bash
 curl -X DELETE "https://<worker>/photo/<id>" -H "X-Admin-Secret: <ADMIN_SECRET>"
 ```
 
 Yüklemeyi hemen kapatmak için `wrangler.toml` içinde `UPLOAD_CLOSES_AT`'i geçmiş bir tarihe çekip `npx wrangler deploy` çalıştırın.
+Test için geçici açmak: `npx wrangler deploy --var UPLOAD_OPENS_AT:2026-10-01T00:00:00+03:00` (normal `deploy` tekrar kapatır).
 
 ## Yerel test
 ```bash

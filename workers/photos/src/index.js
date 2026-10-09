@@ -5,6 +5,7 @@
  *   GET    /photo/<id>              → tam boy JPEG
  *   GET    /thumb/<id>              → küçük resim JPEG
  *   POST   /upload                  → multipart: file (JPEG), thumb (JPEG), name (opsiyonel)
+ *   POST   /admin/verify            → yönetici parolası doğrulama (X-Admin-Secret)
  *   DELETE /photo/<id>              → yönetici (X-Admin-Secret)
  */
 
@@ -58,6 +59,33 @@ function rateLimited(ip) {
   buckets.set(ip, entry);
   if (buckets.size > 5000) buckets.clear();
   return entry.count > 60;
+}
+
+const failures = new Map();
+
+function timingSafeEqual(a, b) {
+  const enc = new TextEncoder();
+  const x = enc.encode(a);
+  const y = enc.encode(b);
+  let diff = x.length ^ y.length;
+  const len = Math.max(x.length, y.length);
+  for (let i = 0; i < len; i += 1) diff |= (x[i] || 0) ^ (y[i] || 0);
+  return diff === 0;
+}
+
+// Başarısız yönetici denemeleri: isolate başına IP başına 10 dakikada en fazla 8 (en iyi çaba).
+function checkAdmin(request, env) {
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const now = Date.now();
+  const entry = failures.get(ip) || { start: now, count: 0 };
+  if (now - entry.start > 10 * 60 * 1000) { entry.start = now; entry.count = 0; }
+  if (entry.count >= 8) return 'locked';
+  const secret = request.headers.get('X-Admin-Secret') || '';
+  if (env.ADMIN_SECRET && timingSafeEqual(secret, env.ADMIN_SECRET)) return 'ok';
+  entry.count += 1;
+  failures.set(ip, entry);
+  if (failures.size > 5000) failures.clear();
+  return 'denied';
 }
 
 function isJpeg(bytes) {
@@ -133,9 +161,17 @@ async function handleImage(request, env, kind, id) {
   });
 }
 
+async function handleAdminVerify(request, env) {
+  const auth = checkAdmin(request, env);
+  if (auth === 'locked') return json(request, env, { error: 'locked' }, 429);
+  if (auth !== 'ok') return json(request, env, { error: 'unauthorized' }, 401);
+  return json(request, env, { ok: true });
+}
+
 async function handleDelete(request, env, id) {
-  const secret = request.headers.get('X-Admin-Secret') || '';
-  if (!env.ADMIN_SECRET || secret !== env.ADMIN_SECRET) return json(request, env, { error: 'unauthorized' }, 401);
+  const auth = checkAdmin(request, env);
+  if (auth === 'locked') return json(request, env, { error: 'locked' }, 429);
+  if (auth !== 'ok') return json(request, env, { error: 'unauthorized' }, 401);
   if (!ID_RE.test(id)) return json(request, env, { error: 'bad_id' }, 400);
   await env.PHOTOS.delete([`p/${id}.jpg`, `t/${id}.jpg`]);
   return json(request, env, { deleted: id });
@@ -147,6 +183,7 @@ export default {
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors(request, env) });
     try {
       if (request.method === 'POST' && url.pathname === '/upload') return await handleUpload(request, env);
+      if (request.method === 'POST' && url.pathname === '/admin/verify') return await handleAdminVerify(request, env);
       if (request.method === 'GET' && url.pathname === '/photos') return await handleList(request, env, url);
       const m = url.pathname.match(/^\/(photo|thumb)\/([^/]+)$/);
       if (m && request.method === 'GET') return await handleImage(request, env, m[1] === 'photo' ? 'p' : 't', m[2].replace(/\.jpg$/, ''));

@@ -3030,38 +3030,8 @@ html.photo-mode .event-photos {
     text-align: left;
 }
 
-.photo-field {
-    display: grid;
-    gap: 6px;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--ink);
-}
-
-.photo-field span { font-weight: 400; color: var(--muted); }
-
-.photo-field input[type="text"] {
-    min-height: 48px;
-    padding: 10px 14px;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--bg);
-    color: var(--ink);
-    font: inherit;
-    font-size: 16px;
-}
-
-.photo-consent {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    font-size: 12.5px;
-    line-height: 1.45;
-    color: var(--ink-soft);
-}
-
-.photo-consent input { width: 22px; height: 22px; margin-top: 1px; flex: none; accent-color: var(--rose-deep); }
-.photo-consent a { color: var(--rose-deep); }
+.photo-note { margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
+.photo-note a { color: var(--rose-deep); }
 
 .photo-pick,
 .photo-more {
