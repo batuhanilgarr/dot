@@ -184,7 +184,7 @@
     }
 
     async function uploadOne(file) {
-        const [full, thumb] = await Promise.all([toJpeg(file, 1600, 0.82), toJpeg(file, 480, 0.72)]);
+        const [full, thumb] = await Promise.all([toJpeg(file, 2560, 0.85), toJpeg(file, 480, 0.72)]);
         const body = new FormData();
         body.append('file', full, 'photo.jpg');
         body.append('thumb', thumb, 'thumb.jpg');
