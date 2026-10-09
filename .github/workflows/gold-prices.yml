@@ -1,0 +1,33 @@
+name: Altın fiyatlarını güncelle
+
+on:
+  schedule:
+    - cron: "30 6 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fiyat tablosunu yenile
+        run: python3 scripts/update-gold-prices.py
+
+      - name: SEO denetimi
+        run: python3 scripts/seo-audit.py
+
+      - name: Değişiklik varsa kaydet
+        run: |
+          if git diff --quiet; then
+            echo "Değişiklik yok."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dugune-ne-takilir.html sitemap.xml feed.xml content-maintenance.json
+          git commit -m "Update gold prices on düğüne ne takılır"
+          git push
