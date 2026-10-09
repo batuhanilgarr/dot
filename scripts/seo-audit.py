@@ -28,7 +28,7 @@ def canonical_path(path: Path) -> str:
 
 def main() -> int:
     errors=[]
-    pages=sorted(p for p in ROOT.glob("*.html") if p.name not in EXCLUDED)
+    pages=sorted(p for p in ROOT.glob("*.html") if p.name not in EXCLUDED and 'http-equiv="refresh"' not in p.read_text(encoding="utf-8"))
     public_names={p.name for p in pages}
     parsed={}
     incoming=collections.Counter()

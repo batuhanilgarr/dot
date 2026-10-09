@@ -15,7 +15,7 @@ Canlı: <https://zeynepbatuhan.com>
 ├── kina.ics / nikah.ics             # Takvime ekle dosyaları
 ├── CNAME, robots.txt, sitemap.xml   # Hosting / SEO yapılandırması
 ├── push-worker-additions.js         # CF Worker push notification referans kodu
-├── davetiyeye-ne-yazilir.html       # SEO sayfası
+├── davetiye-ornekleri.html          # SEO sayfası
 ├── dijital-davetiye-fiyatlari.html  # SEO sayfası
 ├── nisan-davetiyesi-ornekleri.html  # SEO sayfası
 ├── gir/

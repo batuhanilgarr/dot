@@ -10,6 +10,7 @@ items=[]
 for p in sorted(ROOT.glob('*.html')):
     if p.name in EXCLUDED: continue
     s=p.read_text(encoding='utf-8')
+    if 'http-equiv="refresh"' in s: continue
     title=unescape(re.search(r'<title>(.*?)</title>',s,re.S).group(1).strip())
     desc=unescape(re.search(r'<meta name="description" content="([^"]*)"',s).group(1))
     url=re.search(r'<link rel="canonical" href="([^"]+)"',s).group(1)
