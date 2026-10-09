@@ -123,6 +123,15 @@
       "sources": [
         "https://www.adobe.com/express/create/invitation"
       ]
+    },
+    {
+      "path": "dugune-ne-takilir.html",
+      "topic": "Düğüne ne takılır: güncel altın fiyat tablosu",
+      "lastReviewed": "2026-10-09",
+      "reviewIntervalDays": 14,
+      "sources": [
+        "https://finans.truncgil.com/v4/today.json"
+      ]
     }
   ]
 }
