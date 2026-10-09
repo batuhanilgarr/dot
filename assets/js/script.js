@@ -646,6 +646,66 @@ function loadGuestPhotos() {
     document.body.appendChild(tag);
 }
 
+/* ——— Konum kartı: kalan süre ve hava durumu ——— */
+const EVENT_VENUES = {
+    kina:  { startMs: KINA_DATE_MS,  endMs: KINA_DATE_MS + 5 * 3600000,  date: '2026-10-24', lat: 41.0165514, lon: 29.1561369 },
+    nikah: { startMs: NIKAH_START_MS, endMs: NIKAH_START_MS + 4 * 3600000, date: '2026-10-25', lat: 41.0619082, lon: 29.1107091 }
+};
+
+function formatRemaining(ms) {
+    const mins = Math.max(0, Math.floor(ms / 60000));
+    const days = Math.floor(mins / 1440);
+    const hours = Math.floor((mins % 1440) / 60);
+    const minutes = mins % 60;
+    if (days > 0) return `${days} gün ${hours} saat kaldı`;
+    if (hours > 0) return `${hours} saat ${minutes} dakika kaldı`;
+    return `${minutes} dakika kaldı`;
+}
+
+function updateEventCountdowns() {
+    const now = Date.now();
+    document.querySelectorAll('[data-countdown]').forEach((el) => {
+        const venue = EVENT_VENUES[el.dataset.countdown];
+        if (!venue) return;
+        if (now < venue.startMs) {
+            el.textContent = `⏳ ${formatRemaining(venue.startMs - now)}`;
+            el.hidden = false;
+        } else if (now < venue.endMs) {
+            el.textContent = '🎉 Başladı, sizi bekliyoruz!';
+            el.hidden = false;
+        } else {
+            el.hidden = true;
+        }
+    });
+}
+
+let eventWeatherRequested = false;
+async function loadEventWeather() {
+    if (eventWeatherRequested) return;
+    eventWeatherRequested = true;
+    await Promise.all(Object.entries(EVENT_VENUES).map(async ([key, venue]) => {
+        const el = document.querySelector(`[data-weather="${key}"]`);
+        if (!el || Date.now() > venue.endMs) return;
+        try {
+            const url = 'https://api.open-meteo.com/v1/forecast' +
+                `?latitude=${venue.lat}&longitude=${venue.lon}` +
+                '&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max' +
+                `&timezone=Europe%2FIstanbul&start_date=${venue.date}&end_date=${venue.date}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const d = (await res.json()).daily;
+            if (!d || d.weathercode?.[0] == null) throw new Error('veri yok');
+            const [icon, desc] = WMO[d.weathercode[0]] || ['🌡️', 'Belirsiz'];
+            const rain = d.precipitation_probability_max?.[0];
+            el.textContent = `${icon} ${desc} · ${Math.round(d.temperature_2m_min[0])}°–${Math.round(d.temperature_2m_max[0])}°C` +
+                (rain != null ? ` · Yağış ihtimali %${Math.round(rain)}` : '');
+            el.hidden = false;
+        } catch (_) {
+            el.hidden = true;
+        }
+    }));
+}
+
 function updateEventDayCard() {
     const now = Date.now();
     const params = new URLSearchParams(window.location.search);
@@ -653,13 +713,18 @@ function updateEventDayCard() {
     const photoPreview = params.get('foto') === '1';
     // Konum ekranı EVENT_WINDOW_START_MS'den itibaren kalıcıdır; PHOTO_START_MS sonrasında
     // venue kartları yerine fotoğraf paylaşım alanı gösterilir.
-    const active = preview || photoPreview || now >= EVENT_WINDOW_START_MS;
+    const invite = params.get('davet') === '1';
+    const active = !invite && (preview || photoPreview || now >= EVENT_WINDOW_START_MS);
     const photoMode = active && (photoPreview || (!preview && now >= PHOTO_START_MS));
     const root = document.documentElement;
     root.classList.toggle('event-day', active);
     root.classList.toggle('photo-mode', photoMode);
     setEventTakeover(active);
     if (photoMode) loadGuestPhotos();
+    if (active && !photoMode) {
+        updateEventCountdowns();
+        loadEventWeather();
+    }
 }
 
 updateEventDayCard();
@@ -970,26 +1035,26 @@ function showToastBanner() {
     }, 1800);
 }
 
-async function loadWeather() {
-    const WMO = {
-        0: ['☀️', 'Açık hava'],
-        1: ['🌤️', 'Çoğunlukla açık'],
-        2: ['⛅', 'Parçalı bulutlu'],
-        3: ['☁️', 'Kapalı'],
-        45: ['🌫️', 'Sisli'],
-        48: ['🌫️', 'Sisli'],
-        51: ['🌦️', 'Hafif çisenti'],
-        53: ['🌦️', 'Çisenti'],
-        55: ['🌧️', 'Yoğun çisenti'],
-        61: ['🌧️', 'Hafif yağmur'],
-        63: ['🌧️', 'Yağmur'],
-        65: ['🌧️', 'Yoğun yağmur'],
-        80: ['🌦️', 'Sağanak'],
-        81: ['🌦️', 'Kuvvetli sağanak'],
-        82: ['⛈️', 'Şiddetli sağanak'],
-        95: ['⛈️', 'Fırtınalı'],
-    };
+const WMO = {
+    0: ['☀️', 'Açık hava'],
+    1: ['🌤️', 'Çoğunlukla açık'],
+    2: ['⛅', 'Parçalı bulutlu'],
+    3: ['☁️', 'Kapalı'],
+    45: ['🌫️', 'Sisli'],
+    48: ['🌫️', 'Sisli'],
+    51: ['🌦️', 'Hafif çisenti'],
+    53: ['🌦️', 'Çisenti'],
+    55: ['🌧️', 'Yoğun çisenti'],
+    61: ['🌧️', 'Hafif yağmur'],
+    63: ['🌧️', 'Yağmur'],
+    65: ['🌧️', 'Yoğun yağmur'],
+    80: ['🌦️', 'Sağanak'],
+    81: ['🌦️', 'Kuvvetli sağanak'],
+    82: ['⛈️', 'Şiddetli sağanak'],
+    95: ['⛈️', 'Fırtınalı'],
+};
 
+async function loadWeather() {
     function applyWeather(iconId, descId, tempId, cardId, code, tmin, tmax) {
         const [icon, desc] = WMO[code] || ['🌡️', 'Belirsiz'];
         const iconEl = document.getElementById(iconId);

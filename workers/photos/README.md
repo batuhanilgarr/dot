@@ -19,7 +19,7 @@ Deploy sonrası adres `https://zeynepbatuhan-photos-api.batuhannilgarr.workers.d
 ## Davranış
 - Yükleme `UPLOAD_OPENS_AT` (25 Ekim 14:00 TSİ) öncesi `403 not_open` döner; `UPLOAD_CLOSES_AT` sonrası kapanır. Tarihler `wrangler.toml`'da.
 - Yalnızca JPEG kabul edilir (tarayıcı, yüklemeden önce her fotoğrafı 2560 px ve 480 px JPEG'e çevirir; EXIF/konum silinir).
-- Tam boy ≤ 8 MB, küçük resim ≤ 400 KB. IP başına 10 dakikada en fazla 60 yükleme (en iyi çaba).
+- Tam boy ≤ 15 MB, küçük resim ≤ 400 KB. IP başına 10 dakikada en fazla 60 yükleme (en iyi çaba).
 - `Origin` yalnızca `ALLOWED_ORIGINS` listesinden kabul edilir.
 
 ## Moderasyon

@@ -279,10 +279,11 @@
             var preview = q.get('konum') === '1';
             // Konum ekranı: 9 Ekim 00:00'dan itibaren açık. 25 Ekim 14:00 (Türkiye saati) sonrasında
             // ekran fotoğraf paylaşım alanına dönüşür (?konum=1 yine konumları gösterir, ?foto=1 önizler).
+            var invite = q.get('davet') === '1';
             var photo = q.get('foto') === '1';
             var photoTime = now >= new Date('2026-10-25T14:00:00+03:00').getTime();
             var inWindow = now >= new Date('2026-10-09T00:00:00+03:00').getTime();
-            if (preview || photo || inWindow) {
+            if (!invite && (preview || photo || inWindow)) {
                 root.classList.add('event-day');
                 if (photo || (photoTime && !preview)) root.classList.add('photo-mode');
             } else if (q.get('bloom') === '1' || window.location.hash === '#bloom') {
@@ -380,21 +381,36 @@
                 <p class="event-day-card-time">🌷 Kına · Cumartesi 24 Ekim · 12:00</p>
                 <p class="event-day-card-place">Aşk-ı Lavinya</p>
                 <p class="event-day-card-address">Y. Dudullu Mah. Alemdağ Cad. No:774, Ümraniye / İstanbul</p>
+                <p class="event-day-countdown" data-countdown="kina" aria-live="off"></p>
+                <p class="event-day-weather" data-weather="kina" hidden></p>
                 <div class="event-day-card-actions">
                     <a href="https://www.google.com/maps/dir/?api=1&amp;destination=41.0165514%2C29.1561369&amp;travelmode=driving" target="_blank" rel="noopener noreferrer">🤖 Android Konum</a>
                     <a href="https://maps.apple.com/directions?mode=driving&amp;destination=41.0165514%2C29.1561369" target="_blank" rel="noopener noreferrer">🍎 iPhone Konum</a>
                 </div>
+                <div class="event-day-card-actions event-day-card-actions--outline">
+                    <a href="https://yandex.com.tr/harita/?rtext=~41.0165514%2C29.1561369&amp;rtt=auto" target="_blank" rel="noopener noreferrer">🗺️ Yandex Haritalar</a>
+                    <a href="/kina.ics" download>📅 Takvime Ekle</a>
+                </div>
+                <p class="event-day-card-note">🅿️ Araçlarınızı yol üzerine park edebilirsiniz.</p>
             </div>
             <div class="event-day-venue">
                 <p class="event-day-card-time">💍 Nikah · Pazar 25 Ekim · 14:00</p>
                 <p class="event-day-card-place">Beykoz Spor Ormanı Nikah Salonu</p>
                 <p class="event-day-card-address">Küçüksu Cad. No:365, Yeni Mah., Beykoz / İstanbul</p>
+                <p class="event-day-countdown" data-countdown="nikah" aria-live="off"></p>
+                <p class="event-day-weather" data-weather="nikah" hidden></p>
                 <div class="event-day-card-actions">
                     <a href="https://www.google.com/maps/dir/?api=1&amp;destination=41.0619082%2C29.1107091&amp;travelmode=driving" target="_blank" rel="noopener noreferrer">🤖 Android Konum</a>
                     <a href="https://maps.apple.com/directions?mode=driving&amp;destination=41.0619082%2C29.1107091" target="_blank" rel="noopener noreferrer">🍎 iPhone Konum</a>
                 </div>
+                <div class="event-day-card-actions event-day-card-actions--outline">
+                    <a href="https://yandex.com.tr/harita/?rtext=~41.0619082%2C29.1107091&amp;rtt=auto" target="_blank" rel="noopener noreferrer">🗺️ Yandex Haritalar</a>
+                    <a href="/nikah.ics" download>📅 Takvime Ekle</a>
+                </div>
+                <p class="event-day-card-note">🅿️ Belediyenin İSPARK otoparkı mevcuttur.</p>
             </div>
             <a class="event-day-wa" href="https://wa.me/905077090723" target="_blank" rel="noopener noreferrer">WhatsApp ile İletişim</a>
+            <a class="event-day-invite" href="/?davet=1">💌 Davetiyeyi gör</a>
         </div>
         <div class="event-photos" id="eventPhotos">
             <h2 class="event-day-title" id="eventPhotosTitle">Fotoğraflarınızı Paylaşın</h2>
@@ -924,7 +940,7 @@
         <img class="lightbox-img" id="photoLightboxImg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="1030" height="1526" loading="lazy" decoding="async" alt="">
     </div>
 
-    <script src="./assets/js/script.min.js?v=20261012" defer></script>
+    <script src="./assets/js/script.min.js?v=20261013" defer></script>
 
     <footer class="site-footer">
         <p class="footer-names">Zeynep <span>&amp;</span> Batuhan</p>
