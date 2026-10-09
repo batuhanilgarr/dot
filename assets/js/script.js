@@ -621,7 +621,7 @@ const NIKAH_START_MS = new Date('2026-10-25T14:00:00+03:00').getTime();
 const BLOOM_START_MS = new Date('2026-10-25T14:00:00+03:00').getTime();
 const EVENT_END_MS = new Date('2026-10-25T22:00:00+03:00').getTime();
 const KINA_DATE_MS = new Date('2026-10-24T12:00:00+03:00').getTime();
-const EVENT_WINDOW_START_MS = new Date('2026-10-23T00:00:00+03:00').getTime();
+const EVENT_WINDOW_START_MS = new Date('2026-10-09T00:00:00+03:00').getTime();
 
 const eventCard = document.getElementById('eventQuickCard');
 

@@ -277,8 +277,8 @@
             var q = new URLSearchParams(window.location.search);
             var root = document.documentElement;
             var preview = q.get('konum') === '1';
-            // Konum ekranı: 23 Ekim 00:00 → 25 Ekim 14:00 (Türkiye saati). Sonrasında bloom.
-            var inWindow = now >= new Date('2026-10-23T00:00:00+03:00').getTime() &&
+            // Konum ekranı: 9 Ekim 00:00 → 25 Ekim 14:00 (Türkiye saati). Sonrasında bloom.
+            var inWindow = now >= new Date('2026-10-09T00:00:00+03:00').getTime() &&
                            now < new Date('2026-10-25T14:00:00+03:00').getTime();
             if (preview || inWindow) {
                 root.classList.add('event-day');
@@ -906,7 +906,7 @@
         <img class="lightbox-img" id="photoLightboxImg" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" width="1030" height="1526" loading="lazy" decoding="async" alt="">
     </div>
 
-    <script src="./assets/js/script.min.js?v=20261008" defer></script>
+    <script src="./assets/js/script.min.js?v=20261009" defer></script>
 
     <footer class="site-footer">
         <p class="footer-names">Zeynep <span>&amp;</span> Batuhan</p>
