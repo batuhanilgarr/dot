@@ -18,6 +18,9 @@ PINS = [
     ("kina-hediyelikleri-pin", "assets/images/nisan/dsc09414.jpg", "KINA\nHEDİYELİKLERİ", "Fikirler, bütçe ve sipariş", "Adet hesabı ve etiket önerileri"),
     ("kina-davetiyesi-mesaj-pin", "assets/images/nisan/dsc09453.jpg", "KINA DAVETİYESİ\nMESAJLARI", "Hazır kına gecesi metinleri", "Aile ve arkadaş grubu için örnekler"),
     ("evde-nisan-menusu-pin-2", "assets/images/nisan/dsc09286.jpg", "EVDE NİŞAN\nMENÜSÜ", "20, 30 ve 50 kişilik plan", "İkramlık listesi ve miktarlar"),
+    ("istanbul-nisan-alisverisi-pin", "assets/images/nisan/dsc09365.jpg", "İSTANBUL'DA\nNİŞAN MALZEMELERİ", "Eminönü, Tahtakale, Şark Han", "Ürün ürün alışveriş rotası"),
+    ("ankara-kina-alisverisi-pin", "assets/images/nisan/dsc09367.jpg", "ANKARA'DA\nKINA MALZEMELERİ", "Ulus, Suluhan, Çankaya", "Satın alma mı, kiralama mı?"),
+    ("izmir-kina-alisverisi-pin", "assets/images/nisan/dsc09392.jpg", "İZMİR'DE\nKINA MALZEMELERİ", "Kemeraltı alışveriş planı", "Bindallı, kına seti ve hediyelik"),
 ]
 
 def cover(path):
