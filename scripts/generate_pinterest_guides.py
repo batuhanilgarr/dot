@@ -21,6 +21,12 @@ PINS = [
     ("istanbul-nisan-alisverisi-pin", "assets/images/nisan/dsc09365.jpg", "İSTANBUL'DA\nNİŞAN MALZEMELERİ", "Eminönü, Tahtakale, Şark Han", "Ürün ürün alışveriş rotası"),
     ("ankara-kina-alisverisi-pin", "assets/images/nisan/dsc09367.jpg", "ANKARA'DA\nKINA MALZEMELERİ", "Ulus, Suluhan, Çankaya", "Satın alma mı, kiralama mı?"),
     ("izmir-kina-alisverisi-pin", "assets/images/nisan/dsc09392.jpg", "İZMİR'DE\nKINA MALZEMELERİ", "Kemeraltı alışveriş planı", "Bindallı, kına seti ve hediyelik"),
+    ("nikah-belgeleri-pin", "assets/images/nisan/dsc09403.jpg", "NİKAH İÇİN\nGEREKLİ BELGELER", "2026 başvuru kontrol listesi", "Kimlik, fotoğraf, sağlık raporu"),
+    ("evlilik-saglik-raporu-pin", "assets/images/nisan/dsc09404.jpg", "EVLİLİK SAĞLIK\nRAPORU", "Nereden alınır? 2026 rehberi", "Aile hekimi, testler ve süre"),
+    ("nikah-toreni-pin", "assets/images/nisan/dsc09410.jpg", "NİKAH TÖRENİ\nNASIL YAPILIR?", "Adım adım akış ve süre", "Şahit, cüzdan, tören günü listesi"),
+    ("nikah-sahidi-pin", "assets/images/nisan/dsc09421.jpg", "NİKAH ŞAHİDİ\nKİMLER OLUR?", "Şartlar, görevler, seçim", "Yedek şahit planı"),
+    ("nikah-takisi-pin", "assets/images/nisan/dsc09427.jpg", "NİKAHTA TAKI\nTÖRENİ", "Düzen, kayıt ve güvenlik", "Takı görevlisi ve kayıt tablosu"),
+    ("evlendikten-sonra-pin", "assets/images/nisan/dsc09138.jpg", "EVLENDİKTEN\nSONRA İŞLEMLER", "Soyadı, kimlik, banka, adres", "Resmî işlemler kontrol listesi"),
 ]
 
 def cover(path):
