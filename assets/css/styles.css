@@ -3181,3 +3181,20 @@ html.photo-mode .event-photos {
     color: var(--rose-deep);
     text-decoration: none;
 }
+
+.event-day-more { margin-top: 10px; }
+.event-day-more summary {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--rose-deep);
+    cursor: pointer;
+    list-style: none;
+}
+.event-day-more summary::-webkit-details-marker { display: none; }
+.event-day-more summary::after { content: ' ▾'; }
+.event-day-more[open] summary::after { content: ' ▴'; }
+.event-day-more > :not(summary) { text-align: center; }
