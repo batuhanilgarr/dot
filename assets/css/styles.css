@@ -103,7 +103,7 @@ html.event-day .video-container { display: none !important; }
 html.event-day .event-day-card {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     position: fixed;
     inset: 0;
     z-index: 10000;
