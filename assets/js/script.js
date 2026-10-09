@@ -697,8 +697,9 @@ async function loadEventWeather() {
             if (!d || d.weathercode?.[0] == null) throw new Error('veri yok');
             const [icon, desc] = WMO[d.weathercode[0]] || ['🌡️', 'Belirsiz'];
             const rain = d.precipitation_probability_max?.[0];
-            el.textContent = `${icon} ${desc} · ${Math.round(d.temperature_2m_min[0])}°–${Math.round(d.temperature_2m_max[0])}°C` +
-                (rain != null ? ` · Yağış ihtimali %${Math.round(rain)}` : '');
+            el.textContent = `${icon} ${Math.round(d.temperature_2m_min[0])}°–${Math.round(d.temperature_2m_max[0])}°C` +
+                (rain != null ? ` · %${Math.round(rain)}` : '');
+            el.title = `${desc}${rain != null ? ` · Yağış ihtimali %${Math.round(rain)}` : ''}`;
             el.hidden = false;
         } catch (_) {
             el.hidden = true;
