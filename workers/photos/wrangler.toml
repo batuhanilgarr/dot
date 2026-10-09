@@ -1,0 +1,17 @@
+name = "zeynepbatuhan-photos-api"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "zeynepbatuhan-photos"
+
+[vars]
+ALLOWED_ORIGINS = "https://zeynepbatuhan.com,https://www.zeynepbatuhan.com"
+# Yükleme 25 Ekim 2026 Pazar 14:00 (Türkiye saati) itibarıyla açılır.
+UPLOAD_OPENS_AT = "2026-10-25T14:00:00+03:00"
+UPLOAD_CLOSES_AT = "2026-12-31T23:59:00+03:00"
+MAX_PHOTO_BYTES = "4000000"
+MAX_THUMB_BYTES = "400000"
+
+# ADMIN_SECRET:  npx wrangler secret put ADMIN_SECRET

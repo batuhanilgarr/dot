@@ -617,7 +617,7 @@ window.addEventListener('resize', () => {
 }, { passive: true });
 
 const NIKAH_START_MS = new Date('2026-10-25T14:00:00+03:00').getTime();
-// Nikah saatinden sonra konum ekranı kapanır ve bloom (teşekkür) ekranı açılır.
+// Bloom yalnızca ?bloom=1 / #bloom önizlemesiyle açılır; nikahtan sonra konum ekranı fotoğraf paylaşım alanına döner.
 const BLOOM_START_MS = new Date('2026-10-25T14:00:00+03:00').getTime();
 const EVENT_END_MS = new Date('2026-10-25T22:00:00+03:00').getTime();
 const KINA_DATE_MS = new Date('2026-10-24T12:00:00+03:00').getTime();
@@ -634,19 +634,32 @@ function setEventTakeover(active) {
     });
 }
 
+const PHOTO_START_MS = new Date('2026-10-25T14:00:00+03:00').getTime();
+let guestPhotosRequested = false;
+
+function loadGuestPhotos() {
+    if (guestPhotosRequested) return;
+    guestPhotosRequested = true;
+    const tag = document.createElement('script');
+    tag.src = './assets/js/photos.min.js?v=20261009';
+    tag.defer = true;
+    document.body.appendChild(tag);
+}
+
 function updateEventDayCard() {
     const now = Date.now();
-    const preview = new URLSearchParams(window.location.search).get('konum') === '1';
-    const active = preview || (now >= EVENT_WINDOW_START_MS && now < BLOOM_START_MS);
+    const params = new URLSearchParams(window.location.search);
+    const preview = params.get('konum') === '1';
+    const photoPreview = params.get('foto') === '1';
+    // Konum ekranı EVENT_WINDOW_START_MS'den itibaren kalıcıdır; PHOTO_START_MS sonrasında
+    // venue kartları yerine fotoğraf paylaşım alanı gösterilir.
+    const active = preview || photoPreview || now >= EVENT_WINDOW_START_MS;
+    const photoMode = active && (photoPreview || (!preview && now >= PHOTO_START_MS));
     const root = document.documentElement;
-    const wasActive = root.classList.contains('event-day');
     root.classList.toggle('event-day', active);
+    root.classList.toggle('photo-mode', photoMode);
     setEventTakeover(active);
-    // Pencere kapandıysa (sayfa açıkken 14:00 geçtiyse) bloom'a geç.
-    if (wasActive && !active && now >= BLOOM_START_MS) {
-        root.classList.add('bloom-init');
-        activateBloomMode();
-    }
+    if (photoMode) loadGuestPhotos();
 }
 
 updateEventDayCard();
@@ -1156,10 +1169,6 @@ function requestVenueDistances(venues) {
 }
 
 const konumPreview = new URLSearchParams(window.location.search).get('konum') === '1';
-
-if (Date.now() >= BLOOM_START_MS && !konumPreview) {
-    activateBloomMode();
-}
 
 const bloomQueryFlag = new URLSearchParams(window.location.search).get('bloom') === '1' && !konumPreview;
 const bloomHashFlag = window.location.hash === '#bloom' && !konumPreview;

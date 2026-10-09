@@ -35,9 +35,11 @@ http://localhost:8000/?bloom=1
 
 **Consent-gated analytics** — Google Analytics (`G-QNFHDMSSG6`, stored in a `<meta>` tag) is loaded by `assets/js/privacy.js` only after the visitor opts in via the cookie dialog (choice stored in `localStorage` key `zb-consent-v1`). "Seçmeden kapat" is remembered per session (`sessionStorage` `zb-consent-dismissed`), and the dialog never auto-opens while the event-day screen is shown.
 
-**Event-day screen** — From `2026-10-23T00:00+03:00` until `2026-10-25T14:00+03:00` a full-screen card (`#eventQuickCard`) replaces the whole site: couple-name banner plus Kına and Nikah venues with Android (Google Maps) / iPhone (Apple Maps) buttons. An inline FOUC guard in `<head>` adds `event-day` to `<html>`; `updateEventDayCard()` in `script.js` keeps it in sync, sets `inert` on the rest of the page, and hands over to bloom mode when the window closes. Preview any time with `?konum=1`. The window dates are duplicated in the inline guard and in `script.js` (`EVENT_WINDOW_START_MS`, `BLOOM_START_MS`) — change both.
+**Event-day screen** — From `2026-10-09T00:00+03:00` (moved forward from 23 Oct) a full-screen card (`#eventQuickCard`) replaces the whole site: couple-name banner plus Kına and Nikah venues with Android (Google Maps) / iPhone (Apple Maps) buttons. An inline FOUC guard in `<head>` adds `event-day` to `<html>`; `updateEventDayCard()` in `script.js` keeps it in sync and sets `inert` on the rest of the page. The window start is duplicated in the inline guard and in `script.js` (`EVENT_WINDOW_START_MS`) — change both. Preview venues any time with `?konum=1`.
 
-**Bloom Mode** — The entire page transforms into a "flower garden" at `2026-10-25T14:00:00+03:00` (`BLOOM_START_MS`; same instant as `NIKAH_START_MS`). The FOUC guard adds `bloom-init` to `<html>` synchronously; `activateBloomMode()` in `script.js` then adds `bloom-mode` to `<body>`. Preview with `?bloom=1` or `#bloom`.
+**Guest photo mode** — From `2026-10-25T14:00+03:00` (`PHOTO_START_MS` in `script.js` and the inline guard) the card gets `html.photo-mode`: venues are hidden and an upload form plus guest gallery (`.event-photos`) is shown instead; `script.js` then lazy-loads `assets/js/photos.min.js`. There is no automatic bloom handover any more (bloom only via `?bloom=1` / `#bloom`). Preview with `?foto=1`; `?konum=1` still shows the venues. Photos go to the Cloudflare Worker in `workers/photos/` (R2 bucket `zeynepbatuhan-photos`, see its README for deploy and moderation); the client downscales to JPEG (1600 px + 480 px thumb, EXIF stripped). Upload is gated server-side by `UPLOAD_OPENS_AT` in `workers/photos/wrangler.toml`. Local testing: `photosApi=http://localhost:8787` query param (localhost only).
+
+**Bloom Mode** — Only reachable by preview (`?bloom=1` or `#bloom`): `activateBloomMode()` in `script.js` adds `bloom-mode` to `<body>`; the FOUC guard adds `bloom-init`.
 
 **Weather cards** — Open-Meteo forecast is used within 15 days of the kına; before that the cards show the 5-year historical average for the same dates (Open-Meteo archive API).
 
@@ -45,7 +47,7 @@ http://localhost:8000/?bloom=1
 
 **RSVP API** — `RSVP_API_URL` points to a Cloudflare Workers counter. Duplicate submissions are blocked per-device via `localStorage` key `rsvp-confirmed-v1`. Guest count is submitted as individual POST requests (one per guest).
 
-**Service Worker** (`sw.js`, cache name `zeynep-batuhan-v56`) — Caches static assets. Core assets (HTML, CSS, JS) use network-first with `cache: 'no-cache'` revalidation so GitHub Pages' HTTP cache can't serve stale files; `script.js` reloads the page once when a new worker takes over. The `/gir/` path is always fetched from network and never cached. Bump `CACHE_NAME` version when deploying asset changes that must invalidate old caches.
+**Service Worker** (`sw.js`, cache name `zeynep-batuhan-v57`) — Caches static assets. Core assets (HTML, CSS, JS) use network-first with `cache: 'no-cache'` revalidation so GitHub Pages' HTTP cache can't serve stale files; `script.js` reloads the page once when a new worker takes over. The `/gir/` path is always fetched from network and never cached. Bump `CACHE_NAME` version when deploying asset changes that must invalidate old caches.
 
 ### SEO pages
 
