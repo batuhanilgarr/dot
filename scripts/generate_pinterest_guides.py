@@ -1,0 +1,47 @@
+"""Pinterest pin images for the October 2026 guides (JPG for upload, WebP for the repo)."""
+from pathlib import Path
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / "assets/images/pinterest"
+W, H = 1000, 1500
+FONT_BOLD = "/System/Library/Fonts/Supplemental/Arial Bold.ttf"
+FONT_REG = "/System/Library/Fonts/Supplemental/Arial.ttf"
+
+PINS = [
+    ("kiz-isteme-toreni-pin", "assets/images/nisan/dsc09105.jpg", "KIZ İSTEME\nNASIL YAPILIR?", "Kimler gider, ne götürülür?", "Tuzlu kahve ve konuşma sırası"),
+    ("kiz-isteme-konusmasi-pin", "assets/images/nisan/dsc09130.jpg", "KIZ İSTEME\nKONUŞMASI", "Hazır konuşma ve cevap metinleri", "Davet ve teşekkür mesajları"),
+    ("ceyiz-listesi-pin", "assets/images/nisan/dsc09177.jpg", "ÇEYİZ LİSTESİ\nODA ODA", "Önce neler alınır?", "Mutfak, yatak odası, banyo, salon"),
+    ("dugune-ne-takilir-pin", "assets/images/nisan/dsc09227.jpg", "DÜĞÜNE\nNE TAKILIR?", "Güncel altın fiyat tablosu", "Miktar belirleme ve nezaket kuralları"),
+    ("davetiye-ornekleri-pin", "assets/images/nisan/dsc09321.jpg", "DAVETİYEYE\nNE YAZILIR?", "Düğün, nişan, kına, sünnet", "Hazır sözler, mesajlar ve şiirler"),
+]
+
+def cover(path):
+    im = Image.open(path).convert("RGB")
+    s = max(W / im.width, H / im.height)
+    im = im.resize((round(im.width * s), round(im.height * s)), Image.Resampling.LANCZOS)
+    l, t = (im.width - W) // 2, (im.height - H) // 2
+    return im.crop((l, t, l + W, t + H)).filter(ImageFilter.GaussianBlur(0.35))
+
+def centered(draw, text, y, font, fill, spacing=12):
+    box = draw.multiline_textbbox((0, 0), text, font=font, spacing=spacing, align="center", stroke_width=1)
+    draw.multiline_text(((W - (box[2] - box[0])) / 2, y), text, font=font, fill=fill, spacing=spacing,
+                        align="center", stroke_width=1, stroke_fill=(35, 24, 28, 110))
+
+OUT.mkdir(parents=True, exist_ok=True)
+for slug, src, title, subtitle, detail in PINS:
+    im = cover(ROOT / src)
+    overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    od = ImageDraw.Draw(overlay)
+    od.rectangle((0, 0, W, H), fill=(35, 18, 25, 92))
+    od.rounded_rectangle((70, 500, 930, 1260), radius=35, fill=(255, 249, 245, 228), outline=(218, 166, 177, 255), width=4)
+    im = Image.alpha_composite(im.convert("RGBA"), overlay)
+    d = ImageDraw.Draw(im)
+    centered(d, title, 585, ImageFont.truetype(FONT_BOLD, 76), (73, 43, 55, 255), 18)
+    centered(d, subtitle, 865, ImageFont.truetype(FONT_BOLD, 38), (172, 84, 112, 255))
+    centered(d, detail, 960, ImageFont.truetype(FONT_REG, 32), (83, 64, 71, 255))
+    centered(d, "ZEYNEPBATUHAN.COM", 1150, ImageFont.truetype(FONT_BOLD, 28), (151, 111, 65, 255))
+    rgb = im.convert("RGB")
+    rgb.save(OUT / f"{slug}.webp", "WEBP", quality=88, method=6)
+    rgb.save(OUT / f"{slug}.jpg", "JPEG", quality=90, optimize=True)
+    print("wrote", slug)
