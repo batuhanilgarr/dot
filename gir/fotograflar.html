@@ -15,6 +15,7 @@
     .card { background: #fff; border-radius: 20px; padding: 1.5rem; box-shadow: 0 4px 24px rgba(139,94,82,0.10); }
     .login { max-width: 420px; margin: 3rem auto 0; }
     label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; }
+    textarea { width: 100%; padding: 0.7rem 0.9rem; border: 1px solid #e3d3c8; border-radius: 12px; font: inherit; font-size: 16px; color: inherit; background: #fbf8f4; resize: vertical; }
     input[type="password"] { width: 100%; min-height: 48px; padding: 0.7rem 0.9rem; border: 1px solid #e3d3c8; border-radius: 12px; font: inherit; font-size: 16px; color: inherit; background: #fbf8f4; }
     button { min-height: 44px; padding: 0.6rem 1.1rem; border: 0; border-radius: 999px; background: #b8607d; color: #fff; font: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer; }
     button.ghost { background: transparent; border: 1px solid #b8607d; color: #b8607d; }
@@ -50,6 +51,16 @@
     </section>
 
     <section id="panel" hidden>
+      <div class="card" style="margin-bottom:1.25rem">
+        <label for="annText">📢 Anlık duyuru <span style="font-weight:400">(konum ekranının en üstünde görünür)</span></label>
+        <textarea id="annText" rows="3" maxlength="280" placeholder="Örn. Kına 30 dk gecikmeli başlıyor, servis kalkış yeri değişti"></textarea>
+        <div class="bar" style="margin:0.7rem 0 0">
+          <span class="grow" id="annCount">0 / 280</span>
+          <button type="button" id="annSave">Yayınla</button>
+          <button type="button" class="ghost" id="annClear">Kaldır</button>
+        </div>
+        <p class="msg" id="annMsg" role="status"></p>
+      </div>
       <h1>📷 Misafir Fotoğrafları</h1>
       <div class="bar">
         <span class="grow" id="count"></span>
@@ -151,6 +162,35 @@
       updateBar();
     }
 
+
+    async function loadAnnouncement() {
+      try {
+        var res = await fetch(API + '/announcement', { cache: 'no-store' });
+        if (!res.ok) return;
+        var data = await res.json();
+        $('annText').value = data.text || '';
+        $('annCount').textContent = $('annText').value.length + ' / 280';
+        msg($('annMsg'), data.text ? 'Şu an yayında.' : 'Şu an duyuru yok.');
+      } catch (_) { /* sessiz */ }
+    }
+    async function saveAnnouncement(text) {
+      msg($('annMsg'), 'Kaydediliyor…');
+      var res = await fetch(API + '/admin/announcement', {
+        method: 'POST',
+        headers: { 'X-Admin-Secret': secret, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: text })
+      });
+      if (res.status === 401 || res.status === 429) { signOut('Oturum geçersiz. Tekrar giriş yapın.'); return; }
+      if (!res.ok) { msg($('annMsg'), 'Kaydedilemedi.', true); return; }
+      var data = await res.json();
+      $('annText').value = data.text || '';
+      $('annCount').textContent = $('annText').value.length + ' / 280';
+      msg($('annMsg'), data.text ? 'Yayınlandı. Konum ekranında en geç 1 dakikada görünür.' : 'Duyuru kaldırıldı.');
+    }
+    $('annText').addEventListener('input', function () { $('annCount').textContent = $('annText').value.length + ' / 280'; });
+    $('annSave').addEventListener('click', function () { saveAnnouncement($('annText').value.trim()); });
+    $('annClear').addEventListener('click', function () { if (confirm('Duyuru kaldırılsın mı?')) saveAnnouncement(''); });
+
     function signOut(text) {
       secret = ''; try { sessionStorage.removeItem(KEY); } catch (_) {}
       $('panel').hidden = true; $('loginBox').hidden = false; $('pw').value = '';
@@ -162,7 +202,7 @@
       secret = pw; try { sessionStorage.setItem(KEY, pw); } catch (_) {}
       $('loginBox').hidden = true; $('panel').hidden = false;
       msg($('loginMsg'), ''); msg($('panelMsg'), '');
-      await load(true);
+      await Promise.all([load(true), loadAnnouncement()]);
     }
 
     $('loginForm').addEventListener('submit', async function (e) {

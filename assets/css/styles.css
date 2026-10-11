@@ -3218,3 +3218,28 @@ html.photo-mode .event-photos {
 }
 .event-day-chip--time { color: var(--rose-deep); font-weight: 700; }
 .event-day-chip[hidden] { display: none; }
+
+/* Anlık duyuru bandı */
+.event-day-announcement {
+    width: min(480px, 100%);
+    margin: 0 auto 14px;
+    padding: 12px 16px;
+    border: 1px solid var(--rose-deep);
+    border-radius: 14px;
+    background: #fff4f7;
+    color: var(--rose-deep);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.45;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+.event-day-announcement[hidden] { display: none; }
+
+.event-photos-thanks {
+    margin: -6px 0 6px;
+    font-family: var(--font-display);
+    font-size: 20px;
+    line-height: 1.25;
+    color: var(--ink);
+}

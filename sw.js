@@ -1,7 +1,7 @@
 // Service Worker for Zeynep & Batuhan Wedding Invitation
 // Enables offline functionality
 
-const CACHE_NAME = 'zeynep-batuhan-v59';
+const CACHE_NAME = 'zeynep-batuhan-v60';
 // Cevrimdisi sayfa kabugu. Medya ve gorseller tarayicinin ag akisina birakilir.
 const urlsToCache = [
   '/',
@@ -70,7 +70,7 @@ self.addEventListener('fetch', event => {
           return networkResponse;
         })
         .catch(async () => {
-          try { return await caches.match(event.request) || Response.error(); }
+          try { return await caches.match(event.request, { ignoreSearch: true }) || Response.error(); }
           catch (_) { return Response.error(); }
         })
     );

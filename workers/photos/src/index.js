@@ -5,6 +5,8 @@
  *   GET    /photo/<id>              → tam boy JPEG
  *   GET    /thumb/<id>              → küçük resim JPEG
  *   POST   /upload                  → multipart: file (JPEG), thumb (JPEG), name (opsiyonel)
+ *   GET    /announcement            → { text, updated } anlık duyuru (boşsa gösterilmez)
+ *   POST   /admin/announcement      → yönetici: { text } duyuruyu yayınla; boş metin kaldırır
  *   POST   /admin/verify            → yönetici parolası doğrulama (X-Admin-Secret)
  *   DELETE /photo/<id>              → yönetici (X-Admin-Secret)
  */
@@ -161,6 +163,34 @@ async function handleImage(request, env, kind, id) {
   });
 }
 
+const ANNOUNCEMENT_KEY = 'meta/announcement.json';
+const ANNOUNCEMENT_MAX = 280;
+
+async function handleAnnouncementGet(request, env) {
+  let data = { text: '', updated: 0 };
+  const object = await env.PHOTOS.get(ANNOUNCEMENT_KEY);
+  if (object) {
+    try { data = await object.json(); } catch (_) { /* boş duyuru */ }
+  }
+  return json(request, env, { text: data.text || '', updated: data.updated || 0 }, 200, { 'Cache-Control': 'public, max-age=15' });
+}
+
+async function handleAnnouncementSet(request, env) {
+  const auth = checkAdmin(request, env);
+  if (auth === 'locked') return json(request, env, { error: 'locked' }, 429);
+  if (auth !== 'ok') return json(request, env, { error: 'unauthorized' }, 401);
+  let body;
+  try { body = await request.json(); } catch (_) { return json(request, env, { error: 'bad_json' }, 400); }
+  const text = String(body.text || '').replace(/<[^>]*>/g, '').replace(/[\u0000-\u0008\u000b-\u001f\u007f<>]/g, '').trim().slice(0, ANNOUNCEMENT_MAX);
+  if (!text) {
+    await env.PHOTOS.delete(ANNOUNCEMENT_KEY);
+    return json(request, env, { text: '', updated: Date.now() });
+  }
+  const data = { text, updated: Date.now() };
+  await env.PHOTOS.put(ANNOUNCEMENT_KEY, JSON.stringify(data), { httpMetadata: { contentType: 'application/json' } });
+  return json(request, env, data);
+}
+
 async function handleAdminVerify(request, env) {
   const auth = checkAdmin(request, env);
   if (auth === 'locked') return json(request, env, { error: 'locked' }, 429);
@@ -184,6 +214,8 @@ export default {
     try {
       if (request.method === 'POST' && url.pathname === '/upload') return await handleUpload(request, env);
       if (request.method === 'POST' && url.pathname === '/admin/verify') return await handleAdminVerify(request, env);
+      if (request.method === 'POST' && url.pathname === '/admin/announcement') return await handleAnnouncementSet(request, env);
+      if (request.method === 'GET' && url.pathname === '/announcement') return await handleAnnouncementGet(request, env);
       if (request.method === 'GET' && url.pathname === '/photos') return await handleList(request, env, url);
       const m = url.pathname.match(/^\/(photo|thumb)\/([^/]+)$/);
       if (m && request.method === 'GET') return await handleImage(request, env, m[1] === 'photo' ? 'p' : 't', m[2].replace(/\.jpg$/, ''));

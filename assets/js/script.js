@@ -651,6 +651,28 @@ function isForecastAvailable(date) {
     return date <= new Date(Date.now() + 15 * 86400000).toISOString().slice(0, 10);
 }
 
+/* ——— Anlık duyuru (yönetici panelinden yazılır) ——— */
+const GUEST_API = (() => {
+    const local = /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname);
+    const override = local ? new URLSearchParams(window.location.search).get('photosApi') : null;
+    return (override || 'https://zeynepbatuhan-photos-api.batuhannilgarr.workers.dev').replace(/\/$/, '');
+})();
+
+async function refreshAnnouncement() {
+    const el = document.getElementById('eventAnnouncement');
+    if (!el) return;
+    try {
+        const res = await fetch(`${GUEST_API}/announcement`, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const text = (data.text || '').trim();
+        el.textContent = text ? `📢 ${text}` : '';
+        el.hidden = !text;
+    } catch (_) {
+        // Ağ yoksa son gösterilen duyuru kalır.
+    }
+}
+
 /* ——— Konum kartı: kalan süre ve hava durumu ——— */
 const EVENT_VENUES = {
     kina:  { startMs: KINA_DATE_MS,  endMs: KINA_DATE_MS + 5 * 3600000,  date: '2026-10-24', lat: 41.0165514, lon: 29.1561369 },
@@ -727,6 +749,7 @@ function updateEventDayCard() {
     root.classList.toggle('photo-mode', photoMode);
     setEventTakeover(active);
     if (photoMode) loadGuestPhotos();
+    if (active) refreshAnnouncement();
     if (active && !photoMode) {
         updateEventCountdowns();
         loadEventWeather();

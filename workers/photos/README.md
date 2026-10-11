@@ -35,6 +35,9 @@ curl -X DELETE "https://<worker>/photo/<id>" -H "X-Admin-Secret: <ADMIN_SECRET>"
 Yüklemeyi hemen kapatmak için `wrangler.toml` içinde `UPLOAD_CLOSES_AT`'i geçmiş bir tarihe çekip `npx wrangler deploy` çalıştırın.
 Test için geçici açmak: `npx wrangler deploy --var UPLOAD_OPENS_AT:2026-10-01T00:00:00+03:00` (normal `deploy` tekrar kapatır).
 
+## Anlık duyuru
+Panelde (`/gir/fotograflar.html`) üstteki kutuya duyuru yazılıp "Yayınla"ya basılır; konum ekranının en üstünde 📢 bandı olarak görünür (en geç 1 dakikada). "Kaldır" bandı siler. Duyuru R2'de `meta/announcement.json` olarak tutulur.
+
 ## Yerel test
 ```bash
 npx wrangler dev --local --var UPLOAD_OPENS_AT:2026-01-01T00:00:00+03:00 --var ADMIN_SECRET:test
