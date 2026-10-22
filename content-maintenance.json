@@ -127,7 +127,7 @@
     {
       "path": "dugune-ne-takilir.html",
       "topic": "Düğüne ne takılır: güncel altın fiyat tablosu",
-      "lastReviewed": "2026-10-15",
+      "lastReviewed": "2026-10-22",
       "reviewIntervalDays": 14,
       "sources": [
         "https://finans.truncgil.com/v4/today.json"
